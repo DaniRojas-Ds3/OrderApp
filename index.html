@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OrderApp</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f1cd86;
+    }
+    header {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 3px dashed #e9ae62;
+    }
+    header h1 {
+      color: #a62929;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    .menu-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .menu-btn span {
+      width: 20px;
+      height: 2px;
+      background: #333;
+      display: block;
+      position: relative;
+    }
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: #333;
+      position: absolute;
+      left: 0;
+    }
+    .menu-btn span::before { top: -6px; }
+    .menu-btn span::after { top: 6px; }
+    
+
+    .search-bar {
+      display: flex;
+      justify-content: left;
+      padding: 1rem;
+    }
+    .search-bar input {
+      width: 80%;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid #000000;
+      font-size: 1rem;
+    }
+
+    .items {
+      padding: 1rem;
+    }
+    .item {
+      background: #f8f1ea;
+      border-radius: 20px;
+      display:flex;
+      align-items: left;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-right: 1rem;
+    }
+    .item-info h2 {
+      margin: 0;
+      color: #a62929;
+    }
+    .item-info p {
+      margin: 0.25rem 0 0;
+      font-weight: bold;
+    }
+  </style>
+  <style>
+
+    .item-link {
+    text-decoration: none;  
+    color: inherit;      
+    display: block;       
+    }
+
+
+  .item-link:hover .item {
+    transform: scale(1.03);
+    transition: transform 0.2s ease;
+    }
+  </style>
+
+
+</head>
+<body>
+  <header>
+    <h1> <img src="IMAGENES/logo.png" style="width: 60px;;height: 60px; ;"> OrderApp</h1>
+    <div class="menu-btn"> <span></span></div>
+  </header>
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar...">
+  </div>
+  <style>
+  .item-info a {
+    color: darkred;
+    text-decoration: none; 
+  }
+  .item-info a:hover {
+    color: red; 
+  }
+</style>
+
+<section class="items">
+  <!-- Producto: Comida rapida -->
+  <a href="redireccion_comida_rapida.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/comida_rapida.png" alt="">
+      <div class="item-info">
+        <h2>Comida Rápida</h2>
+      </div>
+    </div>
+  </a>
+  <!-- Producto: bebidas -->
+  <a href="redireccion_bebidas.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/bebidas.png" alt="">
+      <div class="item-info">
+        <h2>Bebidas</h2>
+      </div>
+    </div>
+  </a>
+  <!-- Producto: Combos -->
+  <a href="redireccion_combos.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/combo.png" alt="">
+      <div class="item-info">
+        <h2>Combos</h2>
+      </div>
+    </div>
+  </a>
+
+  <!-- Producto: Paquetes -->
+  <a href="redireccion_Paquetes.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/paquetes.png" alt="">
+      <div class="item-info">
+        <h2>paquetes</h2>
+      </div>
+    </div>
+  </a>
+
+  <!-- Producto: Helados -->
+  <a href="redireccion_Helados.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/helados.png" alt="">
+      <div class="item-info">
+        <h2>Helados</h2>
+      </div>
+    </div>
+  </a>
+
+  <!-- Producto: Greca -->
+  <a href="redireccion_greca.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/Greca.png" alt="Comida Rápida">
+      <div class="item-info">
+        <h2>Greca</h2>
+      </div>
+    </div>
+  </a>
+  <!-- Producto: Jugos y fruteria -->
+  <a href="redireccion_jugos-y-fruteria.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/Jugos y  fruteria.png" alt="">
+      <div class="item-info">
+        <h2>Jugos y Fruteria</h2>
+      </div>
+    </div>
+  </a>
+  <!-- Producto: Pasteleria -->
+  <a href="redireccion_pasteleria.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/Pasteleria.png" alt="Comida Rápida">
+      <div class="item-info">
+        <h2>Pasteleria</h2>
+      </div>
+    </div>
+  </a>
+    <!-- Producto: Alpina -->
+  <a href="redireccion_alpina.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/Alpina.png" alt="Comida Rápida">
+      <div class="item-info">
+        <h2>Productos Alpina</h2>
+      </div>
+    </div>
+  </a>
+
+    <!-- Producto: Dulceria -->
+  <a href="redireccion_dulceria.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/Dulceria.png" alt="Comida Rápida">
+      <div class="item-info">
+        <h2>Dulceria</h2>
+      </div>
+    </div>
+  </a>
+</section>
+
+
+
+
+    
+    
+  </section>
+</body>
+</html>

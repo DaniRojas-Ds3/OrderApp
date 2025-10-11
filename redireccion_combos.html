@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combos</title>
+  
+ <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #fadda4;
+    }
+
+    .top-box {
+      background: #ffffff;
+      padding: 15px 20px;
+      margin: 12px 16px;
+      border-radius: 10px;
+      border: 3px solid #000000;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #a62929;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,250px);
+      gap: 20px;
+      justify-content:center;
+      margin: 20px;
+ 
+    }
+    .card {
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 12px;
+      flex: 1 1 200px;
+      max-width: 250px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none; 
+      color: inherit; 
+      display: block;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: flex;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .price {
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #a62929;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="top-box">
+    <h2>Combos</h2> 
+  </div>
+
+  <div class="card-row">
+
+    <div class="card">
+      <img src="IMAGENES/Combo de Sandwich (1).png" alt="Combo de Sandwich">
+      <div class="price">Combo de Sandwich<br>$4.400</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/PASTEL DE POLLO.png" alt="Combo Pastel de Pollo">
+      <div class="price">Combo Pastel de Pollo<br>$4.200</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Combo de Hamburguesa.png" alt="Combo Hamburguesa">
+      <div class="price">Combo Hamburguesa<br>$7.800</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Combo Areburguer.png" alt="Combo Areburguer">
+      <div class="price">Combo Areburguer<br>$7.000</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/combo_perro-removebg-preview.png" alt="Combo Perro">
+      <div class="price">Combo Perro<br>$6.300</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Salchichon.png" alt="Salchichon">
+      <div class="price">Salchichon<br>$300</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Pan.png" alt="Pan Solo">
+      <div class="price">Pan Solo<br>$1.200</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Huevo Cocido.png" alt="Huevo Cocido">
+      <div class="price">Huevo Cocido<br>$1.400</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Tamal.png" alt="Tamales">
+      <div class="price">Tamales<br>$7.500</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Huevos con Salchicha.png" alt="Huevos Rancheros">
+      <div class="price">Huevos Rancheros<br>$5.200</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Huevos al Gusto.png" alt="Huevos al Gusto">
+      <div class="price">Huevos al Gusto<br>$4.700</div>
+    </div>
+
+    <div class="card">
+      <img src="IMAGENES/Huevos Pericos con Salchicha.png" alt="Huevos Pericos con Salchicha">
+      <div class="price">Huevos Pericos con Salchicha<br>$5.700</div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+
