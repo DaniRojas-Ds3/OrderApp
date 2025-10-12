@@ -12,6 +12,26 @@
       background: #fadda4;
     }
 
+    .back-button{
+      position: fixed;
+      top: 150px;
+      right: 1px;
+      z-index: 1000;
+    }
+    .back-button a{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: none;
+      color: rgb(0, 0, 0);
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 3.0rem;
+      transition: all 0,3s ease;
+    }
+
     .top-box {
       background: #ffffff;
       padding: 15px 20px;
@@ -36,7 +56,7 @@
 
     .card {
       background: #f4f6f9;
-      border: 2px solid #000000;
+      border: 2px solid #372424;
       border-radius: 12px;
       flex: 1 1 200px;
       max-width: 250px;
@@ -73,10 +93,15 @@
 </head>
 <body>
 
+
+  
   <div class="top-box">
     <h2>Comidas Rápidas</h2> 
   </div>
 
+  <div class="back-button">
+    <a href="index.html">⬅️</a>
+  </div>
 
   <div class="card-row">
 

@@ -24,6 +24,25 @@
       color: #a62929;
       box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
+        .back-button{
+      position: fixed;
+      top: 150px;
+      right: 1px;
+      z-index: 1000;
+    }
+    .back-button a{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: none;
+      color: rgb(0, 0, 0);
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 3.0rem;
+      transition: all 0,3s ease;
+    }
 
     .card-row {
       display: grid;
@@ -75,7 +94,9 @@
   <div class="top-box">
     <h2>Helados</h2> 
   </div>
-
+    <div class="back-button">
+    <a href="index.html">⬅️</a>
+  </div>
  
   <div class="card-row">
 
