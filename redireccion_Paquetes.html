@@ -24,24 +24,37 @@
       color: #a62929;
       box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
-        .back-button{
+    .back-button{
       position: fixed;
-      top: 150px;
-      right: 1px;
+      top: 170px;
+      right: 10px;
       z-index: 1000;
     }
     .back-button a{
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background-color: none;
+      align-items:center;
+      justify-content:center;
+      width: 20px;
+      height: 10px;
+      background-color: white;
       color: rgb(0, 0, 0);
-      text-decoration: none;
-      padding: 12px 22px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 3.0rem;
+      text-decoration:none;
+      padding: 12px 20px;
+      border: 3px solid black;
+      border-radius: 45px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       transition: all 0,3s ease;
+    }
+
+    .back-button .arrow{
+      font-size: 4rem;
+      display: block;
+      transform: translateY(-6px);
+    }
+
+    .back-button a:hover{
+      background-color: white;
+      transform: scale(1.1);
     }
 
     .card-row {
@@ -95,11 +108,10 @@
     <h2>Paquetes</h2> 
   </div>
 
-    <div class="back-button">
-    <a href="index.html">⬅️</a>
+  <div class="back-button">
+    <a href="index.html"><span class="arrow">←</span></a>
   </div>
-
- 
+  
   <div class="card-row">
 
 
