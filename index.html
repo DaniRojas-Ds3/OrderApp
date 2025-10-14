@@ -108,6 +108,29 @@
     transform: scale(1.03);
     transition: transform 0.2s ease;
     }
+
+    .item-link{
+      transition: opacity 0.25s ease, transform 0.25s ease ;
+    }
+
+    .item-link.hidden{
+      opacity: 0;
+      transform: scale(0.98);
+      pointer-events: none;
+      height: 0;
+      overflow: hidden;
+    }
+
+    #noResults{
+      text-align: center;
+      color: #000000;
+      margin: 20px 0 ;
+      display: none;
+      font-weight: 700;
+    }
+
+
+
   </style>
 
 
@@ -117,9 +140,13 @@
     <h1> <img src="IMAGENES/logo.png" style="width: 60px;;height: 60px; ;"> OrderApp</h1>
     <div class="menu-btn"> <span></span></div>
   </header>
+
   <div class="search-bar">
-    <input type="text" placeholder="Buscar...">
+    <input type="text" id="serchInput"placeholder="Buscar...">
   </div>
+
+
+
   <style>
   .item-info a {
     color: darkred;
@@ -132,11 +159,11 @@
 
 <section class="items">
   <!-- Producto: Comida rapida -->
-  <a href="redireccion_comida_rapida.html" class="item-link">
+  <a href="redireccion_comida.html" class="item-link">
     <div class="item">
       <img src="IMAGENES/comida_rapida.png" alt="">
       <div class="item-info">
-        <h2>Comida Rápida</h2>
+        <h2>Comida</h2>
       </div>
     </div>
   </a>
@@ -226,12 +253,10 @@
     </div>
   </a>
 </section>
-
-
-
-
-    
-    
+<script src="main.js"></script>
   </section>
 </body>
 </html>
+
+
+<img src="IMAGENES/CHANGUA.png" alt="Comida Rápida">
