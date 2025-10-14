@@ -6,23 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OrderApp</title>
   <style>
-    body {
+body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: #f1cd86;
-    }
+      background: #fadda4; 
+}
     header {
-      background: #fff;
+      background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1rem;
-      border-bottom: 3px dashed #e9ae62;
+      border-bottom: 3px dashed #000000;
     }
     header h1 {
       color: #a62929;
-      font-size: 1.8rem;
+      font-size: 4rem;
       margin: 0;
+    
     }
     .menu-btn {
       width: 40px;
@@ -65,6 +66,27 @@
       border-radius: 20px;
       border: 1px solid #000000;
       font-size: 1rem;
+    }
+
+    .buscador {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+     }
+
+    .buscador input {
+      padding: 10px 15px;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 20px;
+      border: 1px solid #b38b00;
+      font-size: 16px;
+      outline: none;
+     }
+
+    .buscador input:focus {
+      border-color: #f5b800;
+      box-shadow: 0 0 5px #f5b80080;
     }
 
     .items {
@@ -142,10 +164,10 @@
   </header>
 
   <div class="search-bar">
-    <input type="text" id="serchInput"placeholder="Buscar...">
+    <input type="text" id="serchInput"placeholder="Buscar Producto...">
   </div>
 
-
+  <div id="resultados" class="Contenedor_Productos"></div>
 
   <style>
   .item-info a {
@@ -253,10 +275,8 @@
     </div>
   </a>
 </section>
-<script src="main.js"></script>
   </section>
+  <script src="main.js"></script>
+  <script src="buscador.js"></script>
 </body>
 </html>
-
-
-<img src="IMAGENES/CHANGUA.png" alt="Comida Rápida">
