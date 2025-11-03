@@ -126,7 +126,7 @@ const productos=[
     {nombre: "Milo pequeño", categoria: "Greca", imagen:"IMAGENES/MILO_PEQUEÑO.png", precio: 3100},
     {nombre: "Milo Grande ", categoria: "Greca", imagen:"IMAGENES/MILO_GRANDE.png", precio: 4600},
     {nombre: "Milo Deslactosado ", categoria: "Greca", imagen:"IMAGENES/Milo Deslactosado.png", precio: 3900},
-    {nombre: "Perico", categoria: "Greca", imagen:"IMAGENES/PERICO_PEQUEÑO.png", precio: 1400},
+    {nombre: "Perico", categoria: "Greca", imagen:"IMAGENES/PERICO_PEQUEÑO.pngzx    ", precio: 1400},
     {nombre: "Cafe", categoria: "Greca", imagen:"IMAGENES/PERICO_GRANDE.png", precio: 2100},
     {nombre: "Cafe Deslactosado", categoria: "Greca", imagen:"IMAGENES/Cafe Deslactosado.png", precio: 2600,},
     {nombre: "Te chai en Agua", categoria: "Greca", imagen:"IMAGENES/TE_CHAI_AGUA.png", precio: 2900},
