@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* 🌈 ESTILO GENERAL */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #ffcf70, #fadda4);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 🧾 CONTENEDOR */
+    .admin-container {
+      text-align: center;
+      background: white;
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-container h1 {
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    /* 🔘 BOTÓN */
+    #pdfBtn {
+      background-color: #f03333;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    #pdfBtn:hover {
+      background-color: #e7a941;
+      transform: scale(1.05);
+    }
+
+    #pdfBtn:active {
+      transform: scale(0.97);
+    }
+        .back-button{
+      position: fixed;
+      top: 170px;
+      right: 10px;
+      z-index: 1000;
+    }
+    .back-button a{
+      display: inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      color: rgb(0, 0, 0);
+      text-decoration:none;
+      padding: 12px 20px;
+      border: 1px solid black;
+      border-radius: 45px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0,3s ease;
+    }
+
+    .back-button .arrow{
+      font-size: 3rem;
+      display: block;
+      transform: translateY(-6px);
+    }
+
+    .back-button a:hover{
+      background-color: white;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="back-button">
+    <a href="index.html"><span class="arrow">←</span></a>
+  </div>
+
+  <div class="admin-container">
+    <h1>Panel de Administración</h1>
+    <button id="pdfBtn">📄 Generar Resumen</button>
+  </div>
+
+  <script>
+    // === SCRIPT DE PDF TAL CUAL COMO TÚ LO TENÍAS ===
+    const pdfBtn = document.getElementById("pdfBtn");
+
+    pdfBtn.addEventListener("click", () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // 🧾 Encabezado
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("RESUMEN DE RESERVAS", 20, 20);
+
+      // 📅 Fecha actual
+      const fecha = new Date().toLocaleDateString("es-CO", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+      doc.setFontSize(12);
+      doc.text(`Fecha del reporte: ${fecha}`, 20, 30);
+
+      // 🗂️ Cargar reservas del día actual
+      const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+      const hoy = new Date().toLocaleDateString("es-CO");
+      const reservasDeHoy = reservas.filter(r => r.fecha === hoy);
+
+      if (reservasDeHoy.length === 0) {
+        doc.text("No hay reservas registradas.", 20, 45);
+        doc.save(`resumen_reservas_${fecha}.pdf`);
+        return;
+      }
+
+      // 🧠 Agrupar por jornada
+      const jornadas = {};
+      reservasDeHoy.forEach(r => {
+        const jornada = r.jornada || "Personal Externo";
+        if (!jornadas[jornada]) jornadas[jornada] = [];
+        jornadas[jornada].push(r);
+      });
+
+      // 🖨️ Imprimir el PDF
+      let y = 50;
+
+      for (const [jornada, registros] of Object.entries(jornadas)) {
+        doc.setFont("helvetica", "bold");
+        doc.text(`Jornada: ${jornada}`, 20, y);
+        y += 8;
+
+        doc.setFont("helvetica", "normal");
+
+        // Agrupar productos dentro de la jornada
+        const productosJornada = {};
+        registros.forEach(r => {
+          if (!productosJornada[r.nombre]) productosJornada[r.nombre] = 0;
+          productosJornada[r.nombre] += r.cantidad;
+        });
+
+        // Mostrar totales por producto
+        for (const [producto, cantidad] of Object.entries(productosJornada)) {
+          doc.text(`• ${cantidad} ${producto}`, 25, y);
+          y += 6;
+        }
+
+        // Mostrar detalle por usuario
+        const usuarios = {};
+        registros.forEach(r => {
+          if (!usuarios[r.usuario]) usuarios[r.usuario] = {};
+          if (!usuarios[r.usuario][r.nombre]) usuarios[r.usuario][r.nombre] = 0;
+          usuarios[r.usuario][r.nombre] += r.cantidad;
+        });
+
+        for (const [usuario, pedidos] of Object.entries(usuarios)) {
+          const detalles = Object.entries(pedidos)
+            .map(([prod, cant]) => `${cant} ${prod}`)
+            .join(", ");
+          doc.text(`- ${usuario}: ${detalles}`, 30, y);
+          y += 6;
+        }
+
+        y += 10; // espacio entre jornadas
+      }
+
+      // === 🔹 Calcular y mostrar total general de productos ===
+      let totalGeneralPorProducto = {};
+
+      for (const [jornada, registros] of Object.entries(jornadas)) {
+        registros.forEach(r => {
+          if (!totalGeneralPorProducto[r.nombre]) totalGeneralPorProducto[r.nombre] = 0;
+          totalGeneralPorProducto[r.nombre] += r.cantidad;
+        });
+      }
+
+      y += 10;
+      doc.setFont("helvetica", "bold");
+      doc.text("TOTAL DEL PEDIDO:", 20, y);
+      y += 8;
+      doc.setFont("helvetica", "normal");
+
+      for (const [producto, total] of Object.entries(totalGeneralPorProducto)) {
+        doc.text(`• ${total} ${producto}`, 25, y);
+        y += 6;
+      }
+
+      // 💾 Guardar PDF
+      doc.save(`resumen_reservas_${fecha}.pdf`);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sección en construcción</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #ffcf70, #fadda4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .contenedor {
+      background: white;
+      padding: 50px 80px;
+      border-radius: 25px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+      animation: aparecer 0.8s ease;
+    }
+
+    .icono {
+      font-size: 90px;
+      margin-bottom: 20px;
+      animation: parpadeo 2s infinite ease-in-out;
+    }
+
+    h1 {
+      color: #444;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 0;
+    }
+
+    @keyframes parpadeo {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .volver {
+      margin-top: 25px;
+      display: inline-block;
+      background-color: #ff1414;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .volver:hover {
+      background-color: #ff0000;
+      transform: scale(1.05);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <div class="icono">⚙️</div>
+    <h1>Sección en construcción</h1>
+    <p>Estamos trabajando en esta funcionalidad.<br>¡Pronto verás algo nuevo aquí!</p>
+    <a href="index.html" class="volver">Volver al inicio</a>
+  </div>
+</body>
+</html>

@@ -23,14 +23,19 @@ body {
       color: #a62929;
       font-size: 4rem;
       margin: 0;
-    
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 550px;
     }
+
     .menu-btn {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
+      border-radius: 70%;
       background: #fff;
-      border: 2px solid #ccc;
+      border: 2px solid #000000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -39,7 +44,7 @@ body {
     .menu-btn span {
       width: 20px;
       height: 2px;
-      background: #333;
+      background: #000000;
       display: block;
       position: relative;
     }
@@ -149,7 +154,131 @@ body {
       display: none;
       font-weight: 700;
     }
-    
+
+    .btn-cerrar-menu {
+  background-color: #ffffff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  color: #a52a2a;
+  font-size: 20px;
+  font-weight: bold;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-cerrar-menu:hover {
+  background-color: #f4c47d;
+  transform: scale(1.1);
+}
+
+/* Para dar espacio extra en la parte superior de las tarjetas */
+.menu-lateral {
+  position: relative;
+  padding-top: 60px;
+}
+
+             /* === Panel lateral === */
+/* === Panel lateral === */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -70%;
+  width: 25%;
+  height: 100%;
+  background: #fadda4;
+  box-shadow: -7px 0 8px rgba(0, 0, 0, 0.2);
+  transition: right 0.4s ease;
+  z-index: 1000;
+  padding: 80px 1rem 1rem; /* ⬅ bajamos las tarjetas (antes era solo padding: 1rem) */
+  overflow-y: auto;
+  border-left: 2px solid #000;
+}
+
+/* Tarjetas dentro del menú */
+.menu-lateral .item {
+  background: #ffffff;
+  border: 1px solid #000000;
+}
+
+/* Cuando se activa el menú */
+.menu-lateral.activo {
+  right: 0;
+}
+
+/* Fondo borroso solo cuando el menú está abierto */
+body.menu-abierto::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 900;
+}
+
+/* Cuando se cierra el menú, el fondo vuelve normal */
+body.menu-cerrado::before {
+  content: none;
+}
+/* Modal administrativo (simple, no rompe estilos existentes) */
+.modal-admin {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  z-index: 2000;
+}
+
+.modal-contenido-admin {
+  width: 320px;
+  max-width: 90%;
+  background: #fff;
+  padding: 18px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+/* input y ojito */
+.modal-contenido-admin input[type="password"],
+.modal-contenido-admin input[type="text"] {
+  width: 100%;
+  padding: 10px 44px 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 6px;
+  top: 3px;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* opcional: estilo error */
+#adminError { font-size: 0.95rem; }
+
   </style>
 
 
@@ -158,7 +287,54 @@ body {
   <header>
     <h1> <img src="IMAGENES/logo.png" style="width: 60px;;height: 60px; ;"> OrderApp</h1>
     <div class="menu-btn"> <span></span></div>
+    
   </header>
+  
+
+  <!-- Menú lateral -->
+<div id="menuLateral" class="menu-lateral">
+  <!-- Botón de cierre del menú -->
+<button id="cerrarMenu" class="btn-cerrar-menu">✖</button>
+
+<a href="redireccion_administracion.html" id="adminLink" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/admin.png" alt="Administración">
+    <div class="item-info">
+      <h2>Administración</h2>
+    </div>
+  </div>
+</a>
+
+
+    <a href="reservas.html" class="item-link">
+      <div class="item">
+        <img src="IMAGENES/reservas_img.png" alt="Reservas">
+        <div class="item-info">
+          <h2>Reservas</h2>
+        </div>
+      </div>
+    </a>
+
+    <a href="redireccion_horarios.html" class="item-link">
+      <div class="item">
+        <img src="IMAGENES/horario.png" alt="Franja Horaria">
+        <div class="item-info">
+          <h2>Franja Horaria</h2>
+        </div>
+      </div>
+    </a>
+
+    <a href="PQRS.html" class="item-link">
+      <div class="item">
+        <img src="IMAGENES/PQRS.png" alt="PQRS">
+        <div class="item-info">
+          <h2>PQRS</h2>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
 
   <div class="search-bar">
     <input type="text" id="serchInput"placeholder="Buscar Producto...">
@@ -166,15 +342,6 @@ body {
 
   <div id="resultados" class="Contenedor_Productos"></div>
 
-  <style>
-  .item-info a {
-    color: darkred;
-    text-decoration: none; 
-  }
-  .item-info a:hover {
-    color: red; 
-  }
-</style>
 
 <section class="items">
   <!-- Producto: Comida rapida -->
@@ -273,7 +440,160 @@ body {
   </a>
 </section>
   </section>
+
+<!-- 🔐 Modal de acceso administrativo -->
+<!-- Modal de verificación (poner una sola vez en index.html) -->
+<div id="adminModal" class="modal-admin" aria-hidden="true" style="display:none;">
+  <div class="modal-contenido-admin">
+    <h2>Acceso administrativo</h2>
+
+    <div style="position:relative; margin-top:12px;">
+      <input id="adminPass" type="password" placeholder="Contraseña" autocomplete="new-password" />
+      <button id="togglePass" class="eye-btn" aria-label="Mostrar contraseña">👁️</button>
+    </div>
+
+    <p id="adminError" style="color:#a62929; display:none; margin-top:10px; font-weight:600;">Contraseña incorrecta</p>
+
+    <div style="margin-top:14px; display:flex; gap:8px; justify-content:center;">
+      <button id="entrarAdmin" class="confirmacion">Entrar</button>
+      <button id="cerrarAdmin" class="cancel">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+  
   <script src="main.js"></script>
   <script src="buscador.js"></script>
+ <script>
+const menuBtn = document.querySelector('.menu-btn');
+const menuLateral = document.getElementById('menuLateral');
+const btnCerrarMenu = document.getElementById('cerrarMenu');
+
+// Abrir menú
+menuBtn.addEventListener('click', () => {
+  menuLateral.classList.add('activo');
+  document.body.classList.add('menu-abierto');
+  document.body.classList.remove('menu-cerrado');
+});
+
+// Cerrar menú con la X
+btnCerrarMenu.addEventListener('click', () => {
+  menuLateral.classList.remove('activo');
+  document.body.classList.add('menu-cerrado');
+  document.body.classList.remove('menu-abierto');
+});
+
+// Cerrar menú haciendo clic fuera
+document.addEventListener('click', (e) => {
+  if (
+    !menuLateral.contains(e.target) &&
+    !menuBtn.contains(e.target) &&
+    menuLateral.classList.contains('activo')
+  ) {
+    menuLateral.classList.remove('activo');
+    document.body.classList.add('menu-cerrado');
+    document.body.classList.remove('menu-abierto');
+  }
+});
+
+// === Intercepta click en la tarjeta "Administración" y abre modal en su lugar ===
+(function() {
+  const adminLink = document.getElementById('adminLink'); // el enlace de la tarjeta (agregado arriba)
+  const adminModal = document.getElementById('adminModal');
+  const cerrarAdmin = document.getElementById('cerrarAdmin');
+  const adminPass = document.getElementById('adminPass');
+  const entrarAdmin = document.getElementById('entrarAdmin');
+  const adminError = document.getElementById('adminError');
+  const togglePass = document.getElementById('togglePass');
+
+  if (!adminLink || !adminModal) return; // seguridad si falta el HTML
+
+  const CLAVE_ADMIN = "12345";     // ajusta si quieres otra clave
+  let intentosRestantes = 3;       // puedes cambiar el número de intentos
+
+  // prevenir la navegación por defecto y abrir modal
+  adminLink.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    adminPass.value = "";
+    adminError.style.display = "none";
+    adminModal.style.display = "flex";
+    adminPass.focus();
+  });
+
+  // cerrar modal
+  cerrarAdmin.addEventListener('click', () => {
+    adminModal.style.display = "none";
+  });
+
+  // click fuera del contenido -> cierra
+  adminModal.addEventListener('click', (e) => {
+    if (e.target === adminModal) adminModal.style.display = "none";
+  });
+
+  // mostrar/ocultar contraseña con el ojo
+  togglePass.addEventListener('click', () => {
+    if (adminPass.type === 'password') {
+      adminPass.type = 'text';
+      togglePass.textContent = '👁️';
+    } else {
+      adminPass.type = 'password';
+      togglePass.textContent = '👁️';
+    }
+    adminPass.focus();
+  });
+
+  function marcarError() {
+    adminError.style.display = 'block';
+    adminPass.value = '';
+    adminPass.focus();
+  }
+
+  function bloquearAcceso() {
+    // si quieres bloquear permanentemente la tarjeta: deshabilitar link
+    adminLink.classList.add('admin-bloqueado');
+    adminModal.style.display = 'none';
+    adminLink.style.pointerEvents = 'none';
+    adminLink.style.opacity = '0.6';
+    // también puedes mostrar mensaje si quieres:
+    mostrarTempModal("Se alcanzó el número máximo de intentos. Contacte al administrador.");
+  }
+
+  // función auxiliar para mostrar un modal informativo corto
+  function mostrarTempModal(texto) {
+    const temp = document.createElement('div');
+    temp.className = 'modal-admin';
+    temp.innerHTML = `<div class="modal-contenido-admin"><p style="font-weight:600">${texto}</p></div>`;
+    document.body.appendChild(temp);
+    setTimeout(()=> temp.remove(), 2200);
+  }
+
+  // Verificar contraseña y redirigir si ok
+  entrarAdmin.addEventListener('click', () => {
+    const val = adminPass.value || '';
+    if (val === CLAVE_ADMIN) {
+      adminError.style.display = 'none';
+      adminModal.style.display = 'none';
+      // redirigir a la ruta original
+      window.location.href = adminLink.getAttribute('href');
+    } else {
+      intentosRestantes--;
+      marcarError();
+      if (intentosRestantes <= 0) {
+        bloquearAcceso();
+      }
+    }
+  });
+
+  // permitir Enter en el campo
+  adminPass.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') entrarAdmin.click();
+  });
+})();
+
+
+</script>
+
+
 </body>
 </html>
