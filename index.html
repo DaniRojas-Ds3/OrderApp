@@ -182,8 +182,8 @@ body {
 .menu-lateral {
   position: fixed;
   top: 0;
-  right: -70%;
-  width: 400px;
+  right: -100%;
+  width: 35%;
   height: 100%;
   background: #fadda4;
   box-shadow: -7px 0 8px rgba(0, 0, 0, 0.2);
@@ -273,6 +273,63 @@ body.menu-cerrado::before {
 
 /* opcional: estilo error */
 #adminError { font-size: 0.95rem; }
+/* ---------- Ajustes responsivos para móvil ---------- */
+@media (max-width: 768px) {
+  /* Hacemos el botón hamburguesa un poco más grande y con mayor área táctil */
+  .menu-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    padding: 6px;
+  }
+  .menu-btn span {
+    width: 22px;
+    height: 2px;
+  }
+
+  /* Menú lateral ocupa más espacio en móvil (mejor usabilidad) */
+  .menu-lateral {
+    width: 85%;
+    right: -100%;               /* escondido por defecto */
+    padding: 100px 1rem 1rem;   /* deja espacio arriba para la X */
+    border-left: 0;
+  }
+  .menu-lateral.activo {
+    right: 0;
+  }
+
+  /* Close button (X) visible y más grande */
+  .btn-cerrar-menu {
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  /* Empujar el contenido del menú hacia abajo para que la X no lo tape */
+  .menu-lateral .menu-contenido { margin-top: 12px; }
+
+  /* Hacer las tarjetas dentro del menú más grandes y con margen */
+  .menu-lateral .item {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* Cuando el menú está abierto, el blur debe ser menos agresivo y no bloquear interacción visual */
+  body.menu-abierto::before {
+    backdrop-filter: blur(3px);
+    background: rgba(0,0,0,0.06);
+  }
+}
+
+/* Muy pequeña (teléfonos muy estrechos) */
+@media (max-width: 420px) {
+  .menu-lateral { width: 92%; }
+  .menu-btn { width: 44px; height: 44px; }
+  .btn-cerrar-menu { top: 12px; right: 12px; }
+}
+
 
   </style>
 
@@ -584,6 +641,45 @@ document.addEventListener('click', (e) => {
   adminPass.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') entrarAdmin.click();
   });
+})();
+// ---------- Mejora touch + área clicable ----------
+(function() {
+  const menuBtnEl = document.querySelector('.menu-btn');
+  const menuLateralEl = document.getElementById('menuLateral');
+  const btnCerrar = document.getElementById('cerrarMenu');
+
+  // Aumentar el 'hit area' para móviles: envolver con listener que capture toques
+  ['click', 'touchstart'].forEach(evt => {
+    menuBtnEl.addEventListener(evt, (e) => {
+      e.preventDefault(); // evita doble disparo en algunos navegadores
+      menuLateralEl.classList.add('activo');
+      document.body.classList.add('menu-abierto');
+      document.body.classList.remove('menu-cerrado');
+    }, { passive: false });
+  });
+
+  // Cerrar con X — escucha también touchstart
+  ['click', 'touchstart'].forEach(evt => {
+    btnCerrar.addEventListener(evt, (e) => {
+      e.preventDefault();
+      menuLateralEl.classList.remove('activo');
+      document.body.classList.remove('menu-abierto');
+      document.body.classList.add('menu-cerrado');
+    }, { passive: false });
+  });
+
+  // Cerrar al tocar fuera: en móviles toca usar touchstart para más fiabilidad
+  function cerrarSiTocaFuera(e) {
+    if (!menuLateralEl.classList.contains('activo')) return;
+    // Si se toca dentro del menú o el botón, no cerramos
+    if (menuLateralEl.contains(e.target) || menuBtnEl.contains(e.target)) return;
+    menuLateralEl.classList.remove('activo');
+    document.body.classList.remove('menu-abierto');
+    document.body.classList.add('menu-cerrado');
+  }
+
+  document.addEventListener('click', cerrarSiTocaFuera);
+  document.addEventListener('touchstart', cerrarSiTocaFuera);
 })();
 
 
