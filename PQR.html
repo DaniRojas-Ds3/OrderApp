@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PQRS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Formulario PQRS</h2>
+
+  <label for="nombre">Tu nombre:</label>
+  <input type="text" id="nombre" placeholder="Escribe tu nombre">
+
+  <label for="mensaje">Tu mensaje:</label>
+  <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+
+  <button onclick="guardarPQR()">Enviar PQRS</button>
+
+  <script>
+    // Guardar mensaje
+    function guardarPQR() {
+      const nombre = document.getElementById("nombre").value.trim();
+      const mensaje = document.getElementById("mensaje").value.trim();
+
+      if (!nombre || !mensaje) {
+        alert("Por favor llena todos los campos.");
+        return;
+      }
+
+      const nuevaNota = {
+        nombre: nombre,
+        mensaje: mensaje,
+        fecha: new Date().toLocaleString()
+      };
+
+      let pqr = JSON.parse(localStorage.getItem("pqr")) || [];
+      pqr.push(nuevaNota);
+      localStorage.setItem("pqr", JSON.stringify(pqr));
+
+      document.getElementById("nombre").value = "";
+      document.getElementById("mensaje").value = "";
+
+      alert("✅ Tu mensaje ha sido enviado correctamente. Será revisado más adelante.");
+    }
+  </script>
+
+</body>
+</html>
