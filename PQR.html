@@ -94,9 +94,6 @@
 
   </style>
 
-  <!-- Librería para generar PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
 <body>
 
@@ -139,11 +136,12 @@
         fecha: new Date().toLocaleString()
       };
 
+      // Guardar en localStorage
       let pqr = JSON.parse(localStorage.getItem("pqr")) || [];
       pqr.push(nuevaNota);
       localStorage.setItem("pqr", JSON.stringify(pqr));
 
-      await generarPDF(nuevaNota);
+      // ❌ YA NO GENERA PDF AQUÍ
 
       alertBox.textContent = "✅ Tu mensaje ha sido enviado correctamente.";
       alertBox.className = "alert success";
@@ -152,38 +150,6 @@
       setTimeout(() => {
         window.location.href = "index.html";
       }, 1200);
-    }
-
-    async function generarPDF(data) {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      // Encabezado
-      doc.setFillColor(166, 41, 41);
-      doc.rect(0, 0, 210, 30, "F");
-
-      doc.setFontSize(20);
-      doc.setTextColor(255, 255, 255);
-      doc.text("PQRS Registrado", 105, 18, { align: "center" });
-
-      // Contenido
-      doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0);
-
-      doc.text(`Fecha: ${data.fecha}`, 14, 45);
-
-      doc.text("Nombre:", 14, 60);
-      doc.text(data.nombre, 50, 60);
-
-      doc.text("Apellido:", 14, 70);
-      doc.text(data.apellido, 50, 70);
-
-      doc.text("Mensaje:", 14, 85);
-
-      let lineas = doc.splitTextToSize(data.mensaje, 180);
-      doc.text(lineas, 14, 95);
-
-      doc.save(`PQRS_${data.nombre}_${data.apellido}.pdf`);
     }
 
   </script>
