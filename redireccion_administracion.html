@@ -33,29 +33,37 @@
       margin-bottom: 25px;
     }
 
-    /* 🔘 BOTONES */
+    /* 🔘 BOTONES MEJORADOS */
     button {
-      background-color: #f03333;
+      background: #d62828;
       color: white;
       border: none;
       padding: 15px 30px;
       font-size: 18px;
-      border-radius: 10px;
+      border-radius: 14px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-      margin: 10px;
-      width: 250px;
+      width: 260px;
+      margin: 12px;
+
+      /* sombras premium */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      
+      /* animaciones suaves */
+      transition: all 0.25s ease;
     }
 
     button:hover {
-      background-color: #e7a941;
-      transform: scale(1.05);
+      background: #ff914d;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.20);
     }
 
     button:active {
-      transform: scale(0.97);
+      transform: translateY(0px) scale(0.98);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
 
+    /* 🔙 BOTÓN DE REGRESO */
     .back-button{
       position: fixed;
       top: 170px;
@@ -101,18 +109,17 @@
   <div class="admin-container">
     <h1>Panel de Administración</h1>
 
-    <!-- BOTÓN ORIGINAL -->
+    <!-- BOTÓN DE RESERVAS -->
     <button id="pdfBtn">📄 Generar Resumen Reservas</button>
 
-    <!-- 🔥 NUEVO BOTÓN PARA GENERAR PQRS -->
+    <!-- BOTÓN DE PQRS -->
     <button id="pqrBtn">📄 Generar Resumen PQRS</button>
-
   </div>
 
   <script>
-    /* ===========================
+    /* ==================================================
        📄 SCRIPT EXISTENTE (RESERVAS)
-       =========================== */
+       ================================================== */
     const pdfBtn = document.getElementById("pdfBtn");
 
     pdfBtn.addEventListener("click", () => {
@@ -208,9 +215,9 @@
       doc.save(`resumen_reservas_${fecha}.pdf`);
     });
 
-    /* ===========================
+    /* ==================================================
        ⭐ NUEVO SCRIPT PARA PQRS
-       =========================== */
+       ================================================== */
     const pqrBtn = document.getElementById("pqrBtn");
 
     pqrBtn.addEventListener("click", () => {
