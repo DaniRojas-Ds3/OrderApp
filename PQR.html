@@ -2,56 +2,126 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 🔥 Necesario para celulares -->
   <title>PQRS</title>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #fadda4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; 
+      padding: 20px; /* Evita que toque los bordes en móviles */
+      box-sizing: border-box;
+    }
+
+    /* 🔥 Contenedor corregido: centrado, grande, responsive, asimétrico */
+    .form-container {
+      background: #ffffff;
+      border: 2px solid #a62929;
+      border-radius: 25px 50px 25px 50px;
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 5px 10px 20px rgba(0,0,0,0.25);
+      box-sizing: border-box;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #a62929;
+      margin-bottom: 20px;
+      font-size: 2rem;
     }
 
     label {
-      font-weight: bold;
       display: block;
-      margin-top: 10px;
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 1.1rem;
     }
 
     input, textarea {
       width: 100%;
-      padding: 8px;
+      padding: 14px;
+      border: 2px solid #a62929;
+      border-radius: 12px;
+      outline: none;
+      font-size: 1.1rem;
       margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
     }
 
     button {
-      margin-top: 15px;
-      padding: 10px 15px;
-      background-color: #007bff;
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #a62929;
       color: white;
       border: none;
+      border-radius: 15px;
+      font-size: 1.2rem;
       cursor: pointer;
-      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.2s ease;
     }
+
+    button:hover {
+      background-color: #ff4c4c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* 🔥 Alertas */
+    .alert {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .success { background-color: #a62929; color: white; }
+    .error   { background-color: #ff6b6b; color: white; }
+
   </style>
 </head>
 <body>
 
-  <h2>Formulario PQRS</h2>
+  <div class="form-container">
+    <h2>Formulario PQRS</h2>
 
-  <label for="nombre">Tu nombre:</label>
-  <input type="text" id="nombre" placeholder="Escribe tu nombre">
+    <label for="nombre">Tu nombre:</label>
+    <input type="text" id="nombre" placeholder="Escribe tu nombre">
 
-  <label for="mensaje">Tu mensaje:</label>
-  <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+    <label for="mensaje">Tu mensaje:</label>
+    <textarea id="mensaje" placeholder="Escribe tu mensaje"></textarea>
 
-  <button onclick="guardarPQR()">Enviar PQRS</button>
+    <button onclick="guardarPQRS()">Enviar PQRS</button>
+
+    <div id="alert" class="alert"></div>
+  </div>
 
   <script>
-    // Guardar mensaje
     function guardarPQRS() {
       const nombre = document.getElementById("nombre").value.trim();
       const mensaje = document.getElementById("mensaje").value.trim();
+      const alertBox = document.getElementById("alert");
 
       if (!nombre || !mensaje) {
-        alert("Por favor llena todos los campos.");
+        alertBox.textContent = "Por favor llena todos los campos.";
+        alertBox.className = "alert error";
+        alertBox.style.display = "block";
         return;
       }
 
@@ -68,7 +138,15 @@
       document.getElementById("nombre").value = "";
       document.getElementById("mensaje").value = "";
 
-      alert("✅ Tu mensaje ha sido enviado correctamente. Será revisado más adelante.");
+      alertBox.textContent = "✅ Tu mensaje ha sido enviado correctamente.";
+      alertBox.className = "alert success";
+      alertBox.style.display = "block";
+
+      /* 🔥 OPCIÓN 2:
+         Espera 1.2 segundos y vuelve al menú principal */
+      setTimeout(() => {
+        window.location.href = "index.html";  // ⚠️ CAMBIA ESTE NOMBRE POR TU MENÚ
+      }, 1200);
     }
   </script>
 

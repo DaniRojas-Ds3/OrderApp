@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel de Administración</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <style>
     /* 🌈 ESTILO GENERAL */
     body {
@@ -32,8 +33,8 @@
       margin-bottom: 25px;
     }
 
-    /* 🔘 BOTÓN */
-    #pdfBtn {
+    /* 🔘 BOTONES */
+    button {
       background-color: #f03333;
       color: white;
       border: none;
@@ -42,22 +43,26 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s;
+      margin: 10px;
+      width: 250px;
     }
 
-    #pdfBtn:hover {
+    button:hover {
       background-color: #e7a941;
       transform: scale(1.05);
     }
 
-    #pdfBtn:active {
+    button:active {
       transform: scale(0.97);
     }
-        .back-button{
+
+    .back-button{
       position: fixed;
       top: 170px;
       right: 10px;
       z-index: 1000;
     }
+
     .back-button a{
       display: inline-flex;
       align-items:center;
@@ -71,7 +76,7 @@
       border: 1px solid black;
       border-radius: 45px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0,3s ease;
+      transition: all 0.3s ease;
     }
 
     .back-button .arrow{
@@ -87,29 +92,37 @@
   </style>
 </head>
 <body>
+
+  <!-- BOTÓN DE REGRESO -->
   <div class="back-button">
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
   <div class="admin-container">
     <h1>Panel de Administración</h1>
-    <button id="pdfBtn">📄 Generar Resumen</button>
+
+    <!-- BOTÓN ORIGINAL -->
+    <button id="pdfBtn">📄 Generar Resumen Reservas</button>
+
+    <!-- 🔥 NUEVO BOTÓN PARA GENERAR PQRS -->
+    <button id="pqrBtn">📄 Generar Resumen PQRS</button>
+
   </div>
 
   <script>
-    // === SCRIPT DE PDF TAL CUAL COMO TÚ LO TENÍAS ===
+    /* ===========================
+       📄 SCRIPT EXISTENTE (RESERVAS)
+       =========================== */
     const pdfBtn = document.getElementById("pdfBtn");
 
     pdfBtn.addEventListener("click", () => {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
-      // 🧾 Encabezado
       doc.setFont("helvetica", "bold");
       doc.setFontSize(18);
       doc.text("RESUMEN DE RESERVAS", 20, 20);
 
-      // 📅 Fecha actual
       const fecha = new Date().toLocaleDateString("es-CO", {
         year: "numeric",
         month: "long",
@@ -118,7 +131,6 @@
       doc.setFontSize(12);
       doc.text(`Fecha del reporte: ${fecha}`, 20, 30);
 
-      // 🗂️ Cargar reservas del día actual
       const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
       const hoy = new Date().toLocaleDateString("es-CO");
       const reservasDeHoy = reservas.filter(r => r.fecha === hoy);
@@ -129,7 +141,6 @@
         return;
       }
 
-      // 🧠 Agrupar por jornada
       const jornadas = {};
       reservasDeHoy.forEach(r => {
         const jornada = r.jornada || "Personal Externo";
@@ -137,7 +148,6 @@
         jornadas[jornada].push(r);
       });
 
-      // 🖨️ Imprimir el PDF
       let y = 50;
 
       for (const [jornada, registros] of Object.entries(jornadas)) {
@@ -147,20 +157,17 @@
 
         doc.setFont("helvetica", "normal");
 
-        // Agrupar productos dentro de la jornada
         const productosJornada = {};
         registros.forEach(r => {
           if (!productosJornada[r.nombre]) productosJornada[r.nombre] = 0;
           productosJornada[r.nombre] += r.cantidad;
         });
 
-        // Mostrar totales por producto
         for (const [producto, cantidad] of Object.entries(productosJornada)) {
           doc.text(`• ${cantidad} ${producto}`, 25, y);
           y += 6;
         }
 
-        // Mostrar detalle por usuario
         const usuarios = {};
         registros.forEach(r => {
           if (!usuarios[r.usuario]) usuarios[r.usuario] = {};
@@ -170,16 +177,14 @@
 
         for (const [usuario, pedidos] of Object.entries(usuarios)) {
           const detalles = Object.entries(pedidos)
-            .map(([prod, cant]) => `${cant} ${prod}`)
-            .join(", ");
+            .map(([prod, cant]) => `${cant} ${prod}`).join(", ");
           doc.text(`- ${usuario}: ${detalles}`, 30, y);
           y += 6;
         }
 
-        y += 10; // espacio entre jornadas
+        y += 10;
       }
 
-      // === 🔹 Calcular y mostrar total general de productos ===
       let totalGeneralPorProducto = {};
 
       for (const [jornada, registros] of Object.entries(jornadas)) {
@@ -193,16 +198,68 @@
       doc.setFont("helvetica", "bold");
       doc.text("TOTAL DEL PEDIDO:", 20, y);
       y += 8;
-      doc.setFont("helvetica", "normal");
 
+      doc.setFont("helvetica", "normal");
       for (const [producto, total] of Object.entries(totalGeneralPorProducto)) {
         doc.text(`• ${total} ${producto}`, 25, y);
         y += 6;
       }
 
-      // 💾 Guardar PDF
       doc.save(`resumen_reservas_${fecha}.pdf`);
     });
+
+    /* ===========================
+       ⭐ NUEVO SCRIPT PARA PQRS
+       =========================== */
+    const pqrBtn = document.getElementById("pqrBtn");
+
+    pqrBtn.addEventListener("click", () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("RESUMEN DE PQRS", 20, 20);
+
+      const fecha = new Date().toLocaleDateString("es-CO", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+      doc.setFontSize(12);
+      doc.text(`Fecha del reporte: ${fecha}`, 20, 30);
+
+      const pqrs = JSON.parse(localStorage.getItem("pqr")) || [];
+
+      if (pqrs.length === 0) {
+        doc.text("No hay PQRS registradas.", 20, 45);
+        doc.save(`resumen_pqrs_${fecha}.pdf`);
+        return;
+      }
+
+      let y = 50;
+
+      pqrs.forEach((pqr, index) => {
+        if (y > 270) {
+          doc.addPage();
+          y = 20;
+        }
+
+        doc.setFont("helvetica", "bold");
+        doc.text(`${index + 1}. Usuario: ${pqr.nombre}`, 20, y);
+        y += 7;
+
+        doc.setFont("helvetica", "normal");
+        doc.text(`Mensaje: ${pqr.mensaje}`, 25, y);
+        y += 7;
+
+        doc.text(`Fecha: ${pqr.fecha}`, 25, y);
+        y += 12;
+      });
+
+      doc.save(`resumen_pqrs_${fecha}.pdf`);
+    });
   </script>
+
 </body>
 </html>
