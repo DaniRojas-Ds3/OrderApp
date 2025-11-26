@@ -93,7 +93,6 @@
     .error   { background-color: #ff6b6b; color: white; }
 
   </style>
-
 </head>
 <body>
 
@@ -115,44 +114,44 @@
   </div>
 
   <script>
+async function guardarPQRS() {
 
-    async function guardarPQRS() {
-      const nombre = document.getElementById("nombre").value.trim();
-      const apellido = document.getElementById("apellido").value.trim();
-      const mensaje = document.getElementById("mensaje").value.trim();
-      const alertBox = document.getElementById("alert");
+  const nombre = document.getElementById("nombre").value.trim();
+  const apellido = document.getElementById("apellido").value.trim();
+  const mensaje = document.getElementById("mensaje").value.trim();
+  const alertBox = document.getElementById("alert");
 
-      if (!nombre || !apellido || !mensaje) {
-        alertBox.textContent = "Por favor llena todos los campos.";
-        alertBox.className = "alert error";
-        alertBox.style.display = "block";
-        return;
-      }
+  if (!nombre || !apellido || !mensaje) {
+    alertBox.textContent = "Por favor llena todos los campos.";
+    alertBox.className = "alert error";
+    alertBox.style.display = "block";
+    return;
+  }
 
-      const nuevaNota = {
-        nombre,
-        apellido,
-        mensaje,
-        fecha: new Date().toLocaleString()
-      };
+  const url = "https://script.google.com/macros/s/AKfycbwF1x3ZdnInfjsODa6alb26942rjQT_tfzJ5ZOPr81lNSqhxBDHpvaY3pAgG1jKdyjcwA/exec";
 
-      // Guardar en localStorage
-      let pqr = JSON.parse(localStorage.getItem("pqr")) || [];
-      pqr.push(nuevaNota);
-      localStorage.setItem("pqr", JSON.stringify(pqr));
+  const body = { nombre, apellido, mensaje };
 
-      // ❌ YA NO GENERA PDF AQUÍ
+  try {
+    await fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    });
 
-      alertBox.textContent = "✅ Tu mensaje ha sido enviado correctamente.";
-      alertBox.className = "alert success";
-      alertBox.style.display = "block";
+    alertBox.textContent = "✅ Tu mensaje ha sido enviado correctamente.";
+    alertBox.className = "alert success";
+    alertBox.style.display = "block";
 
-      setTimeout(() => {
-        window.location.href = "index.html";
-      }, 1200);
-    }
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1200);
 
-  </script>
-
-</body>
-</html>
+  } catch (error) {
+    alertBox.textContent = "❌ Error enviando el mensaje.";
+    alertBox.className = "alert error";
+    alertBox.style.display = "block";
+  }
+}
+</script>
