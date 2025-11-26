@@ -86,6 +86,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- BOTÓN DE REGRESO -->
@@ -101,9 +102,13 @@
   </div>
 
   <script>
+    // 🌐 URL de tu WebApp de Google Apps Script
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycby4gZuX2NTgJaOZttrV7-_P7ZMX4FPxccCvoWI3irZtEaYzhn9bT1FStnoClzvOEAB6Dw/exec";
+
     /* ==================================================
-       📄 PDF RESERVAS (igual que antes)
+       📄 PDF RESERVAS (NO SE MODIFICÓ NADA)
        ================================================== */
+
     const pdfBtn = document.getElementById("pdfBtn");
 
     pdfBtn.addEventListener("click", () => {
@@ -125,10 +130,11 @@
 
       const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
       const hoy = new Date().toLocaleDateString("es-CO");
+
       const reservasDeHoy = reservas.filter(r => r.fecha === hoy);
 
       if (reservasDeHoy.length === 0) {
-        doc.text("No hay reservas registradas.", 20, 45);
+        doc.text("No hay reservas registradas para hoy.", 20, 45);
         doc.save(`resumen_reservas_${fecha}.pdf`);
         return;
       }
@@ -148,6 +154,7 @@
         y += 8;
 
         doc.setFont("helvetica", "normal");
+
         const productosJornada = {};
 
         registros.forEach(r => {
@@ -181,12 +188,12 @@
     });
 
     /* ==================================================
-       ⭐ PDF PQRS COMPLETO + INCLUYE APELLIDO + MEJORADO
+       ⭐ PDF PQRS DESDE GOOGLE SHEETS (CORREGIDO)
        ================================================== */
 
     const pqrBtn = document.getElementById("pqrBtn");
 
-    pqrBtn.addEventListener("click", () => {
+    pqrBtn.addEventListener("click", async () => {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
@@ -208,7 +215,16 @@
       doc.setFontSize(12);
       doc.text(`Fecha del reporte: ${fecha}`, 20, 30);
 
-      const pqrs = JSON.parse(localStorage.getItem("pqr")) || [];
+      // 🔥 Traer PQRS desde Google Sheets
+      let pqrs = [];
+
+      try {
+        const res = await fetch(WEBAPP_URL);
+        pqrs = await res.json();
+      } catch (error) {
+        alert("Error cargando PQRS desde Google Sheets.");
+        return;
+      }
 
       if (pqrs.length === 0) {
         doc.text("No hay PQRS registradas.", 20, 45);
@@ -219,13 +235,11 @@
       let y = 50;
 
       pqrs.forEach((pqr, index) => {
-
         if (y > 260) {
           doc.addPage();
           y = 20;
         }
 
-        // Título de registro
         doc.setFont("helvetica", "bold");
         doc.text(`${index + 1}. Usuario: ${pqr.nombre} ${pqr.apellido}`, 20, y);
         y += 8;
@@ -243,7 +257,6 @@
 
       doc.save(`resumen_pqrs_${fecha}.pdf`);
     });
-
   </script>
 
 </body>
