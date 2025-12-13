@@ -270,33 +270,6 @@ header h1 img {
   </div>
   
 
-  <div class="modal" id="formularioReserva">
-    <div class="modal-content">
-      <span class="close" id="cerrar">&times;</span>
-      <h2>Confirmar Reserva</h2>
-      <form id="reservaForm">
-        <label>Nombre:</label>
-        <input type="text" required><br><br>
-
-        <label>Tipo de persona:</label>
-        <select id="tipoPersona">
-          <option value="Estudiante">Estudiante</option>
-          <option value="Trabajador">Trabajador</option>
-          <option value="Directivo">Directivo</option>
-        </select><br><br>
-
-        <label>Jornada:</label>
-        <select id="jornada">
-          <option value="Mañana">Mañana</option>
-          <option value="Tarde">Tarde</option>
-          <option value="Noche">Noche</option>
-        </select><br><br>
-
-        <button type="submit" class="confirmacion">Registrar Reserva</button>
-      </form>
-    </div>
-  </div>
-
   <!-- 🛒 Botón flotante del carrito -->
 <button id="carritoBtn" class="carrito-boton">🛒</button>
 
@@ -311,34 +284,19 @@ header h1 img {
   </div>
 </div>
 
-
-    <p id="adminError" style="color:red;display:none;">Contraseña incorrecta ❌</p>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<script>
 
-
-
-
-
-
-
+<script type="module">
+import { guardarReserva } from "./firebase.js";
 /* ---------- Datos de ejemplo ---------- */
 const productos = [
      { nombre: "Empanada", categoria: "Comida", imagen:"IMAGENES/EMPANADA.png", precio: 2800 },
     { nombre: "Papa Rellena", categoria: "Comida", imagen:"IMAGENES/PAPA RELLENA.png", precio: 3600},
     { nombre: "Areburguer", categoria: "Comida", imagen:"IMAGENES/AREBURGER.png", precio: 6300 },
-    { nombre: "Hamburguesa", categoria: "Comida", imagen:"IMAGENES/HAMBURGUESA.png", precio: 7000 },
-    { nombre: "Pizza", categoria: "Comida", imagen:"IMAGENES/PIZZA.png", precio: 4600 },
-    { nombre: "Arepa de Queso", categoria: "Comida ", imagen:"IMAGENES/AREPA_QUESO.png", precio: 2700 },
-    { nombre: "Sandwich", categoria: "Comida", imagen:"IMAGENES/SANDWICH.png", precio: 3500 },
-    { nombre: "Pastel de Pollo", categoria: "Comida", imagen:"IMAGENES/PASTEL DE POLLO.png", precio: 3400 },
-    { nombre: "Perros", categoria: "Comida", imagen:"IMAGENES/PERRO.png", precio: 5500 },
-    { nombre: "Pastel de Yuca", categoria: "Comida", imagen:"IMAGENES/Pastel de Yuca.png", precio: 3500 },
-    { nombre: "Churros", categoria: "Comida", imagen:"IMAGENES/CHURRO.png", precio: 2500 },
 ];
 
 /* ---------- Referencias DOM ---------- */
@@ -351,7 +309,7 @@ const contadorNodo = document.getElementById("contador");
 /* ---------- Configuración ---------- */
 const horaApertura = 6;    // 6:00 a.m.
 const minutoApertura = 0;
-const horaCierre = 16;     // 3:45 p.m. (ejemplo)
+const horaCierre =16 ;     // 3:45 p.m. (ejemplo)
 const minutoCierre = 0;
 
 let tiempoRestante = 0;
@@ -660,7 +618,7 @@ confirmarReserva.addEventListener("click", () => {
 /* ---------- FORMULARIO ---------- */
 let formularioReserva = null;
 
-function abrirFormularioReserva() {
+function abrirFormularioReserva() { 
   if (tiempoRestante <= 0) {
     mostrarMensajeEmergente("⛔ El periodo de reservas está cerrado.");
     return;
@@ -679,7 +637,7 @@ function abrirFormularioReserva() {
       <h2>Confirmar Reserva</h2>
       <form id="reservaForm">
         <label>Nombre:</label>
-        <input type="text" id="nombreReserva" required style="width:100%;padding:8px;"><br><br>
+        <input type="text" id="nombreReserva" required style="width:95%;padding:8px;"><br><br>
 
         <label>Tipo de persona:</label>
         <select id="tipoPersona" style="width:100%;padding:8px;" required>
@@ -691,6 +649,7 @@ function abrirFormularioReserva() {
         <div id="campoJornada" style="display:none;">
           <label>Jornada:</label>
           <select id="jornada" style="width:100%;padding:8px;">
+            <option value=""> </option>
             <option value="Mañana">Mañana</option>
             <option value="Tarde">Tarde</option>
             <option value="Noche">Noche</option>
@@ -706,16 +665,27 @@ function abrirFormularioReserva() {
   const cerrarForm = formularioReserva.querySelector("#cerrarForm");
   const tipoPersona = formularioReserva.querySelector("#tipoPersona");
   const campoJornada = formularioReserva.querySelector("#campoJornada");
-  const reservaForm = formularioReserva.querySelector("#reservaForm");
+  const btnEnviar = reservaForm.querySelector("button[type='submit']");
+
 
   cerrarForm.addEventListener("click", () => formularioReserva.style.display = "none");
-  window.addEventListener("click", e => { if (e.target === formularioReserva) formularioReserva.style.display = "none"; });
+
+// ✔ Listener seguro: se agrega UNA sola vez
+if (!window._listenerFormulario) {
+  window._listenerFormulario = true;
+  window.addEventListener("click", e => {
+    if (formularioReserva && e.target === formularioReserva) {
+      formularioReserva.style.display = "none";
+    }
+  });
+}
+
 
   tipoPersona.addEventListener("change", (e) => {
     campoJornada.style.display = e.target.value === "Aprendiz" ? "block" : "none";
   });
 
-reservaForm.addEventListener("submit", (e) => {
+reservaForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   if (tiempoRestante <= 0) {
@@ -724,37 +694,26 @@ reservaForm.addEventListener("submit", (e) => {
     return;
   }
 
-  // obtener los campos desde el formulario del modal (no document)
-  const nombreInput = reservaForm.querySelector("#nombreReserva");
-  const tipoSelect = reservaForm.querySelector("#tipoPersona");
-  const jornadaSelect = reservaForm.querySelector("#jornada");
+  const nombre = reservaForm.querySelector("#nombreReserva").value.trim();
+  const tipo = reservaForm.querySelector("#tipoPersona").value;
+  const jornada = (tipo === "Aprendiz")
+      ? reservaForm.querySelector("#jornada").value
+      : "Jornada Externa";
 
-  const nombre = nombreInput ? nombreInput.value.trim() : "";
-  const tipo = tipoSelect ? tipoSelect.value : "";
-  // Si seleccionó "Aprendiz" tomamos la jornada, si no -> "Sin jornada"
-  const jornada = (tipo === "Aprendiz" && jornadaSelect) ? jornadaSelect.value : "Jornada Externa";
-
-  // fecha actual en el mismo formato que usas para filtrar
   const fechaActual = new Date().toLocaleDateString("es-CO");
 
-  // recuperar reservas previas correctamente (antes de push)
-  let reservasPrevias = JSON.parse(localStorage.getItem("reservas")) || [];
-
-  // push de cada producto del carrito
-  carrito.forEach(item => {
-    reservasPrevias.push({
-      nombre: item.nombre,
+  // 🔥 Enviar a Firebase
+for (const item of carrito) {
+    await guardarReserva({
+      producto: item.nombre,
       cantidad: item.cantidad,
       tipoPersona: tipo,
       jornada: jornada,
       usuario: nombre,
       fecha: fechaActual
     });
-  });
-
-  // guardar en localStorage
-  localStorage.setItem("reservas", JSON.stringify(reservasPrevias));
-  console.log("Reservas guardadas (hoy):", reservasPrevias.filter(r => r.fecha === fechaActual));
+}
+  console.log("Reservas enviadas a Firebase");;
 
   // limpiar formulario
 reservaForm.reset(); // 🔹 limpia los campos de texto y selectñ
@@ -765,37 +724,40 @@ reservaForm.reset(); // 🔹 limpia los campos de texto y selectñ
   actualizarCarrito();
 
   // confirmación visual (con chulito que debe clickeárse)
-  const exito = document.createElement("div");
-  exito.className = "modal";
-  exito.innerHTML = `
+// ✔ MODAL DE ÉXITO (SE CREA SOLO UNA VEZ Y SIN OSCURECER MÁS LA PANTALLA)
+let modalExito = document.getElementById("modalExito");
+
+if (!modalExito) {
+  modalExito = document.createElement("div");
+  modalExito.id = "modalExito";
+  modalExito.className = "modal";
+  modalExito.innerHTML = `
     <div class="modal-content" style="text-align:center;">
-      <h2>${nombre}, su pedido ha sido exitosamente reservado </h2>
+      <h2 id="textoExito"></h2>
       <p id="cerrar-modal" style="font-size:2.5rem; cursor:pointer; margin-top:50px; color: #a62929;"><u>Salir</u></p>
-      <p> Por favor, Toma una captura a este comprobante</p>
+      <p>Por favor, toma una captura de este comprobante.</p>
     </div>
   `;
+  document.body.appendChild(modalExito);
 
-  // añadir solo una vez
-  document.body.appendChild(exito);
-  exito.style.display = "flex";
-
-  // Attach listener al chulito (comprueba que exista)
-  const cerrarModal = exito.querySelector("#cerrar-modal");
-  if (cerrarModal) {
-    cerrarModal.addEventListener("click", () => {
-      // remove modal sólo al click en el chulito
-      exito.remove();
-    });
-  }
-});
-
-
-
+  // Se añade UNA sola vez
+  modalExito.querySelector("#cerrar-modal").addEventListener("click", () => {
+    modalExito.style.display = "none";
+  });
 }
+
+document.getElementById("textoExito").innerHTML = `${nombre}, su pedido ha sido exitosamente reservado`;
+modalExito.style.display = "flex";
+
+}); // cierre reservaForm.addEventListener
+
+} // cierre abrirFormularioReserva
 
 /* ---------- Inicialización ---------- */
 renderizarProductos();
 actualizarUISegunTiempo();
 </script>
+
+
 </body>
 </html>

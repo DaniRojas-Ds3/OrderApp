@@ -101,91 +101,195 @@
     <button id="pqrBtn">📄 Generar Resumen PQRS</button>
   </div>
 
-  <script>
+  <script type="module">
+
     // 🌐 URL de tu WebApp de Google Apps Script
     const WEBAPP_URL = "https://script.google.com/macros/s/AKfycby4gZuX2NTgJaOZttrV7-_P7ZMX4FPxccCvoWI3irZtEaYzhn9bT1FStnoClzvOEAB6Dw/exec";
 
-    /* ==================================================
-       📄 PDF RESERVAS (NO SE MODIFICÓ NADA)
-       ================================================== */
+/* ==================================================
+   📄 PDF RESERVAS (con salto automático de página)
+   ================================================== */
 
-    const pdfBtn = document.getElementById("pdfBtn");
+// Importar Firebase desde tu archivo firebase.js
+import { db } from "./firebase.js";
+import { 
+  collection, 
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    pdfBtn.addEventListener("click", () => {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
 
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(18);
-      doc.text("RESUMEN DE RESERVAS", 20, 20);
+// 🔥 Función para traer reservas desde Firestore
+async function cargarReservasDesdeFirestore() {
+  const reservasRef = collection(db, "reservas");
+  const q = query(reservasRef, orderBy("fechaCreacion", "desc"));
+  const querySnapshot = await getDocs(q);
 
-      const fecha = new Date().toLocaleDateString("es-CO", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+  const data = [];
 
-      doc.setFontSize(12);
-      doc.text(`Fecha del reporte: ${fecha}`, 20, 30);
+  querySnapshot.forEach(doc => {
+    const item = doc.data();
 
-      const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
-      const hoy = new Date().toLocaleDateString("es-CO");
+    // 🔥 Convertir timestamp correctamente
+    if (item.fechaCreacion && item.fechaCreacion.toDate) {
+      item.fechaCreacion = item.fechaCreacion.toDate();
+    }
 
-      const reservasDeHoy = reservas.filter(r => r.fecha === hoy);
+    data.push(item);
+  });
 
-      if (reservasDeHoy.length === 0) {
-        doc.text("No hay reservas registradas para hoy.", 20, 45);
-        doc.save(`resumen_reservas_${fecha}.pdf`);
-        return;
-      }
+  return data;
+}
 
-      const jornadas = {};
-      reservasDeHoy.forEach(r => {
-        const jornada = r.jornada || "Personal Externo";
-        if (!jornadas[jornada]) jornadas[jornada] = [];
-        jornadas[jornada].push(r);
-      });
 
-      let y = 50;
+// ------------------- FIN CARGA DE RESERVAS ------------------------------//
 
-      for (const [jornada, registros] of Object.entries(jornadas)) {
+
+const pdfBtn = document.getElementById("pdfBtn");
+
+pdfBtn.addEventListener("click", async () => {
+
+        const { jsPDF } = window.jspdf;
+
+        // 📄 TAMAÑO CARTA REAL + COORDENADAS EN PUNTOS
+        const doc = new jsPDF({
+            unit: "pt",
+            format: "letter"
+        });
+
+        // 👉 Función para saltar página
+        function checkPageLimit() {
+            if (y >= 750) {       // límite para carta
+                doc.addPage();
+                y = 40;
+            }
+        }
+
+        // -------- ENCABEZADO --------
         doc.setFont("helvetica", "bold");
-        doc.text(`Jornada: ${jornada}`, 20, y);
-        y += 8;
+        doc.setFontSize(18);
+        doc.text("RESUMEN DE RESERVAS", 40, 40);
+
+        const fecha = new Date().toLocaleDateString("es-CO", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+
+        doc.setFontSize(12);
+        doc.text(`Fecha del reporte: ${fecha}`, 40, 60);
+
+        // 🔥 Cargar reservas
+        const reservas = await cargarReservasDesdeFirestore();
+
+        const hoy = new Date().toLocaleDateString("es-CO");
+        const reservasDeHoy = reservas.filter(r => r.fecha === hoy);
+
+        if (reservasDeHoy.length === 0) {
+            doc.text("No hay reservas registradas para hoy.", 40, 80);
+            doc.save(`resumen_reservas_${fecha}.pdf`);
+            return;
+        }
+
+        let y = 90;
+
+        // ======================================================
+        // 🔥 TOTAL GENERAL DE PRODUCTOS
+        // ======================================================
+        const totalGeneral = {};
+        reservasDeHoy.forEach(r => {
+            if (!totalGeneral[r.producto]) totalGeneral[r.producto] = 0;
+            totalGeneral[r.producto] += r.cantidad;
+        });
+
+        doc.setFont("helvetica", "bold");
+        doc.text("TOTAL GENERAL DE PRODUCTOS:", 40, y);
+        y += 20;
 
         doc.setFont("helvetica", "normal");
 
-        const productosJornada = {};
-
-        registros.forEach(r => {
-          if (!productosJornada[r.nombre]) productosJornada[r.nombre] = 0;
-          productosJornada[r.nombre] += r.cantidad;
-        });
-
-        for (const [producto, cantidad] of Object.entries(productosJornada)) {
-          doc.text(`• ${cantidad} ${producto}`, 25, y);
-          y += 6;
+        for (const [producto, cantidad] of Object.entries(totalGeneral)) {
+            checkPageLimit();
+            doc.text(`• ${cantidad} ${producto}`, 50, y);
+            y += 16;
         }
 
-        const usuarios = {};
-        registros.forEach(r => {
-          if (!usuarios[r.usuario]) usuarios[r.usuario] = {};
-          if (!usuarios[r.usuario][r.nombre]) usuarios[r.usuario][r.nombre] = 0;
-          usuarios[r.usuario][r.nombre] += r.cantidad;
+        y += 20;
+
+        // ======================================================
+        // 🔥 AGRUPAR POR JORNADAS (ORDEN PERSONALIZADO)
+        // ======================================================
+        const ordenJornadas = [
+            "Jornada Externa",
+            "Mañana",
+            "Tarde",
+            "Noche"
+        ];
+
+        const jornadas = {};
+        reservasDeHoy.forEach(r => {
+            if (!jornadas[r.jornada]) jornadas[r.jornada] = [];
+            jornadas[r.jornada].push(r);
         });
 
-        for (const [usuario, pedidos] of Object.entries(usuarios)) {
-          const detalles = Object.entries(pedidos)
-            .map(([prod, cant]) => `${cant} ${prod}`).join(", ");
-          doc.text(`- ${usuario}: ${detalles}`, 30, y);
-          y += 6;
+        for (const jornada of ordenJornadas) {
+
+            if (!jornadas[jornada]) continue;
+
+            checkPageLimit();
+            doc.setFont("helvetica", "bold");
+            doc.text(`Jornada: ${jornada}`, 40, y);
+            y += 20;
+
+            doc.setFont("helvetica", "normal");
+
+            // 👉 Totales por jornada
+            const productosJornada = {};
+            jornadas[jornada].forEach(r => {
+                if (!productosJornada[r.producto]) productosJornada[r.producto] = 0;
+                productosJornada[r.producto] += r.cantidad;
+            });
+
+            for (const [producto, cantidad] of Object.entries(productosJornada)) {
+                checkPageLimit();
+                doc.text(`• ${cantidad} ${producto}`, 50, y);
+                y += 16;
+            }
+
+            y += 12;
+
+            // 👉 Agrupación por usuario
+            const usuarios = {};
+            jornadas[jornada].forEach(r => {
+                if (!usuarios[r.usuario]) usuarios[r.usuario] = {};
+                if (!usuarios[r.usuario][r.producto]) usuarios[r.usuario][r.producto] = 0;
+                usuarios[r.usuario][r.producto] += r.cantidad;
+            });
+
+// 👉 Imprimir cada usuario con productos en lista
+for (const [usuario, pedidos] of Object.entries(usuarios)) {
+
+    // Antes de imprimir usuario → verificar salto
+    checkPageLimit();
+    doc.text(`- ${usuario}:`, 30, y);
+    y += 15;
+
+    // Lista de productos bajo el usuario
+    for (const [prod, cant] of Object.entries(pedidos)) {
+
+        checkPageLimit(); // evita que se corte la línea
+
+        doc.text(`• ${cant} ${prod}`, 45, y);
+        y += 14;
+    }
+
+    y += 12; // espacio entre usuarios
+}
         }
 
-        y += 10;
-      }
-
-      doc.save(`resumen_reservas_${fecha}.pdf`);
-    });
+        doc.save(`resumen_reservas_${fecha}.pdf`);
+});
 
     /* ==================================================
        ⭐ PDF PQRS DESDE GOOGLE SHEETS (CORREGIDO)
