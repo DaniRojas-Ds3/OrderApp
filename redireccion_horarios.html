@@ -5,314 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gestor de Temporizadores</title>
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-    /* === ESTILO ORIGINAL DE TU PRIMER PÁGINA === */
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        background: linear-gradient(135deg,#ffcf70,#fadda4);
-        display: flex;
-        justify-content: center;
-        min-height: 100vh;
-    }
-
-    .contenedor {
-        background: white;
-        width: 95%;
-        max-width: 900px;
-        padding: 40px;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        border-radius: 25px;
-        box-shadow: 0 5px 25px rgba(0,0,0,.25);
-        animation: aparecer .8s ease;
-    }
-
-    @keyframes aparecer {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .title-icon {
-        font-size: 70px;
-        animation: parpadeo 2s infinite ease-in-out;
-    }
-
-    @keyframes parpadeo {
-        0%,100% { opacity:1; transform:scale(1) }
-        50% { opacity:.6; transform:scale(1.02) }
-    }
-
-    .btn-rojo {
-        background:#d62828;
-        color:white;
-        padding:12px 24px;
-        border-radius:12px;
-        cursor:pointer;
-        transition: 0.2s;
-        font-weight:700;
-        width:100%;
-        font-size:16px;
-    }
-
-    .btn-rojo:hover {
-        background:#ff4c4c;
-        transform: translateY(-2px);
-    }
-
-    /* Tarjetas */
-    .card-custom {
-        background:white;
-        border-radius:20px;
-        box-shadow:0 3px 15px rgba(0,0,0,.15);
-        padding:20px;
-        border:2px solid #ffe9b5;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg,#ffcf70,#fadda4);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+.contenedor {
+    background: white;
+    width: 95%;
+    max-width: 900px;
+    padding: 40px;
+    margin: 40px 0;
+    border-radius: 25px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.25);
+}
 </style>
-
 </head>
-<body>
 
+<body>
 <div class="contenedor">
 
-    <div class="text-center">
-        <div class="title-icon">⏱️</div>
-        <h1 class="text-3xl font-bold text-gray-700 mt-2">Gestor de Temporizadores</h1>
-        <p class="text-gray-600">Máximo 3 temporizadores activos · Duración 30 minutos · Cooldown 2 horas</p>
+    <!-- HEADER -->
+    <div class="text-center mb-8">
+        <div class="text-8xl mb-4 drop-shadow-xl">⏱</div>
+        <h1 class="text-3xl font-bold text-gray-700">
+            Gestor de Temporizadores
+        </h1>
     </div>
 
-    <!-- ===== FORMULARIO ===== -->
-    <div class="card-custom mt-8">
-        <h2 class="text-xl font-semibold mb-4 text-gray-700">Iniciar Temporizador</h2>
+    <!-- FORMULARIO -->
+    <div class="mt-6 border-2 border-red-300 rounded-xl p-4 bg-yellow-50">
+        <input id="tokenInput" type="text" placeholder="Ficha"
+            class="w-full p-3 border rounded-lg bg-white text-center text-lg">
 
-        <label class="font-semibold text-gray-700">Número de Ficha</label>
-        <input id="tokenInput" type="text"
-            class="w-full mt-1 p-3 bg-yellow-50 border border-yellow-200 rounded-lg outline-none"
-            placeholder="Ej. 12345">
-
-        <button id="startButton" class="btn-rojo mt-4">
+        <button id="startButton"
+            class="mt-3 w-full bg-red-600 text-white p-3 rounded-lg font-bold hover:bg-red-800 transition shadow-md">
             Iniciar Temporizador (30 min)
         </button>
 
-        <div id="messageBox" class="hidden mt-3 p-3 rounded-lg text-center font-semibold text-sm"></div>
+        <button onclick="window.location.href='index.html'"
+            class="mt-3 w-full bg-red-600 text-white p-3 rounded-lg font-bold hover:bg-red-800 transition shadow-md">
+            Volver al inicio
+        </button>
     </div>
 
-    <!-- ===== TEMPORIZADORES ACTIVOS ===== -->
+    <!-- CONTADOR -->
     <h2 class="text-2xl font-bold text-gray-700 mt-10">
-        Temporizadores Activos <span id="activeCount" class="text-red-600">(0/3)</span>
+        Temporizadores Activos <span id="activeCount">(0/3)</span>
     </h2>
 
-    <div id="activeTimersContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
-    </div>
-
-    <!-- ===== HISTORIAL ===== -->
-    <div class="card-custom mt-10">
-        <h2 class="text-xl font-semibold border-b pb-2 text-gray-700">
-            Historial Diario
-        </h2>
-
-        <table class="w-full mt-4 text-sm">
-            <thead class="bg-yellow-100">
-                <tr>
-                    <th class="p-2 text-left">Ficha</th>
-                    <th class="p-2 text-left">Inicio</th>
-                    <th class="p-2 text-left">Fin</th>
-                    <th class="p-2 text-left">Estado</th>
-                </tr>
-            </thead>
-            <tbody id="historyTableBody"></tbody>
-        </table>
-
-        <p id="emptyHistoryRow" class="text-center text-gray-500 mt-4 italic">
-            No hay registros de hoy.
-        </p>
+    <!-- CONTENEDOR -->
+    <div id="activeTimersContainer"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
     </div>
 
 </div>
 
-<!-- ============================================
-    JAVASCRIPT – CON COLORES DINÁMICOS
-=============================================== -->
 <script>
-/* === CONFIG === */
-const TIMER_DURATION_MS = 30 * 60 * 1000;
-const COOLDOWN_DURATION_MS = 2 * 60 * 60 * 1000;
+/* ================= CONFIG ================= */
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzkNqGYdWzvg1OTP19Qj1yCvj_lW_kVmm-3uZ-dwOBz9BOet5Ez1Jx1lMl1RRiwXlkx/exec";
 
-/* === ELEMENTOS === */
-const tokenInput = document.getElementById('tokenInput');
-const startButton = document.getElementById('startButton');
-const messageBox = document.getElementById('messageBox');
-const activeTimersContainer = document.getElementById('activeTimersContainer');
-const activeCount = document.getElementById('activeCount');
-const historyTableBody = document.getElementById('historyTableBody');
-const emptyHistoryRow = document.getElementById('emptyHistoryRow');
 
-/* === ESTADO === */
+const MAX_TIMERS = 3;
+
+/* ================= ESTADO ================= */
 let activeTimers = [];
-let dailyHistory = [];
 
-/* MESSAGES */
-function showMessage(msg, type) {
-    messageBox.textContent = msg;
-    messageBox.classList.remove("hidden");
-    messageBox.style.background = type === "error" ? "#ffdddd" : "#ddffdd";
-    messageBox.style.color = type === "error" ? "#b10000" : "#007a3d";
-}
-
-/* FORMATEADORES */
+/* ================= UTIL ================= */
 function formatTime(ms) {
     const s = Math.max(0, Math.floor(ms / 1000));
-    const m = String(Math.floor(s / 60)).padStart(2,'0');
-    const ss = String(s % 60).padStart(2,'0');
-    return `${m}:${ss}`;
-}
-function formatDate(ts) {
-    return new Date(ts).toLocaleString("es-ES");
+    return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 }
 
-/* ===========================
-   TARJETA CON COLORES DINÁMICOS
-=========================== */
-function renderTimerCard(timer) {
-    const now = Date.now();
-    const remaining = timer.endTime - now;
-
-    // Escalas de color:
-    const total = TIMER_DURATION_MS;
-    const t15 = total / 2;   // 15 min
-    const t10 = total / 3;   // 10 min
-    const t5 = total / 6;    // 5 min
-
-    let bg = "#d9fdd9";      // Verde suave
-
-    if (remaining <= t15) bg = "#fff9c2";  // Amarillo suave
-    if (remaining <= t10) bg = "#ffe1b2";  // Naranja suave
-    if (remaining <= t5)  bg = "#ffcccc";  // Rojo suave
-
-    let card = document.getElementById("timer-"+timer.token);
-
-    if (!card) {
-        card = document.createElement("div");
-        card.id = "timer-"+timer.token;
-        card.className = "card-custom text-center transition-all duration-300";
-        activeTimersContainer.appendChild(card);
-    }
-
-    // Fondo dinámico
-    card.style.background = bg;
-
-    // Parpadeo si faltan menos de 5 min
-    card.classList.toggle("animate-pulse", remaining <= t5);
-
-    // HTML interno
-    card.innerHTML = `
-        <p class="text-gray-700">Ficha</p>
-        <p class="text-3xl font-bold text-red-600">${timer.token}</p>
-        <p class="mt-3 text-4xl font-black text-gray-700">${formatTime(remaining)}</p>
-    `;
+function colorByTime(ms) {
+    const min = ms / 60000;
+    if (min > 20) return "bg-green-100 border-green-400";
+    if (min > 10) return "bg-yellow-100 border-yellow-400";
+    if (min > 5)  return "bg-orange-100 border-orange-400";
+    return "bg-red-100 border-red-400";
 }
 
-/* =============================
-   ACTUALIZAR UI
-============================= */
-function updateUI() {
-    const now = Date.now();
-    const newTimers = [];
+/* ================= RENDER ================= */
+function renderTimers() {
+    const cont = document.getElementById("activeTimersContainer");
+    cont.innerHTML = "";
 
     activeTimers.forEach(t => {
-        if (t.endTime <= now) {
-            dailyHistory.push({
-                token: t.token,
-                startTime: t.startTime,
-                endTime: t.endTime,
-                status: "Completado"
-            });
+        const remaining = t.endTime - Date.now();
+        if (remaining <= 0) return;
 
-            document.getElementById("timer-"+t.token)?.remove();
-            showMessage(`Temporizador de ficha ${t.token} finalizado.`, "success");
-        } else {
-            newTimers.push(t);
-            renderTimerCard(t);
-        }
-    });
+        const card = document.createElement("div");
+        card.className = `p-5 rounded-xl border shadow text-center ${colorByTime(remaining)}`;
 
-    activeTimers = newTimers;
-    activeCount.textContent = `(${activeTimers.length}/3)`;
-    renderHistory();
-}
-
-/* =============================
-   HISTORIAL
-============================= */
-function renderHistory() {
-    historyTableBody.innerHTML = "";
-
-    if (dailyHistory.length === 0) {
-        emptyHistoryRow.classList.remove("hidden");
-        return;
-    }
-    emptyHistoryRow.classList.add("hidden");
-
-    dailyHistory.forEach(h => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td class="p-2">${h.token}</td>
-            <td class="p-2">${formatDate(h.startTime)}</td>
-            <td class="p-2">${formatDate(h.endTime)}</td>
-            <td class="p-2 font-bold ${h.status === "Completado" ? "text-green-700" : "text-red-700"}">
-                ${h.status}
-            </td>
+        card.innerHTML = `
+            <p class="text-gray-600">Ficha</p>
+            <p class="text-xl font-bold">${t.token}</p>
+            <p class="text-3xl font-black mt-2">${formatTime(remaining)}</p>
         `;
-        historyTableBody.appendChild(row);
+        cont.appendChild(card);
+    });
+
+    document.getElementById("activeCount").textContent =
+        `(${activeTimers.length}/${MAX_TIMERS})`;
+}
+
+/* ================= JSONP ================= */
+function jsonp(url, callback) {
+    const cb = "cb_" + Date.now();
+    window[cb] = data => {
+        callback(data);
+        delete window[cb];
+    };
+    const s = document.createElement("script");
+    s.src = `${url}&callback=${cb}`;
+    document.body.appendChild(s);
+}
+
+/* ================= CARGAR ACTIVOS ================= */
+function loadActiveTimers() {
+    jsonp(`${SCRIPT_URL}?action=getActive`, data => {
+        activeTimers = data || [];
+        renderTimers();
     });
 }
 
-/* =============================
-   INICIAR TEMPORIZADOR
-============================= */
+/* ================= INICIAR ================= */
 function startTimer() {
-    const token = tokenInput.value.trim();
-    const now = Date.now();
+    const token = document.getElementById("tokenInput").value.trim();
+    if (!token) return alert("Ingrese una ficha");
 
-    if (!token) return showMessage("Ingrese una ficha válida.", "error");
-    if (activeTimers.length >= 3) return showMessage("Máximo 3 temporizadores activos.", "error");
-    if (activeTimers.some(t => t.token === token)) return showMessage("Esta ficha ya tiene un temporizador activo.", "error");
-
-    const last = [...dailyHistory].reverse().find(h => h.token === token);
-    if (last) {
-        const cd = last.startTime + COOLDOWN_DURATION_MS;
-        if (now < cd) {
-            const mins = Math.ceil((cd - now) / 60000);
-            return showMessage(`Cooldown activo: ${mins} minutos restantes.`, "error");
+    jsonp(
+        `${SCRIPT_URL}?action=start&token=${encodeURIComponent(token)}`,
+        data => {
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+            document.getElementById("tokenInput").value = "";
+            loadActiveTimers();
         }
-    }
-
-    const timer = {
-        token,
-        startTime: now,
-        endTime: now + TIMER_DURATION_MS
-    };
-
-    activeTimers.push(timer);
-    tokenInput.value = "";
-    showMessage(`Temporizador iniciado para ficha ${token}`, "success");
-
-    updateUI();
+    );
 }
 
-/* EVENTOS */
-startButton.onclick = startTimer;
-tokenInput.addEventListener("keypress", e => {
-    if (e.key === "Enter") startTimer();
-});
+document.getElementById("startButton").onclick = startTimer;
 
-setInterval(updateUI, 1000);
-updateUI();
-
+/* ================= INIT ================= */
+loadActiveTimers();
+setInterval(renderTimers, 1000);
 </script>
 
 </body>
