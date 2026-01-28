@@ -116,168 +116,64 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
-  <div class="card-row">
+  <div class="card-row" id="comida_rapida"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+ { nombre: "Empanada", categoria: "Comida", imagen:"IMAGENES/EMPANADA.png", precio: null },
+    { nombre: "Papa Rellena", categoria: "Comida", imagen:"IMAGENES/PAPA RELLENA.png", precio: null},
+    { nombre: "Areburguer", categoria: "Comida", imagen:"IMAGENES/AREBURGER.png", precio: null },
+    { nombre: "Hamburguesa", categoria: "Comida", imagen:"IMAGENES/HAMBURGUESA.png", precio: null },
+    { nombre: "Pizza", categoria: "Comida", imagen:"IMAGENES/PIZZA.png", precio: null },
+    { nombre: "Arepa de Queso", categoria: "Comida ", imagen:"IMAGENES/AREPA_QUESO.png", precio: null },
+    { nombre: "Sandwich", categoria: "Comida", imagen:"IMAGENES/SANDWICH.png", precio: null },
+    { nombre: "Pastel de Pollo", categoria: "Comida", imagen:"IMAGENES/PASTEL DE POLLO.png", precio: null },
+    { nombre: "Perros", categoria: "Comida", imagen:"IMAGENES/PERRO.png", precio: null },
+    { nombre: "Pastel de Yuca", categoria: "Comida", imagen:"IMAGENES/Pastel de Yuca.png", precio: null },
+    { nombre: "Churros", categoria: "Comida", imagen:"IMAGENES/CHURRO.png", precio: null },
+    { nombre: "Burritos", categoria: "Comida ", imagen:"IMAGENES/BURRITO.png", precio: null },
+    { nombre: "Arepa de Huevo", categoria: "Comida", imagen:"IMAGENES/AREPA DE HUEVO.png", precio: null },
+    { nombre: "Arepa de Jamon y Queso", categoria: "Comida", imagen:"IMAGENES/AREPA JAMÓN Y QUESO.png", precio: null },
+    { nombre: "Sandwich Tajado de Jamon y Queso", categoria: "Comida", imagen:"IMAGENES/SANDWICH JAMÓN Y QUESO.png", precio: null },
+    { nombre: "Sandwich de Pollo", categoria: "Comida", imagen:"IMAGENES/SANDWICH POLLO.png", precio: null },
+    { nombre: "Arepa Blanca", categoria: "Comida", imagen:"IMAGENES/AREPA_SIN_SAL.png", precio: null},
+    {nombre: "Changua", categoria: "Comida", imagen:"IMAGENES/CHANGUA.png", precio:null },
+    { nombre: "Salchichon", categoria: "comida", imagen:"IMAGENES/Salchichon.png", precio: null},
+    { nombre: "Pan solo", categoria: "Comida", imagen:"IMAGENES/Pan.png", precio: null},
+    { nombre: "Huevo Cocido", categoria: "Comida", imagen:"IMAGENES/Huevo Cocido.png", precio: null},
+    { nombre: "Tamales", categoria: "Comida", imagen:"IMAGENES/Tamal.png", precio: null},
+    { nombre: "Huevo Rancheros", categoria: "Comida", imagen:"IMAGENES/Huevos con Salchicha.png", precio: null},
+    { nombre: "Huevos al Gusto", categoria: "Comida ", imagen:"IMAGENES/Huevos al Gusto.png", precio: null},
+    { nombre: "Huevpos Pericos con Salchicha", categoria: "Comida", imagen:"IMAGENES/Huevos Pericos con Salchicha.png", precio: null},
+    { nombre: "Adicion Salchicha Ranchera", categoria: "Comida", imagen:"IMAGENES/ADICION_SALCHICHA_RANCHERA.png", precio: null},
+    { nombre: "Lasaña", categoria: "Comida", imagen:"IMAGENES/LASAÑA_.png", precio:null },
+    {nombre: "Pastel de Carne", categoria: "Comida", imagen:"IMAGENES/Pastel de Carne.png", precio:null },
+    {nombre: "Tajada de Queso", categoria: "Comida", imagen:"IMAGENES/QUESO_TAJADO.png", precio: null },
+    {nombre: "Salchichas ", categoria: "Comida", imagen:"IMAGENES/SALCHICHA.png", precio:null }
+     ];
 
-    <div class="card">
-      <img src="IMAGENES/EMPANADA.png" alt="Empanadas">
-      <div class="price">Empanadas<br>$2.800</div>
-    </div>
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("comida_rapida");
 
-    <div class="card">
-      <img src="IMAGENES/AREPA_QUESO.png" alt="Arepa de Queso">
-      <div class="price">Arepa de Queso<br>$2.700</div>
-    </div>
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/PAPA RELLENA.png" alt="Papa Rellena">
-      <div class="price">Papa Rellena<br>$3.600</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/AREBURGER.png" alt="Areburguer">
-      <div class="price">Areburguer<br>$6.300</div>
-    </div>
-
-      <div class="card">
-      <img src="IMAGENES/HAMBURGUESA.png" alt="Hamburguesa">
-      <div class="price">Hamburguesa<br>$7.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/PIZZA.png" alt="Pizza">
-      <div class="price">Pizza<br>$4.600</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/SANDWICH.png" alt="Sandwich">
-      <div class="price">Sandwich<br>$3.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/PASTEL DE POLLO.png" alt="Pastel de Pollo">
-      <div class="price">Pastel de Pollo<br>$3.400</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/PERRO.png" alt="Perros">
-      <div class="price">Perros<br>$5.500</div>
-    </div>
-
-     <div class="card">
-      <img src="IMAGENES/Pastel de Yuca.png" alt="Pastel de Yuca">
-      <div class="price">Pastel de Yuca<br>$3.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/CHURRO.png" alt="Churros">
-      <div class="price">Churros<br>$2.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/BURRITO.png" alt="Burritos">
-      <div class="price">Burritos<br>$6.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/AREPA DE HUEVO.png" alt="Arepa de Huevo">
-      <div class="price">Arepa de Huevo<br>$3.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/AREPA JAMÓN Y QUESO.png" alt="Arepa de Jamon y Queso">
-      <div class="price">Arepa de Jamon y Queso<br>$2.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/SANDWICH JAMÓN Y QUESO.png" alt="Sandwich de Tajado J y Q">
-      <div class="price">Sandwich de Tajado J y Q<br>$2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/SANDWICH POLLO.png" alt="Sanwich de Pollo">
-      <div class="price">Sandwich<br>$6.000</div>
-    </div>
-
-        <div class="card">
-      <img src="IMAGENES/SANDWICH POLLO.png" alt="Sanwich de Pollo">
-      <div class="price">Sandwich<br>$6.000</div>
-    </div>
-
-        <div class="card">
-      <img src="IMAGENES/AREPA_SIN_SAL.png" alt="Arepa Blanca">
-      <div class="price">Arepa Blanca<br>$600</div>
-    </div>
-
-        <div class="card">
-      <img src="IMAGENES/CHANGUA.png" alt="-">
-      <div class="price">Changua<br>$7.500</div>
-    </div>
-    <div class="card">
-      <img src="IMAGENES/Salchichon.png" alt="Salchichon">
-      <div class="price">Salchichon<br>$300</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Pan.png" alt="Pan Solo">
-      <div class="price">Pan Solo<br>$1.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Huevo Cocido.png" alt="Huevo Cocido">
-      <div class="price">Huevo Cocido<br>$1.400</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Tamal.png" alt="Tamales">
-      <div class="price">Tamales<br>$7.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Huevos con Salchicha.png" alt="Huevos Rancheros">
-      <div class="price">Huevos Rancheros<br>$5.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Huevos al Gusto.png" alt="Huevos al Gusto">
-      <div class="price">Huevos al Gusto<br>$4.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Huevos Pericos con Salchicha.png" alt="Huevos Pericos con Salchicha">
-      <div class="price">Huevos Pericos con Salchicha<br>$5.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/ADICION_SALCHICHA_RANCHERA.png" alt="Huevos Pericos con Salchicha">
-      <div class="price">Adicion de Salchicha Ranchera<br>$1.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/LASAÑA_.png" alt="Huevos Pericos con Salchicha">
-      <div class="price">Lasaña<br>$14.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Pastel de Carne.png" alt="Bebida 1">
-      <div class="price">Pastel de Carne <br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/QUESO_TAJADO.png" alt="Bebida 1">
-      <div class="price">Tajada de Queso <br>
-        $600</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/SALCHICHA.png" alt="Bebida 1">
-      <div class="price">Salchicha<br>
-        $4.500</div>
-    </div>
-    
-    </div>
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
+
+    </script>
 
 </body>
 </html>

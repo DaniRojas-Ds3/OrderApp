@@ -172,94 +172,45 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
-  <div class="card-row">
+  <div class="card-row" id="Jugos y Fruteria"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+    {nombre: "Jugos en Leche", categoria: "Jugos y Fruteria", imagen:"IMAGENES/JUGOS_LECHE.png", precio:null },
+    {nombre: "Batido Verde ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Batido Verde.png", precio:null },
+    {nombre: "Jugo en Agua", categoria: "Jugos y Fruteria", imagen:"IMAGENES/jugo en agua.png", precio:null },
+    {nombre: "Gelatina ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Gelatina.png", precio:null },
+    {nombre: "Yogurt con Granola", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Yogurt con Granola.png", precio:null },
+    {nombre: "Vaso de Yogurt 7onz ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Vaso de Yogurt.png", precio:null},
+    {nombre: "Porcion de Fruta ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Porcion de Fruta.png", precio:null },
+    {nombre: "Bananos ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Bananos.png", precio:null },
+    {nombre: "Manzanas  ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Manzanas.png", precio: null },
+    {nombre: "Salpicon ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Salpicon.png", precio: null },
+    {nombre: "Aguacate ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Aguacate.png", precio: null }
+     ];
 
-    <div class="card">
-      <img src="IMAGENES/JUGOS_LECHE.png" alt="Bebida 1">
-      <div class="price">Jugos en Leche <br>
-        $4.600</div>
-    </div>
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("Jugos y Fruteria");
 
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/jugo en agua.png" alt="Bebida 1">
-      <div class="price">Jugo en Agua <br>
-        $3.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Gelatina.png" alt="Bebida 1">
-      <div class="price">Gelatina<br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Yogurt con Granola.png" alt="Bebida 1">
-      <div class="price">Yogurt con Granola<br>
-        $5.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Vaso de Yogurt.png" alt="Bebida 1">
-      <div class="price">Vaso Yogurt 7 onz<br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Porcion de Fruta.png" alt="Bebida 1">
-      <div class="price">Porción de Fruta<br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Bananos.png" alt="Bebida 1">
-      <div class="price">Bananos<br>
-        $1.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Manzanas.png" alt="Bebida 1">
-      <div class="price">Manzanas<br>
-        $2.000</div>
-    </div>
-
-      <div class="card">
-      <img src="IMAGENES/Salpicon.png" alt="Bebida 1">
-      <div class="price">Salpicón<br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Aguacate.png" alt="Bebida 1">
-      <div class="price">Aguacate<br>
-        $3.000</div>
-    </div>
-
-        <div class="flip-card" onclick="this.classList.toggle('flipped')">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img src="IMAGENES/Batido Verde.png" alt="Producto 1">
-          <p>Jugo en Leche - Batido verde <br>
-          $4.600</p>
-        </div>
-
-        <div class="flip-card-back">
-          <h3>Ingredientes</h3>
-          <p>Sabila <br>
-          Limon <br>
-          Espinaca <br>
-          Manzana verde <br>
-          Apio <br>
-          Gengibre</p>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
+
+    </script>
 
 </body>
 </html>

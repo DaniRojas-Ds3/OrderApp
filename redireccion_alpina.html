@@ -111,87 +111,47 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
   
-  <div class="card-row">
+  <div class="card-row" id="Alpina"></div>
+ 
+    <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+     {nombre: "Bilack Bolsa", categoria: "Productos Alpina", imagen:"IMAGENES/Bilack Bolsa.png", precio:null },
+    {nombre: "Yogurt Alpina Original ", categoria: "Productos Alpina", imagen:"IMAGENES/Yogurt Alpina Original.png", precio:null },
+    {nombre: "Avena Alpina ", categoria: "Productos Alpina", imagen:"IMAGENES/Avena Alpina.png", precio:null},
+    {nombre: "Yox", categoria: "Productos Alpina", imagen:"IMAGENES/Yox.png", precio:null},
+    {nombre: "Regeneris", categoria: "Productos Alpina", imagen:"IMAGENES/Regeneris.png", precio:null},
+    {nombre: "Finesse", categoria: "Productos Alpina", imagen:"IMAGENES/Finesse - Original Deslactosado.png", precio: null},
+    {nombre: "Bonyurt", categoria: "Productos Alpina", imagen:"IMAGENES/Bonyurt.png", precio: null},
+    {nombre: "Alpin en Caja ", categoria: "Productos Alpina", imagen:"IMAGENES/Alpin en Caja.png", precio:null },
+    {nombre: "Yogurt Griego", categoria: "Productos Alpina", imagen:"IMAGENES/YOGURT_GRIEGO.png", precio:null},
+    {nombre: "Kumis", categoria: "Productos Alpina", imagen:"IMAGENES/Kumis.png", precio:null},
+    {nombre: "Yogo Yogo en Bolsa", categoria: "Productos Alpina", imagen:"IMAGENES/Yogo Yogo en Bolsa.png", precio:null },
+    {nombre: "Arequipe Alpina", categoria: "Productos Alpina", imagen:"IMAGENES/Arequipe Alpina.png", precio: null}
+     ];
 
-    <div class="card">
-      <img src="IMAGENES/Bilack Bolsa.png" alt="Bebida 1">
-      <div class="price">Bilack Bolsa <br>
-      $ 2.500</div>
-    </div>
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("Alpina");
 
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/Yogurt Alpina Original.png" alt="Bebida 2">
-      <div class="price">Yogurt Alpina Original <br>
-        $3.400</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Avena Alpina.png" alt="Bebida 3">
-      <div class="price">Avena Alpina<br>
-        $4.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Yox.png" alt="Bebida 3">
-      <div class="price">Yox<br>
-        $3.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Regeneris.png" alt="Bebida 3">
-      <div class="price">Regeneris<br>
-        $3.900</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Finesse - Original Deslactosado.png" alt="Bebida 1">
-      <div class="price">Finesse-orinigal deslactosado<br>
-        $4.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Bonyurt.png" alt="Bebida 1">
-      <div class="price">Bonyurt<br>
-        $4.900</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Alpin en Caja.png" alt="Bebida 1">
-      <div class="price">Alpin en Caja<br>
-        $4.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/YOGURT_GRIEGO.png" alt="Bebida 1">
-      <div class="price">Yogurt Griego<br>
-        $6.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Kumis.png" alt="Bebida 1">
-      <div class="price">Kumis<br>
-        $3.500</div>
-    </div>
-
-
-    <div class="card">
-      <img src="IMAGENES/Yogo Yogo en Bolsa.png" alt="Bebida 1">
-      <div class="price">Yogo yogo bolsa<br>
-        $1.900</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Arequipe Alpina.png" alt="Bebida 1">
-      <div class="price">Arequipe Alpina<br>
-        $2.500</div>
-    </div>
-
-
-
-
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
+
+    </script>
 
 </body>
 </html>

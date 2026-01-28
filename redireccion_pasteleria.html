@@ -114,100 +114,49 @@
   </div>
 
  
-  <div class="card-row">
+ <div class="card-row" id="Pasteleria"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+{nombre: "Galletas de Avena ", categoria: "Pasteleria", imagen:"IMAGENES/Galleta de Avena.png", precio:null },
+    {nombre: "Galletas de Vainilla ", categoria: "Pasteleria", imagen:"IMAGENES/Galletas de Vainilla.png", precio:null },
+    {nombre: "Galletas de Chocolate ", categoria: "Pasteleria", imagen:"IMAGENES/Galletas de Chocolate.png", precio: null },
+    {nombre: "Mantecada ", categoria: "Pasteleria", imagen:"IMAGENES/Mantecada.png", precio:null },
+    {nombre: "Torta de Queso  ", categoria: "Pasteleria", imagen:"IMAGENES/Torta de Queso.png", precio:null },
+    {nombre: "Torta de Naranja ", categoria: "Pasteleria", imagen:"IMAGENES/Torta de Naranja.png", precio:null },
+    {nombre: "Torta de Chocolate ", categoria: "Pasteleria", imagen:"IMAGENES/TORTA_CHOCOLATE.png", precio:null},
+    {nombre: "Brownie", categoria: "Pasteleria", imagen:"IMAGENES/Brownie.png", precio:null },
+    {nombre: "Torta de Ciruela ", categoria: "Pasteleria", imagen:"IMAGENES/TORTA_CIRUELA.png", precio:null },
+    {nombre: "Milhojas ", categoria: "Pasteleria", imagen:"IMAGENES/Milhojas - Amapolas.png", precio:null },
+    {nombre: "Amapola ", categoria: "Pasteleria", imagen:"", precio:null},
+    {nombre: "Cocadas", categoria: "Pasteleria", imagen:"IMAGENES/Cocadas.png", precio:null},
+    {nombre: "Flauta ", categoria: "Pasteleria", imagen:"", precio:null},
+    {nombre: "Hojaldres de Bocadillo", categoria: "Pasteleria", imagen:"IMAGENES/Hojaldras de Bocadillo.png", precio:null },
+    {nombre: "Croisant", categoria: "Pasteleria", imagen:"IMAGENES/CROISSANT.png", precio:null}
+     ];
 
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("Pasteleria");
 
-    <div class="card">
-      <img src="IMAGENES/Galleta de Avena.png" alt="Bebida 1">
-      <div class="price">Galletas de Avena <br>
-        $1.800</div>
-    </div>
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/Galletas de Vainilla.png" alt="Bebida 1">
-      <div class="price">Galletas de Vainilla <br>
-        $1.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Galletas de Chocolate.png" alt="Bebida 1">
-      <div class="price">Galletas de Chocolate <br>
-        $2.300</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Mantecada.png" alt="Bebida 1">
-      <div class="price">Mantecada <br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Torta de Queso.png" alt="Bebida 1">
-      <div class="price">Torta de Queso <br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Torta de Naranja.png" alt="Bebida 1">
-      <div class="price">Torta de Naranja - Chocolate <br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/TORTA_CHOCOLATE.png" alt="Bebida 1">
-      <div class="price">Torta de Chocolate<br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Brownie.png" alt="Bebida 1">
-      <div class="price">Brownie <br>
-        $3.800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/TORTA_CIRUELA.png" alt="Bebida 1">
-      <div class="price">Torte de Ciruela<br>
-        $3.800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Milhojas - Amapolas.png" alt="Amapolas">
-      <div class="price">Milhojas <br>
-        $3.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/" alt="Bebida 1">
-      <div class="price">Amapolas<br>
-        $3.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Cocadas.png" alt="Bebida 1">
-      <div class="price">Cocadas <br>
-        $800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/" alt="Bebida 1">
-      <div class="price">Flautas <br>
-        $800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Hojaldras de Bocadillo.png" alt="Bebida 1">
-      <div class="price">Hojaldres Bocadillo <br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/CROISSANT.png" alt="Bebida 1">
-      <div class="price">Croissant<br>
-        $2.500</div>
-    </div>
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
+
+    </script>
 
 </body>
 </html>

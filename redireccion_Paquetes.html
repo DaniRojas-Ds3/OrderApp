@@ -112,154 +112,58 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
   
-  <div class="card-row">
+ <div class="card-row" id="paquetes"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+    { nombre: "Detodito", categoria: "Paquetes ", imagen:"IMAGENES/detodito.png", precio: null},
+    { nombre: "Papas", categoria: "Paquetes ", imagen:"IMAGENES/papas.png", precio: null},
+    { nombre: "Platanos", categoria: "Paquetes ", imagen:"IMAGENES/platanitos.png", precio: null},
+    { nombre: "Doritos", categoria: "Paquetes ", imagen:"IMAGENES/doritos.png", precio: null},
+    { nombre: "Chitos", categoria: "Paquetes ", imagen:"IMAGENES/cheetos.png", precio: null},
+    { nombre: "Choclitos", categoria: "Paquetes ", imagen:"IMAGENES/choclito.png", precio: null},
+    { nombre: "Trocipollo Pequeño", categoria: "Paquetes ", imagen:"IMAGENES/trocipollo.png", precio: null},
+    { nombre: "Trocipollos Grande", categoria: "Paquetes ", imagen:"IMAGENES/trocippollo grande.png", precio: null},
+    { nombre: "Cheese tris", categoria: "Paquetes ", imagen:"IMAGENES/cheese tres.png", precio: null},
+    { nombre: "Tostacos", categoria: "Paquetes ", imagen:"IMAGENES/tostacos.png", precio: null},
+    { nombre: "Doritos Dinamita", categoria: "Paquetes ", imagen:"IMAGENES/doritos flamin.png", precio: null},
+    { nombre: "Mani con sal", categoria: "Paquetes ", imagen:"IMAGENES/MANI_CON_SAL.png", precio: null},
+    { nombre: "Mani con pasas", categoria: "Paquetes ", imagen:"IMAGENES/mani sal y pasa.png", precio: null},
+    { nombre: "ManiMoto", categoria: "Paquetes ", imagen:"IMAGENES/mani moto.png", precio: null},
+    { nombre: "Chokis Bolitas", categoria: "Paquetes ", imagen:"IMAGENES/CHOKIS_BOLITAS.png", precio: null},
+    { nombre: "Gomitas paquete", categoria: "Paquetes ", imagen:"IMAGENES/gomitas.png", precio: null},
+    { nombre: "Herpos", categoria: "Paquetes ", imagen:"IMAGENES/herpo.png", precio: null},
+    { nombre: "Chocoramo", categoria: "Paquetes ", imagen:"IMAGENES/cohocorramo.png", precio: null},
+    { nombre: "Gala", categoria: "Paquetes ", imagen:"IMAGENES/gala.png", precio: null},
+    { nombre: "Gansito", categoria: "Paquetes ", imagen:"IMAGENES/gansito.png", precio: null},
+    { nombre: "Chocoramo Barrita", categoria: "Paquetes ", imagen:"IMAGENES/CHOCORRAMO_BARRITA.png", precio: null},
+    { nombre: "Achiras", categoria: "Paquetes ", imagen:"IMAGENES/achira.png", precio: null},
+    { nombre: "Galletas Cocosette", categoria: "Paquetes", imagen:"IMAGENES/GALLETAS_COCOSETTE.png", precio:null },
+    { nombre: "Cheese tris Grandes", categoria: "Paquetes", imagen:"IMAGENES/CHEESE_TRIS_GRANDE.png", precio:null }
+     ];
 
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("paquetes");
 
-    <div class="card">
-      <img src="IMAGENES/detodito.png" alt="Bebida 1">
-      <div class="price">Detodito<br>
-        $3.200</div>
-    </div>
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/papas.png" alt="Bebida 1">
-      <div class="price">Papas <br>
-        $2.600</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/platanitos.png" alt="Bebida 1">
-      <div class="price">Platanos <br>
-        $2.600</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/doritos.png" alt="Bebida 1">
-      <div class="price">Doritos <br>
-        $2.800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/cheetos.png" alt="Bebida 1">
-      <div class="price">Chitos - Bolitas de Queso <br>
-        $2.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/choclito.png" alt="Bebida 1">
-      <div class="price">Choclitos <br>
-        $2.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/trocipollo.png" alt="Bebida 1">
-      <div class="price">Trocipollo Pequeño <br>
-        $1.800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/trocippollo grande.png" alt="Bebida 1">
-      <div class="price">Trocipollo Grande <br>
-        $3.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/cheese tres.png" alt="Bebida 1">
-      <div class="price">Chestris <br>
-        $2.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/tostacos.png" alt="Bebida 1">
-      <div class="price">Tostacos <br>
-        $2.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/doritos flamin.png" alt="Bebida 1">
-      <div class="price">Doritos Dinamita <br>
-        $3.300</div>
-    </div>
-  
-    <div class="card">
-      <img src="IMAGENES/MANI_CON_SAL.png" alt="Bebida 1">
-      <div class="price">Mani con Sal <br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/mani sal y pasa.png" alt="Bebida 1">
-      <div class="price">Mani con Pasas <br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/mani moto.png" alt="Bebida 1">
-      <div class="price">Manimoto<br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/CHOKIS_BOLITAS.png" alt="Bebida 1">
-      <div class="price">Chokis Bolitas <br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/gomitas.png" alt="Bebida 1">
-      <div class="price">Gomas Paquete <br>
-        $2.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/herpo.png" alt="Bebida 1">
-      <div class="price">Herpos <br>
-        $800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/cohocorramo.png" alt="Bebida 1">
-      <div class="price">Chocorramo  <br>
-        $2.800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/gala.png" alt="Bebida 1">
-      <div class="price">Gala <br>
-        $2.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/gansito.png" alt="Bebida 1">
-      <div class="price">Gansito 
-        $1.900</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/CHOCORRAMO_BARRITA.png" alt="Bebida 1">
-      <div class="price">Chocoramo Barrita <br>
-        $2.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/achira.png" alt="Bebida 1">
-      <div class="price">Achiras <br>
-        4.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/GALLETAS_COCOSETTE.png" alt="Bebida 1">
-      <div class="price">Galletas Cocosette <br>
-        2.200</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/CHEESE_TRIS_GRANDE.png" alt="Bebida 1">
-      <div class="price">Cheese Tris<br>
-        4.500</div>
-    </div>
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
+
+    </script>
 
 </body>
 </html>

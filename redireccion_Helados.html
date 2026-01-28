@@ -111,106 +111,47 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
  
-  <div class="card-row">
+ <div class="card-row" id="Helados"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+    { nombre: "Bonice", categoria: "Helado ", imagen:"IMAGENES/bonice-removebg-preview.png", precio: null},
+    { nombre: "Bocato", categoria: "Helado ", imagen:"IMAGENES/bocato-removebg-preview.png", precio: null},
+    { nombre: "Chococono", categoria: "Helado ", imagen:"IMAGENES/chococono-removebg-preview.png", precio: null},
+    { nombre: "Artesanales", categoria: "Helado ", imagen:"IMAGENES/helado_artesanal-removebg-preview.png", precio: null},
+    { nombre: "Minions ", categoria: "Helado ", imagen:"IMAGENES/paleta_minions-removebg-preview.png", precio: null},
+    { nombre: "Aloha Mix", categoria: "Helado ", imagen:"IMAGENES/aloha-removebg-preview.png", precio: null},
+    { nombre: "Aloha Agua", categoria: "Helado ", imagen:"IMAGENES/aloha_agua-removebg-preview.png", precio: null},
+    { nombre: "Caseros", categoria: "Helado ", imagen:"IMAGENES/helado_casero-removebg-preview.png", precio: null},
+    { nombre: "Chocolisto", categoria: "Helado ", imagen:"IMAGENES/helado_chocolisto-removebg-preview.png", precio: null},
+    { nombre: "Platillo", categoria: "Helado ", imagen:"IMAGENES/platillo-removebg-preview.png", precio: null},
+    { nombre: "Chococono Bakano", categoria: "Helado ", imagen:"IMAGENES/chococono-bakano-removebg-preview.png", precio: null},
+    { nombre: "Polet grande", categoria: "Helado ", imagen:"IMAGENES/polet-removebg-preview.png", precio: null},
+    { nombre: "Paleta Jet", categoria: "Helado ", imagen:"IMAGENES/paleta_jet-removebg-preview.png", precio: null},
+    { nombre: "Compota", categoria: "Helado ", imagen:"IMAGENES/compota.png", precio: null}
+     ];
 
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("Helados");
 
-    <div class="card">
-      <img src="IMAGENES/bonice-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Bonice  <br>
-        $1.600</div>
-    </div>
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/bocato-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Bocato <br>
-        $7.000</div>
-    </div>
-    
-    <div class="card">
-      <img src="IMAGENES/chococono-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Chococono <br>
-        $3.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/helado_artesanal-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Artesanales <br>
-        $3.600</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/paleta_minions-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Minions <br>
-        $2.500</div>
-    </div>
-
-
-    <div class="card">
-      <img src="IMAGENES/aloha-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Aloha Mix <br>
-        $3.200</div>
-    </div>
-
-
-    <div class="card">
-      <img src="IMAGENES/aloha_agua-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Aloha Agua <br>
-        $2.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/helado_casero-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Caseros <br>
-        $2.900</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/helado_chocolisto-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Chocolisto <br>
-        $2.400</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/platillo-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Platillo <br>
-        $3.700</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/chococono-bakano-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Chococono Bakano <br>
-        $3.900</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/polet-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Polet Grande <br>
-        $6.500</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/paleta_jet-removebg-preview.png" alt="Bebida 1">
-      <div class="price">Paleta Jet <br>
-        $5.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/compota.png" alt="Bebida 1">
-      <div class="price">Compota <br>
-        $3.900</div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
 
+    </script>
 </body>
 </html>

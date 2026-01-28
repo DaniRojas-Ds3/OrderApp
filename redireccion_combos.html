@@ -111,37 +111,39 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
-  <div class="card-row">
+  <div class="card-row" id="Combos"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+    { nombre: "Combo de Sandwich", categoria: "Combos ", imagen:"IMAGENES/Combo de Sandwich (1).png", precio: null},
+    { nombre: "Combo Pastel de Pollo", categoria: "Combos ", imagen:"IMAGENES/PASTEL DE POLLO.png", precio: null},
+    { nombre: "Combo Hamburguesa", categoria: "Combos ", imagen:"IMAGENES/Combo de Hamburguesa.png", precio: null},
+    { nombre: "Combo Areburguer", categoria: "Combos ", imagen:"IMAGENES/Combo Areburguer.png", precio: null},
+    { nombre: "Combo Perro", categoria: "Combos ", imagen:"IMAGENES/combo_perro-removebg-preview.png", precio: null}
+     ];
 
-    <div class="card">
-      <img src="IMAGENES/Combo de Sandwich (1).png" alt="Combo de Sandwich">
-      <div class="price">Combo de Sandwich<br>$4.400</div>
-    </div>
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("Combos");
 
-    <div class="card">
-      <img src="IMAGENES/PASTEL DE POLLO.png" alt="Combo Pastel de Pollo">
-      <div class="price">Combo Pastel de Pollo<br>$4.200</div>
-    </div>
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-    <div class="card">
-      <img src="IMAGENES/Combo de Hamburguesa.png" alt="Combo Hamburguesa">
-      <div class="price">Combo Hamburguesa<br>$7.800</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/Combo Areburguer.png" alt="Combo Areburguer">
-      <div class="price">Combo Areburguer<br>$7.000</div>
-    </div>
-
-    <div class="card">
-      <img src="IMAGENES/combo_perro-removebg-preview.png" alt="Combo Perro">
-      <div class="price">Combo Perro<br>$6.300</div>
-    </div>
-
-
-
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
 
+    </script>
 </body>
 </html>
 

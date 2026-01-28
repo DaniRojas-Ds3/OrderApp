@@ -113,93 +113,50 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
-  <div class="card-row">
+  <div class="card-row" id="Greca"></div>
+      <script>
+/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
+      const productos = [
+{nombre: "Tinto Pequeño", categoria: "Greca ", imagen:"IMAGENES/TINTO_PEQUEÑO.png", precio: null},
+    {nombre: "Tinto Grande", categoria: "Greca ", imagen:"IMAGENES/TINTO_GRANDE.png", precio: null},
+    {nombre: "Agua de Panela", categoria: "Greca", imagen:"IMAGENES/Agua de Panela.png", precio: null},
+    {nombre: "Aromatica", categoria: "Greca", imagen:"IMAGENES/Aromatica.png", precio: null},
+    {nombre: "Aromatica Grande ", categoria: "Greca", imagen:"IMAGENES/Aromatica Grande.png", precio: null},
+    {nombre: "Chocolate ", categoria: "Greca", imagen:"IMAGENES/Chocolate.png", precio: null},
+    {nombre: "Milo pequeño", categoria: "Greca", imagen:"IMAGENES/MILO_PEQUEÑO.png", precio: null},
+    {nombre: "Milo Grande ", categoria: "Greca", imagen:"IMAGENES/MILO_GRANDE.png", precio: null},
+    {nombre: "Milo Deslactosado ", categoria: "Greca", imagen:"IMAGENES/Milo Deslactosado.png", precio: null},
+    {nombre: "Perico", categoria: "Greca", imagen:"IMAGENES/PERICO_PEQUEÑO.png", precio: null},
+    {nombre: "Cafe", categoria: "Greca", imagen:"IMAGENES/PERICO_GRANDE.png", precio: null},
+    {nombre: "Cafe Deslactosado", categoria: "Greca", imagen:"IMAGENES/Cafe Deslactosado.png", precio: null},
+    {nombre: "Te chai en Agua", categoria: "Greca", imagen:"IMAGENES/TE_CHAI_AGUA.png", precio: null},
+    {nombre: "Te chai en Leche ", categoria: "Greca", imagen:"IMAGENES/TE_CHAI_LECHE.png", precio: null},
+    {nombre: "Vaso con Leche", categoria: "Greca", imagen:"IMAGENES/Vaso con Leche.png", precio: null},
+    {nombre: "Arroz con Leche", categoria: "Greca", imagen:"IMAGENES/Arroz de Leche.png", precio: null}
+     ];
 
-    <div class="card">
-      <img src="IMAGENES/TINTO_PEQUEÑO.png" alt="Tinto">
-      <div class="price">Tinto Pequeño<br>$1.100</div>
+/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
+  const contenedor = document.getElementById("Greca");
+
+  productos.forEach(producto => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+card.innerHTML = `
+  <img src="${producto.imagen}" alt="${producto.nombre}">
+  <div class="price">
+    ${producto.nombre}
+    ${
+      producto.precio !== null
+        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
+        : ""
+    }
   </div>
+`;
+    contenedor.appendChild(card);
+  });
 
-    <div class="card">
-      <img src="IMAGENES/TINTO_GRANDE.png" alt="Tinto">
-      <div class="price">Tinto Grande<br>$1.800</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/Agua de Panela.png" alt="A">
-      <div class="price">Agua de Panela<br>$1.900</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/Aromatica.png" alt="A">
-      <div class="price">Aromatica<br>$1.100</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/Aromatica Grande.png" alt="A">
-      <div class="price">Aromatica Grande<br>$1.800</div>
-  </div>
-
-
-    <div class="card">
-      <img src="IMAGENES/Chocolate.png" alt="C">
-      <div class="price">Chocolate<br>$2.700</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/MILO_PEQUEÑO.png" alt="M">
-      <div class="price">Milo Pequeño<br>$3.100</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/MILO_GRANDE.png" alt="Tinto">
-      <div class="price">Milo Grande<br>$4.600</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/Milo Deslactosado.png" alt="T">
-      <div class="price">Milo Deslactosado<br>$3.900</div>
-  </div>
-
-     <div class="card">
-      <img src="IMAGENES/PERICO_PEQUEÑO.png" alt="T">
-      <div class="price">Perico<br>$1.400</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/PERICO_GRANDE.png" alt="T">
-      <div class="price">Cafe<br>$2.100</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/Cafe Deslactosado.png" alt="T">
-      <div class="price">Cafe Deslactosado<br>$2.600</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/TE_CHAI_AGUA.png" alt="T">
-      <div class="price">Te Chai en agua<br>$2.900</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/TE_CHAI_LECHE.png" alt="T">
-      <div class="price">Te Chai en Leche<br>$2.900</div>
-  </div>
-
-     <div class="card">
-      <img src="IMAGENES/Vaso con Leche.png" alt="T">
-      <div class="price">Vaso de Leche<br>$2.600</div>
-  </div>
-
-    <div class="card">
-      <img src="IMAGENES/Arroz de Leche.png" alt="T">
-      <div class="price">Arroz de Leche<br>$3.300</div>
-  </div>
-
-    
-    
-  </div>
-
+    </script>
 </body>
 </html>
 
