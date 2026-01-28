@@ -38,7 +38,12 @@ input.addEventListener("input", () => {
       <img src="${prod.imagen}" alt="${prod.nombre}">
       <div class="item-info">
         <h2>${prod.nombre}</h2>
-        <p>$${prod.precio.toLocaleString()}</p>
+        ${
+  prod.precio !== null
+    ? `<p>$ ${prod.precio.toLocaleString("es-CO")}</p>`
+    : ""
+}
+
         <p style="font-size:14px;color:#a62929;">${prod.categoria}</p>
       </div>
     `;
