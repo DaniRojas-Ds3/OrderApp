@@ -1,5 +1,6 @@
 const productos=[
     /*-----------------------------COMIDAS-----------------------*/
+    { nombre: "Costillas BBQ al horno", categoria: "Comida", imagen:"IMAGENES/COSTILLAS BBQ AL HORNO.webp", precio: 14000 },
     { nombre: "Empanada", categoria: "Comida", imagen:"IMAGENES/EMPANADA.webp", precio: null },
     { nombre: "Papa Rellena", categoria: "Comida", imagen:"IMAGENES/PAPA RELLENA.webp", precio: null},
     { nombre: "Areburguer", categoria: "Comida", imagen:"IMAGENES/AREBURGER.webp", precio: null },

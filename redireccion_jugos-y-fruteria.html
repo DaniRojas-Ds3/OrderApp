@@ -173,44 +173,61 @@
   </div>
 
   <div class="card-row" id="Jugos y Fruteria"></div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-    {nombre: "Jugos en Leche", categoria: "Jugos y Fruteria", imagen:"IMAGENES/JUGOS_LECHE.webp", precio:null },
-    {nombre: "Batido Verde ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Batido Verde.webp", precio:null },
-    {nombre: "Jugo en Agua", categoria: "Jugos y Fruteria", imagen:"IMAGENES/jugo en agua.webp", precio:null },
-    {nombre: "Gelatina ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Gelatina.webp", precio:null },
-    {nombre: "Yogurt con Granola", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Yogurt con Granola.webp", precio:null },
-    {nombre: "Vaso de Yogurt 7onz ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Vaso de Yogurt.webp", precio:null},
-    {nombre: "Porcion de Fruta ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Porcion de Fruta.webp", precio:null },
-    {nombre: "Bananos ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Bananos.webp", precio:null },
-    {nombre: "Manzanas  ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Manzanas.webp", precio: null },
-    {nombre: "Salpicon ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Salpicon.webp", precio: null },
-    {nombre: "Aguacate ", categoria: "Jugos y Fruteria", imagen:"IMAGENES/Aguacate.webp", precio: null }
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Jugos y Fruteria");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Jugos y Fruteria");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Jugos y Fruteria")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
-
 </body>
 </html>

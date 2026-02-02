@@ -114,70 +114,61 @@
 
  
  <div class="card-row" id="Dulceria"></div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-    {nombre: "Queso y Quesadilas", categoria: "Dulceria", imagen:"IMAGENES/queso_quesadillas.webp", precio:null },
-    {nombre: "Bocadillo Veleño", categoria: "Dulceria", imagen:"IMAGENES/bocadillo_veleño.webp", precio:null },
-    {nombre: "Bobbalo", categoria: "Dulceria", imagen:"IMAGENES/bobbaloo.webp", precio: null},
-    {nombre: "Bianchi", categoria: "Dulceria", imagen:"IMAGENES/bianchi.webp", precio:null },
-    {nombre: "Revolcon", categoria: "Dulceria", imagen:"IMAGENES/revolcon.webp", precio: null},
-    {nombre: "Barrilete", categoria: "Dulceria", imagen:"IMAGENES/barrilete.webp", precio: null},
-    {nombre: "Frunas", categoria: "Dulceria", imagen:"IMAGENES/frunas.webp", precio:null },
-    {nombre: "Bombombum", categoria: "Dulceria", imagen:"IMAGENES/bombom bum.webp", precio: null},
-    {nombre: "Mamut", categoria: "Dulceria", imagen:"IMAGENES/mamut.webp", precio: null},
-    {nombre: "Trident Unidad", categoria: "Dulceria", imagen:"IMAGENES/trident 1.webp", precio: null},
-    {nombre: "Chocobreak", categoria: "Dulceria", imagen:"IMAGENES/chocobreak.webp", precio: null} ,
-    {nombre: "Trident x3", categoria: "Dulceria", imagen:"IMAGENES/trinden x3.webp", precio: null},
-    {nombre: "Trident Barra", categoria: "Dulceria", imagen:"IMAGENES/trindent barra.webp", precio:null },
-    {nombre: "Halls Unidad", categoria: "Dulceria", imagen:"IMAGENES/halls.webp", precio:null },
-    {nombre: "Chicle Xtime", categoria: "Dulceria", imagen:"IMAGENES/Xtime.webp", precio:null },
-    {nombre: "Halls en Barra", categoria: "Dulceria", imagen:"IMAGENES/halls barra.webp", precio: null },
-    {nombre: "Mentas Chao", categoria: "Dulceria", imagen:"IMAGENES/mentas_chao.webp", precio: null},
-    {nombre: "Lokillo", categoria: "Dulceria", imagen:"IMAGENES/lokiño.webp", precio: null},
-    {nombre: "Moritas", categoria: "Dulceria", imagen:"IMAGENES/MORITAS.webp", precio: null},
-    {nombre: "Chocolores", categoria: "Dulceria", imagen:"IMAGENES/choco colores.webp", precio:null },
-    {nombre: "Sparkies Grande", categoria: "Dulceria", imagen:"IMAGENES/sparkies.webp", precio: null},
-    {nombre: "Jet Pequeña", categoria: "Dulceria", imagen:"IMAGENES/jet.webp", precio:null },
-    {nombre: "Burbujas", categoria: "Dulceria", imagen:"IMAGENES/burbuja.webp", precio: null},
-    {nombre: "Jumbo Mani", categoria: "Dulceria", imagen:"IMAGENES/jumbo mani.webp", precio: null},
-    {nombre: "Festival", categoria: "Dulceria", imagen:"IMAGENES/festival.webp", precio:null },
-    {nombre: "Minichips", categoria: "Dulceria", imagen:"IMAGENES/minichips.webp", precio: null},
-    {nombre: "Club social", categoria: "Dulceria", imagen:"IMAGENES/clubsocial.webp", precio: null },
-    {nombre: "Tosh", categoria: "Dulceria", imagen:"IMAGENES/tosh.webp", precio: null},
-    {nombre: "Oreo", categoria: "Dulceria", imagen:"IMAGENES/oreo x4.webp", precio: null},
-    {nombre: "Saltinas", categoria: "Dulceria", imagen:"IMAGENES/saltinas.webp", precio:null },
-    {nombre: "Dulces", categoria: "Dulceria", imagen:"IMAGENES/dulces.webp", precio: null},
-    {nombre: "Galletas Chokis", categoria: "Dulceria", imagen:"IMAGENES/chokis.webp", precio:null },
-    {nombre: "Galletas Quaker", categoria: "Dulceria", imagen:"IMAGENES/quaker.webp", precio: null},
-    {nombre: "Galletas Oreo", categoria: "Dulceria", imagen:"IMAGENES/oreo x6.webp", precio: null},
-    {nombre: "Mentas Chao tubo", categoria: "Dulceria", imagen:"IMAGENES/MENTAS_CHAO_TUBO.webp", precio: null},
-    {nombre: "Mentas Chao Linea", categoria: "Dulceria", imagen:"IMAGENES/MENTAS_CHAO_LINEA.webp", precio: null},
-    {nombre: "Moritas Paquete", categoria: "Dulceria", imagen:"IMAGENES/MORITAS_PAQUETE.webp", precio: null},
-    {nombre: "Merengon ", categoria: "Dulceria", imagen:"IMAGENES/MERENGON.webp", precio:null }
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Dulceria");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Dulceria");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Dulceria")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 
 </body>

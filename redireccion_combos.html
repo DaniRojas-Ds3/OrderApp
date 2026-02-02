@@ -110,38 +110,66 @@
   <div class="back-button">
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
+<div class="card-row" id="Combos"></div>
 
-  <div class="card-row" id="Combos"></div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-    { nombre: "Combo de Sandwich", categoria: "Combos ", imagen:"IMAGENES/Combo de Sandwich.webp", precio: null},
-    { nombre: "Combo Pastel de Pollo", categoria: "Combos ", imagen:"IMAGENES/PASTEL DE POLLO.webp", precio: null},
-    { nombre: "Combo Hamburguesa", categoria: "Combos ", imagen:"IMAGENES/Combo de Hamburguesa.webp", precio: null},
-    { nombre: "Combo Areburguer", categoria: "Combos ", imagen:"IMAGENES/Combo Areburguer.webp", precio: null},
-    { nombre: "Combo Perro", categoria: "Combos ", imagen:"IMAGENES/combo_perro-removebg-preview.webp", precio: null}
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Combos");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Combos");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Combos")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
+
+
+
 
     </script>
 </body>

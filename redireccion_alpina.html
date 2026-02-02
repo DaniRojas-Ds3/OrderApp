@@ -111,46 +111,62 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
   
-  <div class="card-row" id="Alpina"></div>
- 
-    <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-     {nombre: "Bilack Bolsa", categoria: "Productos Alpina", imagen:"IMAGENES/Bilack Bolsa.webp", precio:null },
-    {nombre: "Yogurt Alpina Original ", categoria: "Productos Alpina", imagen:"IMAGENES/Yogurt Alpina Original.webp", precio:null },
-    {nombre: "Avena Alpina ", categoria: "Productos Alpina", imagen:"IMAGENES/Avena Alpina.webp", precio:null},
-    {nombre: "Yox", categoria: "Productos Alpina", imagen:"IMAGENES/Yox.webp", precio:null},
-    {nombre: "Regeneris", categoria: "Productos Alpina", imagen:"IMAGENES/Regeneris.webp", precio:null},
-    {nombre: "Finesse", categoria: "Productos Alpina", imagen:"IMAGENES/Finesse - Original Deslactosado.webp", precio: null},
-    {nombre: "Bonyurt", categoria: "Productos Alpina", imagen:"IMAGENES/Bonyurt.webp", precio: null},
-    {nombre: "Alpin en Caja ", categoria: "Productos Alpina", imagen:"IMAGENES/Alpin en Caja.webp", precio:null },
-    {nombre: "Yogurt Griego", categoria: "Productos Alpina", imagen:"IMAGENES/YOGURT_GRIEGO.webp", precio:null},
-    {nombre: "Kumis", categoria: "Productos Alpina", imagen:"IMAGENES/Kumis.webp", precio:null},
-    {nombre: "Yogo Yogo en Bolsa", categoria: "Productos Alpina", imagen:"IMAGENES/Yogo Yogo en Bolsa.webp", precio:null },
-    {nombre: "Arequipe Alpina", categoria: "Productos Alpina", imagen:"IMAGENES/Arequipe Alpina.webp", precio: null}
-     ];
+  <div class="card-row" id="Productos Alpina"></div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Alpina");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+      <script>
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Productos Alpina");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Productos Alpina")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 
 </body>

@@ -112,70 +112,60 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
-  <div class="card-row" id="bebidas"></div>
+  <div class="card-row" id="Bebidas"></div>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-    { nombre: "Hit de vidrio 250", categoria: "Bebidas", imagen:"IMAGENES/HIT VIDRIO 250.webp", precio: null,},
-    { nombre: "Postobon Retornable 1.25", categoria: "Bebidas ", imagen:"IMAGENES/POSTOBÓN RETORNABLE 1.25.webp", precio: null },
-    { nombre: "Amper", categoria: "Bebidas ", imagen:"IMAGENES/AMPER.webp", precio: null },
-    { nombre: "Red Bull", categoria: "Bebidas ", imagen:"IMAGENES/REDBULL.webp", precio: null },
-    { nombre: "Coca Cola 350ml de Vidrio", categoria: "Bebidas ", imagen:"IMAGENES/COCA COLA 350 VIDRIO.webp", precio: null},
-    { nombre: "Coca Cola 1.5ml ", categoria: "Bebidas ", imagen:"IMAGENES/COCA COLA 1.5.webp", precio: null},
-    { nombre: "Coca Cola 500ml ", categoria: "Bebidas ", imagen:"IMAGENES/COCA COLA 500 ML.webp", precio: null },
-    { nombre: "Coca Cola Mini", categoria: "Bebidas ", imagen:"IMAGENES/COCA COLA MINI.webp", precio: null },
-    { nombre: "Coca Cola Mini de vidrio", categoria: "Bebidas ", imagen:"IMAGENES/COCA COLA MINI VIDRIO.webp", precio: null },
-    { nombre: "Natu Mini", categoria: "Bebidas ", imagen:"IMAGENES/NATU MINI.webp", precio: null },
-    { nombre: "Natu 400ml", categoria: "Bebidas ", imagen:"IMAGENES/NATU 400 ML.webp", precio: null },
-    { nombre: "Natu de Vidrio", categoria: "Bebidas ", imagen:"IMAGENES/NATU VIDRIO.webp", precio: null },
-    { nombre: "Hit en caja", categoria: "Bebidas ", imagen:"IMAGENES/HIT CAJA.webp", precio: null },
-    { nombre: "Hit 500 ml", categoria: "Bebidas ", imagen:"IMAGENES/HIT 500 ML.webp", precio: null },
-    { nombre: "Aloe", categoria: "Bebidas ", imagen:"IMAGENES/ALOE.webp", precio: null },
-    { nombre: "speed", categoria: "Bebidas ", imagen:"IMAGENES/SPEED.webp", precio: null },
-    { nombre: "Bretaña", categoria: "Bebidas ", imagen:"IMAGENES/BRETAÑA.webp", precio: null },
-    { nombre: "Squash", categoria: "Bebidas ", imagen:"IMAGENES/SQUASH.webp", precio: null },
-    { nombre: "Agua de Litro", categoria: "Bebidas ", imagen:"IMAGENES/AGUA LITRO.webp", precio: null },
-    { nombre: "Agua 300ml", categoria: "Bebidas ", imagen:"IMAGENES/AGUA_CRISTAL_PEQUEÑA.webp", precio: null },
-    { nombre: "Agua con Gas pequeña", categoria: "Bebidas ", imagen:"IMAGENES/AGUA GAS PEQUEÑA.webp", precio: null },
-    { nombre: "Aguas 600", categoria: "Bebidas ", imagen:"IMAGENES/AGUA 600 ML.webp", precio: null },
-    { nombre: "Agua con Gas Grande", categoria: "Bebidas ", imagen:"IMAGENES/AGUA GAS GRANDE.webp", precio: null },
-    { nombre: "Agua H2O pequeña", categoria: "Bebidas ", imagen:"IMAGENES/H2O PEQUEÑA.webp", precio: null },
-    { nombre: "Agua H2O", categoria: "Bebidas ", imagen:"IMAGENES/H2O GRANDE.webp", precio: null },
-    { nombre: "Mister Tea", categoria: "Bebidas ", imagen:"IMAGENES/MISTER TEA.webp", precio: null },
-    { nombre: "Te Hatsu", categoria: "Bebidas ", imagen:"IMAGENES/TE HATSU.webp", precio: null },
-    { nombre: "Gaseosa Postobon Vidrio", categoria: "Bebidas ", imagen:"IMAGENES/POSTOBÓN VIDRIO.webp", precio: null },
-    { nombre: "Acua", categoria: "Bebidas ", imagen:"IMAGENES/ACQUA.webp", precio: null },
-    { nombre: "Tuti-Fruti", categoria: "Bebidas ", imagen:"IMAGENES/TUTIFRUTI.webp", precio: null },
-    { nombre: "Gatorade sin Azucar", categoria: "Bebidas ", imagen:"IMAGENES/GATORADE SIN AZÚCAR.webp", precio: null},
-    { nombre: "Gatorade", categoria: "Bebidas ", imagen:"IMAGENES/GATORADE.webp", precio: null },
-    { nombre: "Gatorlyte", categoria: "Bebidas ", imagen:"IMAGENES/GATORLYTE.webp", precio: null},
-    { nombre: "Vaso de Gaseosa", categoria: "Bebidas ", imagen:"IMAGENES/VASO GASEOSA.webp", precio: null },
-    { nombre: "Electrolit", categoria: "Bebidas", imagen:"IMAGENES/Elecrolit.webp", precio:null },
-    { nombre: "Speed en Lata", categoria: "Bebidas", imagen:"IMAGENES/Espeed en Lata.webp", precio:null },
-    { nombre: "Gaseosa Familiar", categoria: "Bebidas", imagen:"IMAGENES/Gaseosa Familiar.webp", precio:null }
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("bebidas");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" >
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Bebidas");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Bebidas")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 
 </body>

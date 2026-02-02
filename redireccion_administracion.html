@@ -1,107 +1,477 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel de Administración</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administración</title>
 
-  <style>
-    /* 🌈 ESTILO GENERAL */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #ffcf70, #fadda4);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
-    .admin-container {
-      text-align: center;
-      background: white;
-      padding: 40px 60px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    .admin-container h1 {
-      color: #333;
-      margin-bottom: 25px;
-    }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #ffcf70, #fadda4);
+  height: 100vh;
+}
 
-    button {
-      background: #d62828;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 14px;
-      cursor: pointer;
-      width: 260px;
-      margin: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: all 0.25s ease;
-    }
+/* ===== LAYOUT ===== */
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
 
-    button:hover {
-      background: #ff914d;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.20);
-    }
 
-    .back-button{
-      position: fixed;
-      top: 170px;
-      right: 10px;
-      z-index: 1000;
-    }
+/* ===== MENÚ IZQUIERDO ===== */
+.admin-menu {
+  width: 100%;
+  background: #ffffff;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
 
-    .back-button a{
-      display: inline-flex;
-      align-items:center;
-      justify-content:center;
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      color: rgb(0, 0, 0);
-      text-decoration:none;
-      padding: 12px 20px;
-      border: 1px solid black;
-      border-radius: 45px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
 
-    .back-button .arrow{
-      font-size: 3rem;
-      display: block;
-      transform: translateY(-6px);
-    }
+.admin-menu h2 {
+  display: none;
+}
 
-    .back-button a:hover{
-      transform: scale(1.1);
-    }
-  </style>
+
+/* BOTONES MENU */
+.menu-btn {
+  background: #d62828;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  font-size: 15px;
+  border-radius: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+}
+
+.menu-btn:hover {
+  background: #ff914d;
+  transform: translateY(-2px);
+}
+
+
+/* ===== ÁREA DE CONTENIDO ===== */
+.content-area {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.content-box {
+  background: white;
+  padding: 35px;
+  border-radius: 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  min-height: calc(100vh - 60px);
+}
+
+/* SECCIONES */
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+
+
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  /* MENÚ ARRIBA */
+  .admin-menu {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .admin-menu h2 {
+    display: none;
+  }
+
+  .menu-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 16px;
+    padding: 14px 18px;
+    border-radius: 14px;
+  }
+
+  /* CONTENIDO ABAJO */
+  .content-area {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .content-box {
+    min-height: auto;
+    padding: 25px;
+    border-radius: 18px;
+  }
+
+  /*---------------------------------------------------ESTILOS DEL FORMULARIO DE AGREGAR PRODUCTO----------------------------------------*/
+  /* ===== FORMULARIO AGREGAR PRODUCTOS ===== */
+.form-productos {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #eaddcb;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.form-productos .form-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-productos label {
+  display: block;
+  margin-top: 14px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-productos input,
+.form-productos select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+}
+
+.form-productos input:focus,
+.form-productos select:focus {
+  outline: none;
+  border-color: #7b5cff;
+}
+
+.form-productos button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #ff0101;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.form-productos button:hover {
+  background: #ed1616;
+}
+
+.form-productos #mensaje {
+  margin-top: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/*---------------------------------------------ESTILO DEL MESAJE DE PRODUCTOS ----------------------------------------------*/
+.mensaje {
+  margin-top: 18px;
+  font-size: 16px;
+}
+
+.mensaje.exito {
+  color: #16a34a; /* verde */
+}
+
+.mensaje.error {
+  color: #dc2626; /* rojo */
+}
+/*--------------------------------------BOTONES DE DESCARGAR PDFS ---------------------------------------*/
+.pdf-btn {
+  background: #d62828;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  font-size: 15px;
+  border-radius: 14px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.25s ease;
+}
+
+.pdf-btn:hover {
+  background: #ff914d;
+  transform: translateY(-2px);
+}
+/*-------------------------------------------------------ESTILO DE SECCION DE EDITAR PRODUCTOS-----------------------------------*/
+/* ---------- TABLA ADMIN ---------- */
+.fila-producto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.nombre-producto {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn-editar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn-editar:hover {
+  color: #ff9800;
+}
+
+/* móvil */
+@media (max-width: 768px) {
+  .fila-producto {
+    padding: 16px 10px;
+  }
+}
+#editarProducto {
+  display: none;
+}
+/*----------------------------------------------------------ESTILO DEL EDITOR--------------------------------------------*/
+#editarProducto {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+#editarProducto h2 {
+  margin-bottom: 20px;
+}
+
+#editarProducto label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+#editarProducto input,
+#editarProducto select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+
+
+</style>
 </head>
+
+
 
 <body>
 
-  <!-- BOTÓN DE REGRESO -->
-  <div class="back-button">
-    <a href="index.html"><span class="arrow">←</span></a>
-  </div>
+<div class="admin-layout">
 
-  <div class="admin-container">
-    <h1>Panel de Administración</h1>
+  <!-- MENÚ -->
+  <aside class="admin-menu">
+    <h2>Menú</h2>
 
-    <button id="pdfBtn">📄 Generar Resumen Reservas</button>
-    <button id="pqrBtn">📄 Generar Resumen PQRS</button>
-  </div>
+    <button class="menu-btn" onclick="mostrar('productos')">➕ Agregar productos </button>
+    <button class="menu-btn" onclick="mostrar('precios')">✏️ Editor de productos</button>
+    <button class="menu-btn" onclick="mostrar('pdf-reservas')">📄 Resumen reservas</button>
+    <button class="menu-btn" onclick="mostrar('pdf-pqrs')">📄 Resumen PQRS</button>
+  </aside>
 
-  <script type="module">
+  <!-- CONTENIDO -->
+  <main class="content-area">
+    <div class="content-box">
+
+      <div id="inicio" class="section active">
+        <h1>Panel de Administración</h1>
+        <p>Selecciona una opción del menú para comenzar.</p>
+      </div>
+  <!--------------------------- SECCION DE AGREGAR PRODUCTOS ------------------------------------- -->
+
+      <div id="productos" class="section">
+        <h2>Agregar Productos</h2>
+        <p>Gestión completa de productos.</p>
+        <h2>Agregar producto</h2>
+<div class="form-productos">
+  <h2>➕ Agregar producto</h2>
+
+  <label>Nombre del producto</label>
+  <input type="text" id="nombreProducto" placeholder="Ej: Café Latte">
+
+  <label>Precio</label>
+  <input type="number" id="precioProducto" placeholder="Ej: 4500">
+
+  <label>Categoría</label>
+  <select id="categoriaProducto">
+  <option value="">Selecciona una categoría</option>
+    <option value="Comida">Comida</option>
+    <option value="Bebidas">Bebidas</option>
+    <option value="Combos">Combos</option>
+    <option value="Paquetes">Paquetes</option>
+    <option value="Helados">Helados</option>
+    <option value="Greca">Greca</option>
+    <option value="Jugos y Fruteria">Jugos y Fruteria</option>
+    <option value="Pasteleria">Pasteleria</option>
+    <option value="Productos Alpina">Productos Alpina</option>
+    <option value="Dulceria">Dulceria</option>
+  </select>
+  
+  <div class="campo">
+  <label for="imagen">URL de la imagen (opcional)</label>
+  <input
+    type="url"
+    id="imagen"
+    placeholder="https://ejemplo.com/imagen.jpg"
+  />
+</div>
+
+
+  <!-- PRODUCTO ACTIVO -->
+  <label>
+    <input type="checkbox" id="productoActivo" checked>
+    Producto activo
+  </label>
+
+  <!-- PRECIO ACTIVO -->
+  <label>
+    <input type="checkbox" id="precioActivo" checked>
+    Precio activo
+  </label>
+
+  <!-- ACTIVO EN RESERVAS -->
+<label>
+  <input type="checkbox" id="activoReservas">
+  Mostrar en reservas
+</label>
+
+
+  <!-- BOTÓN -->
+  <button type="button" onclick="guardarProducto()">
+    Guardar producto
+  </button>
+</div>
+
+
+
+
+  <p id="mensaje"></p>
+ 
+</div>
+ <!-------------------------------------------------- SECCION DE EDITAR DE PRODUCTOS----------------------------------------- --> 
+<div id="precios" class="section">
+  <h2>Editor de Productos</h2>
+  <p>Aquí podrás modificar los productos existentes.</p>
+
+  <input
+    type="text"
+    id="buscadorProductos"
+    placeholder="🔍 Buscar producto..."
+    style="width:100%;padding:10px;margin:15px 0;border-radius:8px;"
+  >
+
+  <table id="tablaProductos" style="width:100%;border-collapse:collapse;">
+    <tbody id="listaProductosAdmin"></tbody>
+  </table>
+</div>
+
+<!-- PANTALLA DE EDICIÓN -->
+<div id="editarProducto" class="section" style="display:none;">
+  <button onclick="volverALista()">⬅ Volver</button>
+
+  <h2>Editar producto</h2>
+
+  <label>Nombre</label>
+  <input type="text" id="editNombre">
+
+  <label>Categoría</label>
+  <select id="editCategoria"></select>
+
+  <label>Precio</label>
+  <input type="number" id="editPrecio">
+
+  <label><input type="checkbox" id="editActivo"> Producto activo</label>
+  <label><input type="checkbox" id="editPrecioActivo"> Precio activo</label>
+  <label><input type="checkbox" id="editActivoReservas"> Activo en reservas</label>
+
+  <label>Imagen</label>
+  <input type="url" id="editImagen">
+
+  <br><br>
+  <button onclick="guardarCambiosProducto()">💾 Guardar</button>
+  <button onclick="volverALista()">❌ Cancelar</button>
+</div>
+
+
+<!-------------------------------------------------- SECCION DE ----------------------------------------- --> 
+
+      <div id="categorias" class="section">
+        <h2>Gestión de categorías</h2>
+        <p>Administrar categorías visibles en la web.</p>
+      </div>
+
+      <div id="pdf-reservas" class="section">
+        <h2>Resumen de Reservas</h2>
+        <button id="pdfBtn">📄 Generar PDF</button>
+      </div>
+
+      <div id="pdf-pqrs" class="section">
+        <h2>Resumen de PQRS</h2>
+        <button id="pqrBtn">📄 Generar PDF</button>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+
+<!-- 🔥 AQUÍ SIGUE TU JS ORIGINAL DE FIREBASE + PDFs SIN CAMBIOS -->
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script type="module">
+function mostrar(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// 👇 HACERLA GLOBAL PARA LOS BOTONES HTML
+window.mostrar = mostrar;
 
     // 🌐 URL de tu WebApp de Google Apps Script
     const WEBAPP_URL = "https://script.google.com/macros/s/AKfycby4gZuX2NTgJaOZttrV7-_P7ZMX4FPxccCvoWI3irZtEaYzhn9bT1FStnoClzvOEAB6Dw/exec";
@@ -112,12 +482,22 @@
 
 // Importar Firebase desde tu archivo firebase.js
 import { db } from "./firebase.js";
-import { 
-  collection, 
-  getDocs,
+
+import {
+  collection,
   query,
-  orderBy
+  orderBy,
+  onSnapshot,
+  doc,
+  getDoc,
+  updateDoc,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+
+
 
 
 // 🔥 Función para traer reservas desde Firestore
@@ -361,7 +741,240 @@ for (const [usuario, pedidos] of Object.entries(usuarios)) {
 
       doc.save(`resumen_pqrs_${fecha}.pdf`);
     });
-  </script>
+
+    /*---------------------------------------------------- SCRIPT DE AGREGAR LOS PRODUCTOS --------------------------------------*/
+async function guardarProducto() {
+  const nombre = document.getElementById("nombreProducto").value.trim();
+  const precio = Number(document.getElementById("precioProducto").value);
+  const categoria = document.getElementById("categoriaProducto").value;
+  const imagenInput = document.getElementById("imagen").value.trim();
+  const imagen = convertirLinkDrive(imagenInput);
+  const productoActivo = document.getElementById("productoActivo").checked;
+  const precioActivo = document.getElementById("precioActivo").checked;
+  const activoReservas = document.getElementById("activoReservas").checked;
+
+
+  const mensaje = document.getElementById("mensaje");
+  mensaje.textContent = "";
+  mensaje.className = "mensaje";
+
+  if (!nombre || !precio || !categoria) {
+    mensaje.textContent = "⚠️ Completa todos los campos obligatorios";
+    mensaje.classList.add("error");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "productos"), {
+      nombre,
+      precio,
+      categoria,
+      imagen: imagen || null,
+      activo: productoActivo,
+      precioActivo: precioActivo,
+      activoReservas: activoReservas,
+      creado: new Date()
+    });
+
+    mensaje.textContent = "✅ Producto guardado correctamente";
+    mensaje.classList.add("exito");
+
+    // limpiar formulario
+    document.getElementById("nombreProducto").value = "";
+    document.getElementById("precioProducto").value = "";
+    document.getElementById("categoriaProducto").value = "";
+    document.getElementById("productoActivo").checked = true;
+    document.getElementById("precioActivo").checked = true;
+    document.getElementById("imagen").value = "";
+    document.getElementById("activoReservas").checked = false;
+
+    
+
+  } catch (error) {
+    console.error(error);
+    mensaje.textContent = "❌ Error al guardar el producto";
+    mensaje.classList.add("error");
+  }
+}
+
+window.guardarProducto = guardarProducto;
+
+/*----------------------------------------------------SCRIPT DE EDITOR DE PRODUCTOS--------------------------------------------*/
+const listaAdmin = document.getElementById("listaProductosAdmin");
+
+const q = query(
+  collection(db, "productos"),
+  orderBy("nombre")
+);
+
+onSnapshot(q, (snapshot) => {
+  listaAdmin.innerHTML = "";
+
+  snapshot.forEach((doc) => {
+    const p = doc.data();
+
+const fila = document.createElement("tr");
+fila.dataset.categoria = (p.categoria || "").toLowerCase();
+
+fila.innerHTML = `
+  <td class="fila-producto">
+    <span class="nombre-producto">${p.nombre}</span>
+    <small class="categoria-producto">${p.categoria || ""}</small>
+    <button class="btn-editar" onclick="editarProducto('${doc.id}')">
+      ✏️ Editar
+    </button>
+  </td>
+`;
+
+
+    listaAdmin.appendChild(fila);
+  });
+});
+
+/*----------------------------------------------- FUNCION EDITAR---------------------------------------------------*/
+let productoEditandoId = null;
+
+window.editarProducto = function (id) {
+  productoEditandoId = id;
+
+  document.getElementById("precios").style.display = "none";
+  document.getElementById("editarProducto").style.display = "block";
+
+  cargarCategoriasEditor();
+  cargarProducto(id);
+};
+/*--------------------------------------------------FUNCION BUSCADOR---------------------------------------------------------*/
+const buscador = document.getElementById("buscadorProductos");
+
+buscador.addEventListener("input", () => {
+  const texto = buscador.value.toLowerCase().trim();
+
+  const filas = listaAdmin.querySelectorAll("tr");
+
+  filas.forEach(fila => {
+    const nombre = fila
+      .querySelector(".nombre-producto")
+      .textContent
+      .toLowerCase();
+
+    const categoria = fila.dataset.categoria;
+
+    const coincide =
+      nombre.includes(texto) || categoria.includes(texto);
+
+    fila.style.display = coincide ? "" : "none";
+  });
+});
+
+
+/*----------------------------------------------- FUNCION VOLVER A LISTA---------------------------------------------------*/
+
+function volverALista() {
+  productoEditandoId = null;
+
+  document.getElementById("editarProducto").style.display = "none";
+  document.getElementById("precios").style.display = "block";
+}
+
+
+/*-----------------------------------------------CARGAR PRODUCTOS ---------------------------------------------------*/
+
+async function cargarProducto(id) {
+  const ref = doc(db, "productos", id);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    console.error("Producto no encontrado");
+    return;
+  }
+
+  const p = snap.data();
+  console.log("Producto cargado:", p);
+
+  // 🔥 OBTENER ELEMENTOS AQUÍ (cuando ya existen)
+  const editNombre = document.getElementById("editNombre");
+  const editCategoria = document.getElementById("editCategoria");
+  const editPrecio = document.getElementById("editPrecio");
+  const editActivo = document.getElementById("editActivo");
+  const editPrecioActivo = document.getElementById("editPrecioActivo");
+  const editActivoReservas = document.getElementById("editActivoReservas");
+  const editImagen = document.getElementById("editImagen");
+
+  editNombre.value = p.nombre || "";
+  editCategoria.value = p.categoria || "";
+  editPrecio.value = p.precio || 0;
+  editActivo.checked = !!p.activo;
+  editPrecioActivo.checked = !!p.precioActivo;
+  editActivoReservas.checked = !!p.activoReservas;
+  editImagen.value = p.imagen || "";
+}
+
+
+/*-----------------------------------------------GUARDAR CAMBIOS ---------------------------------------------------*/
+async function guardarCambiosProducto() {
+  if (!productoEditandoId) return;
+
+  // 🔥 obtener elementos AQUÍ también
+  const editNombre = document.getElementById("editNombre");
+  const editCategoria = document.getElementById("editCategoria");
+  const editPrecio = document.getElementById("editPrecio");
+  const editActivo = document.getElementById("editActivo");
+  const editPrecioActivo = document.getElementById("editPrecioActivo");
+  const editActivoReservas = document.getElementById("editActivoReservas");
+  const editImagen = document.getElementById("editImagen");
+
+  const ref = doc(db, "productos", productoEditandoId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  const datosActuales = snap.data();
+
+  await updateDoc(ref, {
+    nombre: editNombre.value.trim(),
+    categoria: editCategoria.value || datosActuales.categoria,
+    precio: Number(editPrecio.value) || datosActuales.precio,
+    activo: editActivo.checked,
+    precioActivo: editPrecioActivo.checked,
+    activoReservas: editActivoReservas.checked,
+    imagen: convertirLinkDrive(editImagen.value.trim()) || datosActuales.imagen,
+    actualizado: serverTimestamp()
+  });
+
+  volverALista();
+}
+
+
+/*--------------------------------------------------------CARGAR CATEGORIAS ---------------------------------------------------*/
+
+function cargarCategoriasEditor() {
+  const select = document.getElementById("editCategoria");
+
+  if (select.options.length > 0) return; // evita duplicar
+
+  select.innerHTML = `
+    <option value="">Seleccione una categoría</option>
+    <option value="Comida">Comida</option>
+    <option value="Bebidas">Bebidas</option>
+    <option value="Combos">Combos</option>
+    <option value="Paquetes">Paquetes</option>
+    <option value="Helados">Helados</option>
+    <option value="Greca">Greca</option>
+    <option value="Jugos y Fruteria">Jugos y Fruteria</option>
+    <option value="Pasteleria">Pasteleria</option>
+    <option value="Productos Alpina">Productos Alpina</option>
+    <option value="Dulceria">Dulceria</option>
+  `;
+}
+/*----------------------------------CODIGO PARA SACAR EL LINK DE UNA IMAGEN DE DRIVE------------------------*/
+
+window.volverALista = volverALista;
+window.guardarCambiosProducto = guardarCambiosProducto;
+window.cargarProducto = cargarProducto;
+
+
+</script>
+
+
 
 </body>
 </html>

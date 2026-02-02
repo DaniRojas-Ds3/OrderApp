@@ -114,48 +114,61 @@
   </div>
 
   <div class="card-row" id="Greca"></div>
+ <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-{nombre: "Tinto Pequeño", categoria: "Greca ", imagen:"IMAGENES/TINTO_PEQUEÑO.webp", precio: null},
-    {nombre: "Tinto Grande", categoria: "Greca ", imagen:"IMAGENES/TINTO_GRANDE.webp", precio: null},
-    {nombre: "Agua de Panela", categoria: "Greca", imagen:"IMAGENES/Agua de Panela.webp", precio: null},
-    {nombre: "Aromatica", categoria: "Greca", imagen:"IMAGENES/Aromatica.webp", precio: null},
-    {nombre: "Aromatica Grande ", categoria: "Greca", imagen:"IMAGENES/Aromatica Grande.webp", precio: null},
-    {nombre: "Chocolate ", categoria: "Greca", imagen:"IMAGENES/Chocolate.webp", precio: null},
-    {nombre: "Milo pequeño", categoria: "Greca", imagen:"IMAGENES/MILO_PEQUEÑO.webp", precio: null},
-    {nombre: "Milo Grande ", categoria: "Greca", imagen:"IMAGENES/MILO_GRANDE.webp", precio: null},
-    {nombre: "Milo Deslactosado ", categoria: "Greca", imagen:"IMAGENES/Milo Deslactosado.webp", precio: null},
-    {nombre: "Perico", categoria: "Greca", imagen:"IMAGENES/PERICO_PEQUEÑO.webp", precio: null},
-    {nombre: "Cafe", categoria: "Greca", imagen:"IMAGENES/PERICO_GRANDE.webp", precio: null},
-    {nombre: "Cafe Deslactosado", categoria: "Greca", imagen:"IMAGENES/Cafe Deslactosado.webp", precio: null},
-    {nombre: "Te chai en Agua", categoria: "Greca", imagen:"IMAGENES/TE_CHAI_AGUA.webp", precio: null},
-    {nombre: "Te chai en Leche ", categoria: "Greca", imagen:"IMAGENES/TE_CHAI_LECHE.webp", precio: null},
-    {nombre: "Vaso con Leche", categoria: "Greca", imagen:"IMAGENES/Vaso con Leche.webp", precio: null},
-    {nombre: "Arroz con Leche", categoria: "Greca", imagen:"IMAGENES/Arroz de Leche.webp", precio: null}
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Greca");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Greca");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Greca")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 </body>
 </html>

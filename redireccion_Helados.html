@@ -112,46 +112,61 @@
   </div>
  
  <div class="card-row" id="Helados"></div>
+ <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-    { nombre: "Bonice", categoria: "Helado ", imagen:"IMAGENES/bonice-removebg-preview.webp", precio: null},
-    { nombre: "Bocato", categoria: "Helado ", imagen:"IMAGENES/bocato-removebg-preview.webp", precio: null},
-    { nombre: "Chococono", categoria: "Helado ", imagen:"IMAGENES/chococono-removebg-preview.webp", precio: null},
-    { nombre: "Artesanales", categoria: "Helado ", imagen:"IMAGENES/helado_artesanal-removebg-preview.webp", precio: null},
-    { nombre: "Minions ", categoria: "Helado ", imagen:"IMAGENES/paleta_minions-removebg-preview.webp", precio: null},
-    { nombre: "Aloha Mix", categoria: "Helado ", imagen:"IMAGENES/aloha-removebg-preview.webp", precio: null},
-    { nombre: "Aloha Agua", categoria: "Helado ", imagen:"IMAGENES/aloha_agua-removebg-preview.webp", precio: null},
-    { nombre: "Caseros", categoria: "Helado ", imagen:"IMAGENES/helado_casero-removebg-preview.webp", precio: null},
-    { nombre: "Chocolisto", categoria: "Helado ", imagen:"IMAGENES/helado_chocolisto-removebg-preview.webp", precio: null},
-    { nombre: "Platillo", categoria: "Helado ", imagen:"IMAGENES/platillo-removebg-preview.webp", precio: null},
-    { nombre: "Chococono Bakano", categoria: "Helado ", imagen:"IMAGENES/chococono.webp", precio: null},
-    { nombre: "Polet grande", categoria: "Helado ", imagen:"IMAGENES/polet.webp", precio: null},
-    { nombre: "Paleta Jet", categoria: "Helado ", imagen:"IMAGENES/paleta_jet.webp", precio: null},
-    { nombre: "Compota", categoria: "Helado ", imagen:"IMAGENES/compota.webp", precio: null}
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Helados");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Helados");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Helados")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 </body>
 </html>

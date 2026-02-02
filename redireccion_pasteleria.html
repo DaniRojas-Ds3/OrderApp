@@ -115,47 +115,61 @@
 
  
  <div class="card-row" id="Pasteleria"></div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-{nombre: "Galletas de Avena ", categoria: "Pasteleria", imagen:"IMAGENES/Galleta de Avena.webp", precio:null },
-    {nombre: "Galletas de Vainilla ", categoria: "Pasteleria", imagen:"IMAGENES/Galletas de Vainilla.webp", precio:null },
-    {nombre: "Galletas de Chocolate ", categoria: "Pasteleria", imagen:"IMAGENES/Galletas de Chocolate.webp", precio: null },
-    {nombre: "Mantecada ", categoria: "Pasteleria", imagen:"IMAGENES/Mantecada.webp", precio:null },
-    {nombre: "Torta de Queso  ", categoria: "Pasteleria", imagen:"IMAGENES/Torta de Queso.webp", precio:null },
-    {nombre: "Torta de Naranja ", categoria: "Pasteleria", imagen:"IMAGENES/Torta de Naranja.webp", precio:null },
-    {nombre: "Torta de Chocolate ", categoria: "Pasteleria", imagen:"IMAGENES/TORTA_CHOCOLATE.webp", precio:null},
-    {nombre: "Brownie", categoria: "Pasteleria", imagen:"IMAGENES/Brownie.webp", precio:null },
-    {nombre: "Torta de Ciruela ", categoria: "Pasteleria", imagen:"IMAGENES/TORTA_CIRUELA.webp", precio:null },
-    {nombre: "Milhojas ", categoria: "Pasteleria", imagen:"IMAGENES/Milhojas - Amapolas.webp", precio:null },
-    {nombre: "Amapola ", categoria: "Pasteleria", imagen:"", precio:null},
-    {nombre: "Cocadas", categoria: "Pasteleria", imagen:"IMAGENES/Cocadas.webp", precio:null},
-    {nombre: "Flauta ", categoria: "Pasteleria", imagen:"", precio:null},
-    {nombre: "Hojaldres de Bocadillo", categoria: "Pasteleria", imagen:"IMAGENES/Hojaldras de Bocadillo.webp", precio:null },
-    {nombre: "Croisant", categoria: "Pasteleria", imagen:"IMAGENES/CROISSANT.webp", precio:null}
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("Pasteleria");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Pasteleria");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Pasteleria")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 
 </body>

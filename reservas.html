@@ -261,7 +261,7 @@ header h1 img {
   <div class="contador" id="contador"></div>
 
   <header>
-    <h1><img src="IMAGENES/logo.png" style="width:60px;height:60px;"> Reservas</h1>
+    <h1><img src="IMAGENES/LOGO.webp" style="width:60px;height:60px;"> Reservas</h1>
   </header>
 
   <section class="productos" id="listaProductos"></section>
@@ -287,17 +287,39 @@ header h1 img {
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-
 <script type="module">
-import { guardarReserva } from "./firebase.js";
-/* ---------- Datos de ejemplo ---------- */
-const productos = [
-     { nombre: "Empanada", categoria: "Comida", imagen:"IMAGENES/EMPANADA.png", precio: 2800 },
-    { nombre: "Papa Rellena", categoria: "Comida", imagen:"IMAGENES/PAPA RELLENA.png", precio: 3600},
-    { nombre: "Areburguer", categoria: "Comida", imagen:"IMAGENES/AREBURGER.png", precio: 6300 },
-];
+
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { db } from "./firebase.js";
+let productos = [];
+async function cargarProductosReservas() {
+  try {
+    const q = query(
+      collection(db, "productos"),
+      where("activo", "==", true),
+      where("activoReservas", "==", true)
+    );
+
+    const snapshot = await getDocs(q);
+
+    productos = [];
+    snapshot.forEach(doc => {
+      productos.push(doc.data());
+    });
+
+    renderizarProductos(); // 🔥 usa TU función existente
+  } catch (error) {
+    console.error("Error cargando productos de reservas:", error);
+  }
+}
+
 
 /* ---------- Referencias DOM ---------- */
 const lista = document.getElementById("listaProductos");
@@ -307,9 +329,9 @@ const contadorNodo = document.getElementById("contador");
 
 // 🕗 CONFIGURA AQUÍ las horas y minutos de apertura y cierre (hora local de Bogotá)
 /* ---------- Configuración ---------- */
-const horaApertura = 6;    // 6:00 a.m.
+const horaApertura = 6;    // 
 const minutoApertura = 0;
-const horaCierre =16 ;     // 3:45 p.m. (ejemplo)
+const horaCierre =15 ;     
 const minutoCierre = 0;
 
 let tiempoRestante = 0;
@@ -429,10 +451,10 @@ function actualizarUISegunTiempo() {
       carritoBtn.style.cursor = "not-allowed";
       carritoBtn.disabled = true;
     }
-    contadorNodo.innerHTML = "🕗 <strong>Reservas no disponibles (6:00 a.m. - 4:00 p.m.)</strong>";
+    contadorNodo.innerHTML = "🕗 <strong>Reservas no disponibles (6:00 a.m. - 3:00 p.m.)</strong>";
 
     if (!horarioMensajeMostrado) {
-      mostrarMensajeEmergente("🕗 Las reservas estarán disponibles de 6:00 a.m. a 4:00 p.m.");
+      mostrarMensajeEmergente("🕗 Las reservas estarán disponibles de 6:00 a.m. a 3:00 p.m.");
       horarioMensajeMostrado = true;
     }
 
@@ -754,8 +776,10 @@ modalExito.style.display = "flex";
 } // cierre abrirFormularioReserva
 
 /* ---------- Inicialización ---------- */
-renderizarProductos();
+cargarProductosReservas();
 actualizarUISegunTiempo();
+
+
 </script>
 
 

@@ -112,57 +112,62 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
   
- <div class="card-row" id="paquetes"></div>
+ <div class="card-row" id="Paquetes"></div>
+ <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
-    { nombre: "Detodito", categoria: "Paquetes ", imagen:"IMAGENES/detodito.webp", precio: null},
-    { nombre: "Papas", categoria: "Paquetes ", imagen:"IMAGENES/papas.webp", precio: null},
-    { nombre: "Platanos", categoria: "Paquetes ", imagen:"IMAGENES/platanitos.webp", precio: null},
-    { nombre: "Doritos", categoria: "Paquetes ", imagen:"IMAGENES/doritos.webp", precio: null},
-    { nombre: "Chitos", categoria: "Paquetes ", imagen:"IMAGENES/cheetos.webp", precio: null},
-    { nombre: "Choclitos", categoria: "Paquetes ", imagen:"IMAGENES/choclito.webp", precio: null},
-    { nombre: "Trocipollo Pequeño", categoria: "Paquetes ", imagen:"IMAGENES/trocipollo.webp", precio: null},
-    { nombre: "Trocipollos Grande", categoria: "Paquetes ", imagen:"IMAGENES/trocippollo grande.webp", precio: null},
-    { nombre: "Cheese tris", categoria: "Paquetes ", imagen:"IMAGENES/cheese tres.webp", precio: null},
-    { nombre: "Tostacos", categoria: "Paquetes ", imagen:"IMAGENES/tostacos.webp", precio: null},
-    { nombre: "Doritos Dinamita", categoria: "Paquetes ", imagen:"IMAGENES/doritos flamin.webp", precio: null},
-    { nombre: "Mani con sal", categoria: "Paquetes ", imagen:"IMAGENES/MANI_CON_SAL.webp", precio: null},
-    { nombre: "Mani con pasas", categoria: "Paquetes ", imagen:"IMAGENES/mani sal y pasa.webp", precio: null},
-    { nombre: "ManiMoto", categoria: "Paquetes ", imagen:"IMAGENES/mani moto.webp", precio: null},
-    { nombre: "Chokis Bolitas", categoria: "Paquetes ", imagen:"IMAGENES/CHOKIS_BOLITAS.webp", precio: null},
-    { nombre: "Gomitas paquete", categoria: "Paquetes ", imagen:"IMAGENES/gomitas.webp", precio: null},
-    { nombre: "Herpos", categoria: "Paquetes ", imagen:"IMAGENES/herpo.webp", precio: null},
-    { nombre: "Chocoramo", categoria: "Paquetes ", imagen:"IMAGENES/cohocorramo.webp", precio: null},
-    { nombre: "Gala", categoria: "Paquetes ", imagen:"IMAGENES/gala.webp", precio: null},
-    { nombre: "Gansito", categoria: "Paquetes ", imagen:"IMAGENES/gansito.webp", precio: null},
-    { nombre: "Chocoramo Barrita", categoria: "Paquetes ", imagen:"IMAGENES/CHOCORRAMO_BARRITA.webp", precio: null},
-    { nombre: "Achiras", categoria: "Paquetes ", imagen:"IMAGENES/achira.webp", precio: null},
-    { nombre: "Galletas Cocosette", categoria: "Paquetes", imagen:"IMAGENES/GALLETAS_COCOSETTE.webp", precio:null },
-    { nombre: "Cheese tris Grandes", categoria: "Paquetes", imagen:"IMAGENES/CHEESE_TRIS_GRANDE.webp", precio:null }
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("paquetes");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Paquetes");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Paquetes")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
-
     </script>
 
 </body>

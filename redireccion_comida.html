@@ -116,62 +116,63 @@
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
 
-  <div class="card-row" id="comida_rapida"></div>
+  <div class="card-row" id="Comida"></div>
+
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
       <script>
-/* --------------------------------------------- PRODUCTOS ---------------------------------------------------------- */
-      const productos = [
- { nombre: "Empanada", categoria: "Comida", imagen:"IMAGENES/EMPANADA.webp", precio: null },
-    { nombre: "Papa Rellena", categoria: "Comida", imagen:"IMAGENES/PAPA RELLENA.webp", precio: null},
-    { nombre: "Areburguer", categoria: "Comida", imagen:"IMAGENES/AREBURGER.webp", precio: null },
-    { nombre: "Hamburguesa", categoria: "Comida", imagen:"IMAGENES/HAMBURGUESA.webp", precio: null },
-    { nombre: "Pizza", categoria: "Comida", imagen:"IMAGENES/PIZZA.webp", precio: null },
-    { nombre: "Arepa de Queso", categoria: "Comida ", imagen:"IMAGENES/AREPA_QUESO.webp", precio: null },
-    { nombre: "Sandwich", categoria: "Comida", imagen:"IMAGENES/SANDWICH.webp", precio: null },
-    { nombre: "Pastel de Pollo", categoria: "Comida", imagen:"IMAGENES/PASTEL DE POLLO.webp", precio: null },
-    { nombre: "Perros", categoria: "Comida", imagen:"IMAGENES/PERRO.webp", precio: null },
-    { nombre: "Pastel de Yuca", categoria: "Comida", imagen:"IMAGENES/Pastel de Yuca.webp", precio: null },
-    { nombre: "Churros", categoria: "Comida", imagen:"IMAGENES/CHURRO.webp", precio: null },
-    { nombre: "Burritos", categoria: "Comida ", imagen:"IMAGENES/BURRITO.webp", precio: null },
-    { nombre: "Arepa de Huevo", categoria: "Comida", imagen:"IMAGENES/AREPA DE HUEVO.webp", precio: null },
-    { nombre: "Arepa de Jamon y Queso", categoria: "Comida", imagen:"IMAGENES/AREPA JAMÓN Y QUESO.webp", precio: null },
-    { nombre: "Sandwich Tajado de Jamon y Queso", categoria: "Comida", imagen:"IMAGENES/SANDWICH JAMÓN Y QUESO.webp", precio: null },
-    { nombre: "Sandwich de Pollo", categoria: "Comida", imagen:"IMAGENES/SANDWICH POLLO.webp", precio: null },
-    { nombre: "Arepa Blanca", categoria: "Comida", imagen:"IMAGENES/AREPA_SIN_SAL.webp", precio: null},
-    {nombre: "Changua", categoria: "Comida", imagen:"IMAGENES/CHANGUA.webp", precio:null },
-    { nombre: "Salchichon", categoria: "comida", imagen:"IMAGENES/Salchichon.webp", precio: null},
-    { nombre: "Pan solo", categoria: "Comida", imagen:"IMAGENES/Pan.webp", precio: null},
-    { nombre: "Huevo Cocido", categoria: "Comida", imagen:"IMAGENES/Huevo Cocido.webp", precio: null},
-    { nombre: "Tamales", categoria: "Comida", imagen:"IMAGENES/Tamal.webp", precio: null},
-    { nombre: "Huevo Rancheros", categoria: "Comida", imagen:"IMAGENES/Huevos con Salchicha.webp", precio: null},
-    { nombre: "Huevos al Gusto", categoria: "Comida ", imagen:"IMAGENES/Huevos al Gusto.webp", precio: null},
-    { nombre: "Huevpos Pericos con Salchicha", categoria: "Comida", imagen:"IMAGENES/Huevos Pericos con Salchicha.webp", precio: null},
-    { nombre: "Adicion Salchicha Ranchera", categoria: "Comida", imagen:"IMAGENES/ADICION_SALCHICHA_RANCHERA.webp", precio: null},
-    { nombre: "Lasaña", categoria: "Comida", imagen:"IMAGENES/LASAÑA_.webp", precio:null },
-    {nombre: "Pastel de Carne", categoria: "Comida", imagen:"IMAGENES/Pastel de Carne.webp", precio:null },
-    {nombre: "Tajada de Queso", categoria: "Comida", imagen:"IMAGENES/QUESO_TAJADO.webp", precio: null },
-    {nombre: "Salchichas ", categoria: "Comida", imagen:"IMAGENES/SALCHICHA.webp", precio:null }
-     ];
+// 🔥 Configuración Firebase (USA LA MISMA QUE YA TIENES)
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pJcW57wuSQXBf2lUbgjZrZxYVWaAH_0",
+  authDomain: "reservas-ea11f.firebaseapp.com",
+  projectId: "reservas-ea11f",
+  storageBucket: "reservas-ea11f.firebasestorage.app",
+  messagingSenderId: "377091524438",
+  appId: "1:377091524438:web:c0d8fb31ead8c0534d38f7"
+};
 
-/*--------------------------------------------- CODIGO PARA QUE APAREZCAN LOS PRODUCTOS -----------------------------------------*/
-  const contenedor = document.getElementById("comida_rapida");
 
-  productos.forEach(producto => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-card.innerHTML = `
-  <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
-  <div class="price">
-    ${producto.nombre}
-    ${
-      producto.precio !== null
-        ? `<br>$ ${producto.precio.toLocaleString("es-CO")}`
-        : ""
-    }
-  </div>
-`;
-    contenedor.appendChild(card);
+// 📦 CONTENEDOR
+const contenedor = document.getElementById("Comida");
+
+// 🔄 LEER PRODUCTOS
+db.collection("productos")
+  .where("categoria", "==", "Comida")
+  .where("activo", "==", true)
+  .get()
+  .then(snapshot => {
+    contenedor.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.imagen || 'IMAGENES/placeholder.webp'}" alt="${p.nombre}">
+        <div class="price">
+          ${p.nombre}
+          ${
+            p.precioActivo && p.precio
+              ? `<br>$ ${p.precio.toLocaleString("es-CO")}`
+              : ""
+          }
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error cargando productos:", error);
   });
+
 
     </script>
 
