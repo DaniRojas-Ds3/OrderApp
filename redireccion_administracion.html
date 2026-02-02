@@ -308,6 +308,7 @@ body {
 
     <button class="menu-btn" onclick="mostrar('productos')">➕ Agregar productos </button>
     <button class="menu-btn" onclick="mostrar('precios')">✏️ Editor de productos</button>
+    <button class="menu-btn" onclick="mostrar('eliminar')">✂️ Editor de productos</button>
     <button class="menu-btn" onclick="mostrar('pdf-reservas')">📄 Resumen reservas</button>
     <button class="menu-btn" onclick="mostrar('pdf-pqrs')">📄 Resumen PQRS</button>
   </aside>
@@ -316,10 +317,6 @@ body {
   <main class="content-area">
     <div class="content-box">
 
-      <div id="inicio" class="section active">
-        <h1>Panel de Administración</h1>
-        <p>Selecciona una opción del menú para comenzar.</p>
-      </div>
   <!--------------------------- SECCION DE AGREGAR PRODUCTOS ------------------------------------- -->
 
       <div id="productos" class="section">
@@ -436,13 +433,26 @@ body {
 </div>
 
 
-<!-------------------------------------------------- SECCION DE ----------------------------------------- --> 
+<!-------------------------------------------------- SECCION DE ELIMNINAR----------------------------------------- --> 
 
-      <div id="categorias" class="section">
-        <h2>Gestión de categorías</h2>
-        <p>Administrar categorías visibles en la web.</p>
-      </div>
+<div id="eliminar" class="section">
+  <h2>Eliminar Productos</h2>
+  <p>Elimina productos permanentemente de la base de datos.</p>
 
+  <input
+    type="text"
+    id="buscadorEliminar"
+    placeholder="🔍 Buscar producto..."
+    style="width:100%;padding:10px;margin:15px 0;border-radius:8px;"
+  >
+
+  <table style="width:100%;border-collapse:collapse;">
+    <tbody id="listaEliminarProductos"></tbody>
+  </table>
+</div>
+
+
+<!-------------------------------------------------- SECCION DE PDFS----------------------------------------- --> 
       <div id="pdf-reservas" class="section">
         <h2>Resumen de Reservas</h2>
         <button id="pdfBtn">📄 Generar PDF</button>
@@ -965,7 +975,77 @@ function cargarCategoriasEditor() {
     <option value="Dulceria">Dulceria</option>
   `;
 }
-/*----------------------------------CODIGO PARA SACAR EL LINK DE UNA IMAGEN DE DRIVE------------------------*/
+/*--------------------------------------------------------------ELIMINAR PRODUCTOS------------------------*/
+/*====================================================
+  ❌ ELIMINAR PRODUCTOS (MISMO DISEÑO QUE EDITOR)
+====================================================*/
+
+import {
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const listaEliminar = document.getElementById("listaEliminarProductos");
+const buscadorEliminar = document.getElementById("buscadorEliminar");
+
+// 🔥 MISMA CONSULTA QUE EL EDITOR
+onSnapshot(q, (snapshot) => {
+  listaEliminar.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const p = docSnap.data();
+
+    const fila = document.createElement("tr");
+    fila.dataset.categoria = (p.categoria || "").toLowerCase();
+
+    fila.innerHTML = `
+      <td class="fila-producto">
+        <span class="nombre-producto">${p.nombre}</span>
+        <small class="categoria-producto">${p.categoria || ""}</small>
+        <button class="btn-editar" onclick="eliminarProducto('${docSnap.id}', '${p.nombre}')">
+          ❌ Eliminar
+        </button>
+      </td>
+    `;
+
+    listaEliminar.appendChild(fila);
+  });
+});
+
+/* 🔍 BUSCADOR (IDÉNTICO AL EDITOR) */
+buscadorEliminar.addEventListener("input", () => {
+  const texto = buscadorEliminar.value.toLowerCase().trim();
+
+  listaEliminar.querySelectorAll("tr").forEach(fila => {
+    const nombre = fila
+      .querySelector(".nombre-producto")
+      .textContent
+      .toLowerCase();
+
+    const categoria = fila.dataset.categoria;
+
+    const coincide =
+      nombre.includes(texto) || categoria.includes(texto);
+
+    fila.style.display = coincide ? "" : "none";
+  });
+});
+
+/* 🧨 FUNCIÓN ELIMINAR */
+window.eliminarProducto = async function (id, nombre) {
+  const confirmar = confirm(`⚠️ ¿Seguro que deseas eliminar "${nombre}"?\n\nEsta acción NO se puede deshacer.`);
+
+  if (!confirmar) return;
+
+  try {
+    await deleteDoc(doc(db, "productos", id));
+    alert("✅ Producto eliminado correctamente");
+  } catch (error) {
+    console.error(error);
+    alert("❌ Error al eliminar el producto");
+  }
+};
+
+/*-------------------------------------------------------------------------------------------------------------*/
 
 window.volverALista = volverALista;
 window.guardarCambiosProducto = guardarCambiosProducto;
