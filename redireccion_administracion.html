@@ -260,9 +260,7 @@ body {
     padding: 16px 10px;
   }
 }
-#editarProducto {
-  display: none;
-}
+
 /*----------------------------------------------------------ESTILO DEL EDITOR--------------------------------------------*/
 #editarProducto {
   background: #fff;
@@ -308,7 +306,7 @@ body {
 
     <button class="menu-btn" onclick="mostrar('productos')">➕ Agregar productos </button>
     <button class="menu-btn" onclick="mostrar('precios')">✏️ Editor de productos</button>
-    <button class="menu-btn" onclick="mostrar('eliminar')">✂️ Editor de productos</button>
+    <button class="menu-btn" onclick="mostrar('eliminar')">✂️ Eliminar de productos</button>
     <button class="menu-btn" onclick="mostrar('pdf-reservas')">📄 Resumen reservas</button>
     <button class="menu-btn" onclick="mostrar('pdf-pqrs')">📄 Resumen PQRS</button>
   </aside>
@@ -406,7 +404,8 @@ body {
 </div>
 
 <!-- PANTALLA DE EDICIÓN -->
-<div id="editarProducto" class="section" style="display:none;">
+<div id="editarProducto" class="section">
+
   <button onclick="volverALista()">⬅ Volver</button>
 
   <h2>Editar producto</h2>
@@ -479,6 +478,9 @@ function mostrar(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
+// Mostrar sección por defecto al cargar la página
+mostrar("productos");
+
 
 // 👇 HACERLA GLOBAL PARA LOS BOTONES HTML
 window.mostrar = mostrar;
@@ -500,10 +502,12 @@ import {
   onSnapshot,
   doc,
   getDoc,
+  getDocs,        
   updateDoc,
   addDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 
 
 
@@ -758,7 +762,6 @@ async function guardarProducto() {
   const precio = Number(document.getElementById("precioProducto").value);
   const categoria = document.getElementById("categoriaProducto").value;
   const imagenInput = document.getElementById("imagen").value.trim();
-  const imagen = convertirLinkDrive(imagenInput);
   const productoActivo = document.getElementById("productoActivo").checked;
   const precioActivo = document.getElementById("precioActivo").checked;
   const activoReservas = document.getElementById("activoReservas").checked;
@@ -847,12 +850,16 @@ let productoEditandoId = null;
 window.editarProducto = function (id) {
   productoEditandoId = id;
 
-  document.getElementById("precios").style.display = "none";
-  document.getElementById("editarProducto").style.display = "block";
+  document.querySelectorAll('.section')
+    .forEach(s => s.classList.remove('active'));
+
+  document.getElementById("editarProducto")
+    .classList.add('active');
 
   cargarCategoriasEditor();
   cargarProducto(id);
 };
+
 /*--------------------------------------------------FUNCION BUSCADOR---------------------------------------------------------*/
 const buscador = document.getElementById("buscadorProductos");
 
@@ -882,9 +889,13 @@ buscador.addEventListener("input", () => {
 function volverALista() {
   productoEditandoId = null;
 
-  document.getElementById("editarProducto").style.display = "none";
-  document.getElementById("precios").style.display = "block";
+  document.querySelectorAll('.section')
+    .forEach(s => s.classList.remove('active'));
+
+  document.getElementById("precios")
+    .classList.add('active');
 }
+
 
 
 /*-----------------------------------------------CARGAR PRODUCTOS ---------------------------------------------------*/
@@ -946,7 +957,7 @@ async function guardarCambiosProducto() {
     activo: editActivo.checked,
     precioActivo: editPrecioActivo.checked,
     activoReservas: editActivoReservas.checked,
-    imagen: convertirLinkDrive(editImagen.value.trim()) || datosActuales.imagen,
+    imagen: editImagen.value.trim() || datosActuales.imagen,
     actualizado: serverTimestamp()
   });
 
@@ -1046,6 +1057,8 @@ window.eliminarProducto = async function (id, nombre) {
 };
 
 /*-------------------------------------------------------------------------------------------------------------*/
+
+
 
 window.volverALista = volverALista;
 window.guardarCambiosProducto = guardarCambiosProducto;
