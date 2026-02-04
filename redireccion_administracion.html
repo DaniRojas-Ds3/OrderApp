@@ -192,25 +192,6 @@ body {
   background: #ed1616;
 }
 
-.form-productos #mensaje {
-  margin-top: 14px;
-  text-align: center;
-  font-weight: 600;
-}
-
-/*---------------------------------------------ESTILO DEL MESAJE DE PRODUCTOS ----------------------------------------------*/
-.mensaje {
-  margin-top: 18px;
-  font-size: 16px;
-}
-
-.mensaje.exito {
-  color: #16a34a; /* verde */
-}
-
-.mensaje.error {
-  color: #dc2626; /* rojo */
-}
 /*--------------------------------------BOTONES DE DESCARGAR PDFS ---------------------------------------*/
 .pdf-btn {
   background: #d62828;
@@ -288,6 +269,37 @@ body {
   border-radius: 8px;
   border: 1px solid #ccc;
 }
+/*------------------------------------------------MENSAJES FLOTANTES-----------------------------*/
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 280px;
+  max-width: 90%;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+}
+
+/* visible */
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* tipos */
+.toast.success { background: #2ecc71; }
+.toast.error   { background: #e74c3c; }
+.toast.warn    { background: #f39c12; }
+
 
 
 
@@ -297,7 +309,8 @@ body {
 
 
 <body>
-
+  
+<!-------------------------------------------------------------------------------------------->>
 <div class="admin-layout">
 
   <!-- MENÚ -->
@@ -380,12 +393,12 @@ body {
   </button>
 </div>
 
-
-
-
-  <p id="mensaje"></p>
  
 </div>
+
+<!------------------------------------------------------------------------------------------------------------------------->
+<div id="toast" class="toast"></div>
+
  <!-------------------------------------------------- SECCION DE EDITAR DE PRODUCTOS----------------------------------------- --> 
 <div id="precios" class="section">
   <h2>Editor de Productos</h2>
@@ -767,30 +780,26 @@ async function guardarProducto() {
   const activoReservas = document.getElementById("activoReservas").checked;
 
 
-  const mensaje = document.getElementById("mensaje");
-  mensaje.textContent = "";
-  mensaje.className = "mensaje";
+if (!nombre || !precio || !categoria) {
+  mostrarToast("⚠️ Completa todos los campos obligatorios", "warn");
+  return;
+}
 
-  if (!nombre || !precio || !categoria) {
-    mensaje.textContent = "⚠️ Completa todos los campos obligatorios";
-    mensaje.classList.add("error");
-    return;
-  }
 
   try {
     await addDoc(collection(db, "productos"), {
       nombre,
       precio,
       categoria,
-      imagen: imagen || null,
+      imagen: imagenInput || null,
       activo: productoActivo,
       precioActivo: precioActivo,
       activoReservas: activoReservas,
       creado: new Date()
     });
 
-    mensaje.textContent = "✅ Producto guardado correctamente";
-    mensaje.classList.add("exito");
+mostrarToast("✅ Producto guardado correctamente", "success");
+
 
     // limpiar formulario
     document.getElementById("nombreProducto").value = "";
@@ -805,8 +814,7 @@ async function guardarProducto() {
 
   } catch (error) {
     console.error(error);
-    mensaje.textContent = "❌ Error al guardar el producto";
-    mensaje.classList.add("error");
+ mostrarToast("❌ Error al guardar el producto", "error");
   }
 }
 
@@ -1049,14 +1057,28 @@ window.eliminarProducto = async function (id, nombre) {
 
   try {
     await deleteDoc(doc(db, "productos", id));
-    alert("✅ Producto eliminado correctamente");
+    mostrarToast("🗑️ Producto eliminado correctamente", "success");
+
   } catch (error) {
     console.error(error);
-    alert("❌ Error al eliminar el producto");
+    mostrarToast("❌ Error al eliminar el producto", "error");
+
   }
 };
 
-/*-------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------MENSAJES-----------------------------------------------------------*/
+function mostrarToast(mensaje, tipo = "success", tiempo = 2500) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = mensaje;
+  toast.className = `toast show ${tipo}`;
+
+  setTimeout(() => {
+    toast.className = "toast";
+  }, tiempo);
+}
+
+
 
 
 
