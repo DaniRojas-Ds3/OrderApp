@@ -500,10 +500,10 @@ function renderizarProductos() {
     card.className = "card";
     card.innerHTML = `
       <img src="${encodeURI(prod.imagen)}" alt="${prod.nombre}">
-${prod.precioActivo 
-  ? `<p>$${prod.precio.toLocaleString("es-CO")}</p>` 
-  : `<p style="color:#999;"></p>`}
-
+      <h3>${prod.nombre}</h3>
+      ${prod.precioActivo 
+        ? `<p>$${prod.precio.toLocaleString("es-CO")}</p>` 
+        : ``}
       <button data-index="${i}" class="btn-agregar">Agregar al carrito</button>
     `;
     lista.appendChild(card);
