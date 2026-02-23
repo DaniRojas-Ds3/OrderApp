@@ -85,12 +85,13 @@
       transform: scale(1.05);
     }
 
-    .card img {
-      width: 100px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain; /* 👈 cambia cover por contain */
+  background-color: #fff; /* opcional para que no se vea vacío feo */
+  border-radius: 8px;
+}
 
     .price {
       margin-top: 8px;
