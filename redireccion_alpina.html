@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alpina</title>
+  <title>Lacteos</title>
   
   <style>
     body {
@@ -105,13 +105,13 @@
 <body>
 
   <div class="top-box">
-    <h2>Productos Alpina</h2> 
+    <h2>Lacteos</h2> 
   </div>
   <div class="back-button">
     <a href="index.html"><span class="arrow">←</span></a>
   </div>
   
-  <div class="card-row" id="Productos Alpina"></div>
+  <div class="card-row" id="Lacteos"></div>
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -133,11 +133,11 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // 📦 CONTENEDOR
-const contenedor = document.getElementById("Productos Alpina");
+const contenedor = document.getElementById("Lacteos");
 
 // 🔄 LEER PRODUCTOS
 db.collection("productos")
-  .where("categoria", "==", "Productos Alpina")
+  .where("categoria", "==", "Lacteos")
   .where("activo", "==", true)
   .get()
   .then(snapshot => {
