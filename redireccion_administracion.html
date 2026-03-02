@@ -14,10 +14,9 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: linear-gradient(135deg, #ffcf70, #fadda4);
+  background: #f4f6fb;
   height: 100vh;
 }
-
 /* ===== LAYOUT ===== */
 .admin-layout {
   display: flex;
@@ -30,13 +29,13 @@ body {
 /* ===== MENÚ IZQUIERDO ===== */
 .admin-menu {
   width: 100%;
-  background: #ffffff;
-  padding: 16px;
+  background: linear-gradient(135deg, #38bdf8, #60a5fa);
+  padding: 18px;
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 14px;
   overflow-x: auto;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 25px rgba(56,189,248,0.35);
 }
 
 
@@ -47,25 +46,26 @@ body {
 
 /* BOTONES MENU */
 .menu-btn {
-  background: #d62828;
-  color: white;
-  border: none;
-  padding: 14px 20px;
+  background: rgba(255,255,255,0.25);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 14px 22px;
   font-size: 15px;
-  border-radius: 14px;
+  border-radius: 30px;
   cursor: pointer;
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  backdrop-filter: blur(8px);
   transition: all 0.25s ease;
 }
 
 .menu-btn:hover {
-  background: #ff914d;
+  background: white;
+  color: #2563eb;
   transform: translateY(-2px);
 }
-
 
 /* ===== ÁREA DE CONTENIDO ===== */
 .content-area {
@@ -75,10 +75,10 @@ body {
 }
 
 .content-box {
-  background: white;
-  padding: 35px;
-  border-radius: 22px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   min-height: calc(100vh - 60px);
 }
 
@@ -134,12 +134,12 @@ body {
   /*---------------------------------------------------ESTILOS DEL FORMULARIO DE AGREGAR PRODUCTO----------------------------------------*/
   /* ===== FORMULARIO AGREGAR PRODUCTOS ===== */
 .form-productos {
-  max-width: 420px;
+  max-width: 480px;
   margin: 0 auto;
-  background: #eaddcb;
-  padding: 28px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 24px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
 }
 
 .form-productos .form-title {
@@ -161,35 +161,40 @@ body {
 .form-productos input,
 .form-productos select {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 6px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
   font-size: 15px;
+  background: #f9fafb;
+  transition: 0.2s ease;
 }
 
 .form-productos input:focus,
 .form-productos select:focus {
   outline: none;
-  border-color: #7b5cff;
+  border-color: #2563eb;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
 }
 
 .form-productos button {
   width: 100%;
-  margin-top: 22px;
-  padding: 14px;
+  margin-top: 25px;
+  padding: 15px;
   border: none;
-  border-radius: 12px;
-  background: #ff0101;
+  border-radius: 30px;
+  background: #2563eb;
   color: white;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .form-productos button:hover {
-  background: #ed1616;
+  background: #1d4ed8;
+  transform: translateY(-2px);
 }
 
 /*--------------------------------------BOTONES DE DESCARGAR PDFS ---------------------------------------*/
@@ -212,27 +217,26 @@ body {
 /*-------------------------------------------------------ESTILO DE SECCION DE EDITAR PRODUCTOS-----------------------------------*/
 /* ---------- TABLA ADMIN ---------- */
 .fila-producto {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
   align-items: center;
   padding: 14px;
   border-bottom: 1px solid #eee;
+  gap: 10px;
 }
 
 .nombre-producto {
-  font-size: 16px;
+  text-align: left;
   font-weight: 500;
 }
 
-.btn-editar {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
+.categoria-producto {
+  text-align: left;
+  color: #666;
 }
 
-.btn-editar:hover {
-  color: #ff9800;
+.btn-editar {
+  justify-self: end;
 }
 
 /* móvil */
@@ -348,9 +352,99 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
+/* ===== CARDS DE ANUNCIOS ===== */
 
+.card-anuncio {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
 
+.img-anuncio {
+  width: 140px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+}
 
+.info-anuncio {
+  flex: 1;
+}
+
+.info-anuncio h4 {
+  margin: 0 0 10px 0;
+}
+
+.btn-eliminar-anuncio {
+  background: #d62828;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-eliminar-anuncio:hover {
+  background: #b71c1c;
+}
+/* INPUT FILE PREMIUM */
+input[type="file"] {
+  width: 100%;
+  padding: 18px;
+  border-radius: 18px;
+  border: 2px dashed #93c5fd;
+  background: #eff6ff;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+input[type="file"]:hover {
+  background: #dbeafe;
+}
+
+input[type="file"]::file-selector-button {
+  background: #38bdf8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-right: 15px;
+  transition: 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: #0ea5e9;
+}
+/* BOTONES PDF MODERNOS */
+
+.section .btn-descarga {
+  padding: 15px 28px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #38bdf8, #60a5fa) !important;
+  color: white !important;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(56,189,248,0.35);
+  width: auto !important;
+}
+
+.section .btn-descarga:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(56,189,248,0.45);
+}
 </style>
 </head>
 
@@ -370,6 +464,7 @@ body {
     <button class="menu-btn" onclick="mostrar('eliminar')">✂️ Eliminar de productos</button>
     <button class="menu-btn" onclick="mostrar('pdf-reservas')">📄 Resumen reservas</button>
     <button class="menu-btn" onclick="mostrar('pdf-pqrs')">📄 Resumen PQRS</button>
+    <button class="menu-btn" onclick="mostrar('anuncios')">📢 Anuncios</button>
   </aside>
 
   <!-- CONTENIDO -->
@@ -530,15 +625,46 @@ body {
 <!-------------------------------------------------- SECCION DE PDFS----------------------------------------- --> 
       <div id="pdf-reservas" class="section">
         <h2>Resumen de Reservas</h2>
-        <button id="pdfBtn">📄 Generar PDF</button>
+        <button id="pdfBtn" class="btn-descarga">
+  📄 Generar PDF
+</button>
       </div>
 
       <div id="pdf-pqrs" class="section">
         <h2>Resumen de PQRS</h2>
-        <button id="pqrBtn">📄 Generar PDF</button>
+        <button id="pqrBtn" class="btn-descarga">
+  📄 Generar PDF
+</button>
       </div>
+<!-------------------------------------------------- SECCION DE ANUNCIOS 📣📣📣📣📣📣📣----------------------------------------- --> 
+<div id="anuncios" class="section">
+  <h2>Gestión de Anuncios</h2>
 
-    </div>
+  <div class="form-productos">
+    <h2>📢 Publicar anuncio</h2>
+
+    <label>Título</label>
+    <input type="text" id="tituloAnuncio" placeholder="Ej: Promo 2x1">
+
+    <label>Imagen</label>
+    <input type="file" id="imagenAnuncio" accept="image/*">
+
+    <button type="button" onclick="publicarAnuncio()">
+      Publicar anuncio
+    </button>
+  </div>
+
+  <hr style="margin:30px 0">
+
+  <h3>Anuncios publicados</h3>
+  <div id="listaAnunciosAdmin"></div>
+</div>
+
+
+
+
+
+    </div> <!--------------------------------------CONTENT BOX -->
   </main>
 
 </div>
@@ -913,6 +1039,11 @@ fila.innerHTML = `
 
     listaAdmin.appendChild(fila);
   });
+
+  // 🔥 SOLUCIÓN
+  if (buscador.value.trim() !== "") {
+    buscador.dispatchEvent(new Event("input"));
+  }
 });
 
 /*----------------------------------------------- FUNCION EDITAR---------------------------------------------------*/
@@ -1092,6 +1223,9 @@ onSnapshot(q, (snapshot) => {
 
     listaEliminar.appendChild(fila);
   });
+  if (buscadorEliminar.value.trim() !== "") {
+  buscadorEliminar.dispatchEvent(new Event("input"));
+}
 });
 
 /* 🔍 BUSCADOR (IDÉNTICO AL EDITOR) */
@@ -1162,10 +1296,115 @@ function mostrarToast(mensaje, tipo = "success", tiempo = 2500) {
   }, tiempo);
 }
 
+/* =========================================
+   📢 SISTEMA DE ANUNCIOS (FIRESTORE + CLOUDINARY)
+========================================= */
 
+const CLOUD_NAME = "dyr1lufbt";
+const UPLOAD_PRESET = "anuncios_unsigned";
 
+async function subirImagenCloudinary(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", UPLOAD_PRESET);
 
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+    {
+      method: "POST",
+      body: formData
+    }
+  );
 
+  const data = await res.json();
+  return data.secure_url;
+}
+
+async function publicarAnuncio() {
+  const titulo = document.getElementById("tituloAnuncio").value.trim();
+  const imagenFile = document.getElementById("imagenAnuncio").files[0];
+
+  if (!titulo || !imagenFile) {
+    mostrarToast("⚠️ Completa todos los campos", "warn");
+    return;
+  }
+
+  try {
+    mostrarToast("Subiendo imagen...", "warn");
+
+    const imageUrl = await subirImagenCloudinary(imagenFile);
+
+    await addDoc(collection(db, "anuncios"), {
+      titulo,
+      imagen: imageUrl,
+      activo: true,
+      creado: serverTimestamp()
+    });
+
+    mostrarToast("✅ Anuncio publicado", "success");
+
+    document.getElementById("tituloAnuncio").value = "";
+    document.getElementById("imagenAnuncio").value = "";
+    document.getElementById("anuncioActivo").checked = true;
+
+  } catch (error) {
+    console.error(error);
+    mostrarToast("❌ Error al publicar anuncio", "error");
+  }
+}
+
+const listaAnunciosAdmin = document.getElementById("listaAnunciosAdmin");
+
+const anunciosQuery = query(
+  collection(db, "anuncios"),
+  orderBy("creado", "desc")
+);
+
+onSnapshot(anunciosQuery, (snapshot) => {
+  listaAnunciosAdmin.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const a = docSnap.data();
+
+    const div = document.createElement("div");
+ div.className = "card-anuncio";
+
+div.innerHTML = `
+  <img src="${a.imagen}" class="img-anuncio">
+  <div class="info-anuncio">
+    <h4>${a.titulo}</h4>
+    <button class="btn-eliminar-anuncio"
+      onclick="eliminarAnuncio('${docSnap.id}')">
+      🗑 Eliminar
+    </button>
+  </div>
+`;
+
+    listaAnunciosAdmin.appendChild(div);
+  });
+});
+
+/*---------------------------------------------------------ACTIVAR Y DESACTIVAR ANUNCIOS -------------------------------------------*/
+async function toggleAnuncio(id, estadoActual) {
+  const ref = doc(db, "anuncios", id);
+
+  await updateDoc(ref, {
+    activo: !estadoActual
+  });
+
+  mostrarToast("Estado actualizado", "success");
+}
+
+/*-----------------------------------------------------------ELIMINAR ANUNCIOS ---------------------------------------------------*/
+
+async function eliminarAnuncio(id) {
+  await deleteDoc(doc(db, "anuncios", id));
+  mostrarToast("🗑️ Anuncio eliminado", "success");
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+window.eliminarAnuncio = eliminarAnuncio;
+window.toggleAnuncio = toggleAnuncio;
+window.publicarAnuncio = publicarAnuncio;
 window.volverALista = volverALista;
 window.guardarCambiosProducto = guardarCambiosProducto;
 window.cargarProducto = cargarProducto;
