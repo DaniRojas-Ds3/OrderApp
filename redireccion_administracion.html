@@ -236,7 +236,9 @@ body {
 }
 
 .btn-editar {
-  justify-self: end;
+  background: linear-gradient(135deg, #38bdf8, #60a5fa);
+  color: white;
+  box-shadow: 0 8px 20px rgba(56,189,248,0.35);
 }
 
 /* móvil */
@@ -345,7 +347,7 @@ body {
 }
 
 .btn-eliminar {
-  background: #d62828;
+  background: #407efa;
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -445,6 +447,60 @@ input[type="file"]::file-selector-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 30px rgba(56,189,248,0.45);
 }
+
+/* ===== BOTONES MODERNOS GLOBALES ===== */
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 30px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* 👈 ESTO centra el texto */
+  gap: 8px;
+
+  width: fit-content; /* 👈 ahora el botón se adapta al texto */
+}
+
+/* Azul principal */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+  box-shadow: 0 8px 20px rgba(37,99,235,0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(56,189,248,0.45);
+}
+
+/* Rojo eliminar */
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 8px 20px rgba(220,38,38,0.35);
+}
+
+.btn-danger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(220,38,38,0.45);
+}
+
+/* Gris cancelar */
+.btn-secondary {
+  background: #e5e7eb;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
 </style>
 </head>
 
@@ -533,9 +589,9 @@ input[type="file"]::file-selector-button:hover {
 
 
   <!-- BOTÓN -->
-  <button type="button" onclick="guardarProducto()">
-    Guardar producto
-  </button>
+<button type="button" class="btn btn-primary" onclick="guardarProducto()">
+  💾 Guardar producto
+</button>
 </div>
 
  
@@ -585,8 +641,13 @@ input[type="file"]::file-selector-button:hover {
   <input type="url" id="editImagen">
 
   <br><br>
-  <button onclick="guardarCambiosProducto()">💾 Guardar</button>
-  <button onclick="volverALista()">❌ Cancelar</button>
+<button class="btn btn-primary" onclick="guardarCambiosProducto()">
+  💾 Guardar
+</button>
+
+<button class="btn btn-secondary" onclick="volverALista()">
+  Cancelar
+</button>
 </div>
 
 
@@ -615,8 +676,8 @@ input[type="file"]::file-selector-button:hover {
     <p id="textoEliminar"></p>
 
     <div class="modal-actions">
-      <button id="btnCancelar" class="btn-cancelar">Cancelar</button>
-      <button id="btnConfirmar" class="btn-eliminar">Eliminar</button>
+<button id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+<button id="btnConfirmar" class="btn btn-danger">Eliminar</button>
     </div>
   </div>
 </div>
@@ -1031,7 +1092,7 @@ fila.innerHTML = `
   <td class="fila-producto">
     <span class="nombre-producto">${p.nombre}</span>
     <small class="categoria-producto">${p.categoria || ""}</small>
-    <button class="btn-editar" onclick="editarProducto('${doc.id}')">
+    <button class="btn btn-primary" onclick="editarProducto('${doc.id}')">
       ✏️ Editar
     </button>
   </td>
@@ -1217,7 +1278,7 @@ onSnapshot(q, (snapshot) => {
       <td class="fila-producto">
         <span class="nombre-producto">${p.nombre}</span>
         <small class="categoria-producto">${p.categoria || ""}</small>
-        <button class="btn-editar" onclick="eliminarProducto('${docSnap.id}', '${p.nombre}')">
+        <button class="btn btn-danger" onclick="eliminarProducto('${docSnap.id}', '${p.nombre}')">
           ❌ Eliminar
         </button>
       </td>
