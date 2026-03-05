@@ -347,7 +347,7 @@ body {
 }
 
 .btn-eliminar {
-  background: #407efa;
+  background: #d62828;
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -530,9 +530,6 @@ input[type="file"]::file-selector-button:hover {
   <!--------------------------- SECCION DE AGREGAR PRODUCTOS ------------------------------------- -->
 
       <div id="productos" class="section">
-        <h2>Agregar Productos</h2>
-        <p>Gestión completa de productos.</p>
-        <h2>Agregar producto</h2>
 <div class="form-productos">
   <h2>➕ Agregar producto</h2>
 
@@ -566,6 +563,10 @@ input[type="file"]::file-selector-button:hover {
     id="imagen"
     placeholder="https://ejemplo.com/imagen.jpg"
   />
+
+  <label>O subir imagen desde tu dispositivo (opcional)</label>
+  <input type="file" id="imagenArchivo" accept="image/*">
+
 </div>
 
 
@@ -639,6 +640,9 @@ input[type="file"]::file-selector-button:hover {
 
   <label>Imagen</label>
   <input type="url" id="editImagen">
+
+  <label>O subir nueva imagen (opcional)</label>
+  <input type="file" id="editImagenArchivo" accept="image/*">
 
   <br><br>
 <button class="btn btn-primary" onclick="guardarCambiosProducto()">
@@ -1022,35 +1026,41 @@ for (const [usuario, pedidos] of Object.entries(usuarios)) {
 
     /*---------------------------------------------------- SCRIPT DE AGREGAR LOS PRODUCTOS --------------------------------------*/
 async function guardarProducto() {
-  const nombre = document.getElementById("nombreProducto").value.trim();
-  const precio = Number(document.getElementById("precioProducto").value);
-  const categoria = document.getElementById("categoriaProducto").value;
-  const imagenInput = document.getElementById("imagen").value.trim();
-  const productoActivo = document.getElementById("productoActivo").checked;
-  const precioActivo = document.getElementById("precioActivo").checked;
-  const activoReservas = document.getElementById("activoReservas").checked;
-
-
-if (!nombre || !precio || !categoria) {
-  mostrarToast("⚠️ Completa todos los campos obligatorios", "warn");
-  return;
-}
-
-
   try {
+
+    const nombre = document.getElementById("nombreProducto").value.trim();
+    const precio = Number(document.getElementById("precioProducto").value);
+    const categoria = document.getElementById("categoriaProducto").value;
+    const imagenInput = document.getElementById("imagen").value.trim();
+    const imagenFile = document.getElementById("imagenArchivo").files[0];
+    const productoActivo = document.getElementById("productoActivo").checked;
+    const precioActivo = document.getElementById("precioActivo").checked;
+    const activoReservas = document.getElementById("activoReservas").checked;
+
+    if (!nombre || !precio || !categoria) {
+      mostrarToast("⚠️ Completa todos los campos obligatorios", "warn");
+      return;
+    }
+
+    let imageUrl = imagenInput || null;
+
+    if (imagenFile) {
+      mostrarToast("Subiendo imagen...", "warn");
+      imageUrl = await subirImagenCloudinary(imagenFile);
+    }
+
     await addDoc(collection(db, "productos"), {
       nombre,
       precio,
       categoria,
-      imagen: imagenInput || null,
+      imagen: imageUrl,
       activo: productoActivo,
       precioActivo: precioActivo,
       activoReservas: activoReservas,
       creado: new Date()
     });
 
-mostrarToast("✅ Producto guardado correctamente", "success");
-
+    mostrarToast("✅ Producto guardado correctamente", "success");
 
     // limpiar formulario
     document.getElementById("nombreProducto").value = "";
@@ -1059,13 +1069,12 @@ mostrarToast("✅ Producto guardado correctamente", "success");
     document.getElementById("productoActivo").checked = true;
     document.getElementById("precioActivo").checked = true;
     document.getElementById("imagen").value = "";
+    document.getElementById("imagenArchivo").value = "";
     document.getElementById("activoReservas").checked = false;
-
-    
 
   } catch (error) {
     console.error(error);
- mostrarToast("❌ Error al guardar el producto", "error");
+    mostrarToast("❌ Error al guardar el producto", "error");
   }
 }
 
@@ -1207,6 +1216,14 @@ async function guardarCambiosProducto() {
   const editPrecioActivo = document.getElementById("editPrecioActivo");
   const editActivoReservas = document.getElementById("editActivoReservas");
   const editImagen = document.getElementById("editImagen");
+  const editImagenFile = document.getElementById("editImagenArchivo").files[0];
+
+let nuevaImagen = editImagen.value.trim() || datosActuales.imagen;
+
+if (editImagenFile) {
+  mostrarToast("Subiendo nueva imagen...", "warn");
+  nuevaImagen = await subirImagenCloudinary(editImagenFile);
+}
 
   const ref = doc(db, "productos", productoEditandoId);
   const snap = await getDoc(ref);
@@ -1221,7 +1238,7 @@ async function guardarCambiosProducto() {
     activo: editActivo.checked,
     precioActivo: editPrecioActivo.checked,
     activoReservas: editActivoReservas.checked,
-    imagen: editImagen.value.trim() || datosActuales.imagen,
+    imagen: nuevaImagen,
     actualizado: serverTimestamp()
   });
 
