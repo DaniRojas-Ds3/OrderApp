@@ -297,7 +297,7 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import { db } from "./firebase.js";
+import { db, guardarReserva } from "./firebase.js";
 let productos = [];
 async function cargarProductosReservas() {
   try {
@@ -686,10 +686,10 @@ function abrirFormularioReserva() {
   `;
   document.body.appendChild(formularioReserva);
 
-  const cerrarForm = formularioReserva.querySelector("#cerrarForm");
-  const tipoPersona = formularioReserva.querySelector("#tipoPersona");
-  const campoJornada = formularioReserva.querySelector("#campoJornada");
-  const btnEnviar = reservaForm.querySelector("button[type='submit']");
+const cerrarForm = formularioReserva.querySelector("#cerrarForm");
+const tipoPersona = formularioReserva.querySelector("#tipoPersona");
+const campoJornada = formularioReserva.querySelector("#campoJornada");
+const reservaForm = formularioReserva.querySelector("#reservaForm");
 
 
   cerrarForm.addEventListener("click", () => formularioReserva.style.display = "none");
