@@ -13,6 +13,7 @@ body {
 
 /* ---- Encabezado ---- */
 header {
+  
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -55,7 +56,7 @@ header h1 img {
 
 /* ---- Tarjetas ---- */
 .productos {
-  margin-top: 60px;
+  margin-top: 140px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
@@ -193,65 +194,39 @@ header h1 img {
   padding-bottom: 5px;
 }
 
-/* ---- Back Button ---- */
-.back-button {
-  position: fixed;
-  top: 120px;
-  left: 1455px;
+/* ---- Botón volver ---- */
+
+.back-button{
+  position: fixed;          /* se fija a la pantalla */
+  right: 20px;              /* lado derecho */
+  top: 28%;                 /* altura entre header y productos */
+  transform: translateY(-50%);
   z-index: 1000;
 }
 
-.back-button a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 55px;
-  height: 35px;
-  background-color: white;
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  border: 2px solid black;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+.back-button a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:white;
+  color:#a62929;
+
+  padding:10px 18px;
+  border-radius:25px;
+
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+
+  box-shadow:0 3px 8px rgba(0,0,0,0.2);
+  transition:0.25s;
 }
 
-.back-button .arrow {
-  font-size: 3rem;
-  transform: translateY(-6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.back-button a:hover {
-  transform: scale(1.1);
-}
-
-/* ---- Responsive ajustes ---- */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  .card img {
-    height: 160px;
-  }
-
-  .back-button {
-    top: 170px;
-    left: 353px;
-  }
-
-  .back-button a {
-    width: 40px;
-    height: 40px;
-  }
-
-  .back-button .arrow {
-    font-size: 2.3rem;
-    transform: translateY(-1px);
-  }
+.back-button a:hover{
+  background:#a62929;
+  color:white;
+  transform:scale(1.05);
 }
 
 
@@ -265,9 +240,12 @@ header h1 img {
   </header>
 
   <section class="productos" id="listaProductos"></section>
-    <div class="back-button">
-    <a href="index.html"><span class="arrow">←</span></a>
-  </div>
+
+<div class="back-button">
+  <a href="index.html">
+    <span></span> Volver
+  </a>
+</div>
   
 
   <!-- 🛒 Botón flotante del carrito -->

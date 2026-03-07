@@ -4,26 +4,34 @@
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OrderApp</title>
+  <title>OrderPage</title>
+ <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
   <link rel="icon" href="IMAGENES/FAVICON.png" type="image/x-icon">
 
   <style>
+.menu-btn {
+  position: absolute;
+  right: 25px;
+}
+
 body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, sans-serif;
       background: #fadda4; 
 }
-    header {
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      border-bottom: 3px dashed #000000;
-    }
+header {
+  position: relative;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centramos contenido */
+  padding: 0 1.5rem;
+  height: 130px;
+  border-bottom: 3px dashed #000000;
+}
     header h1 {
       color: #a62929;
-      font-size: 4rem;
+      font-size: 3 rem;
       margin: 0;
     }
 
@@ -407,7 +415,86 @@ body.menu-cerrado::before {
     font-size: 1.2rem;
   }
 }
+/* ================= DISEÑO ESCRITORIO ================= */
 
+@media (min-width: 1024px) {
+
+  .items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 40px 80px;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .item img {
+    width: 100px;
+    height: 100px;
+    margin: 0 0 15px 0;
+  }
+
+  .item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  }
+
+  .item-info h2 {
+    font-size: 1.4rem;
+  }
+
+}
+/*------------------------------------------------LOGO-----------------------------------------*/
+.brand {
+  position: relative;
+  display: flex;
+  align-items: center;   /* centra verticalmente */
+  justify-content: center; /* centra horizontalmente el titulo */
+  height: 100%;
+}
+
+/* LOGO */
+.logo {
+  position: absolute;
+  left: -150px;
+  height: 120px;
+  width: auto;
+}
+
+/* TITULO */
+.titulo {
+  margin: 0;
+  font-size: 3rem;
+  color: #a62929;
+  font-family: 'Satisfy', cursive;
+}
+
+/* ================= ANUNCIO AJUSTADO PARA COMPUTADOR ================= */
+
+@media (min-width: 1024px) {
+
+.anuncio-modal{
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  display: inline-block;
+}
+
+  .anuncio-modal img{
+    width: 100%;
+    max-height: 80vh;   /* evita que la imagen sea gigante */
+    object-fit: contain;
+  }
+
+}
   </style>
 
 
@@ -418,7 +505,10 @@ body.menu-cerrado::before {
 <div id="anunciosPublicos"></div>
 <!------------------------------------------------------------------------------------------------------------>
   <header>
-    <h1> <img src="IMAGENES/LOGO.webp" style="width: 60px;;height: 60px; ;"> OrderApp</h1>
+  <div class="brand">
+  <img src="IMAGENES/delixia_logo.png" class="logo">
+  <h1 class="titulo">OrderPage</h1>
+</div>
 <div class="menu-btn">
   <span class="dot"></span>
   <span class="dot"></span>
