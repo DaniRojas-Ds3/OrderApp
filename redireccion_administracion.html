@@ -1200,7 +1200,11 @@ async function cargarProducto(id) {
   editActivo.checked = !!p.activo;
   editPrecioActivo.checked = !!p.precioActivo;
   editActivoReservas.checked = !!p.activoReservas;
+  if (p.tipoImagen === "url") {
   editImagen.value = p.imagen || "";
+} else {
+  editImagen.value = ""; // 👈 no mostrar URL si fue subida
+}
 }
 
 
@@ -1208,7 +1212,6 @@ async function cargarProducto(id) {
 async function guardarCambiosProducto() {
   if (!productoEditandoId) return;
 
-  // 🔥 obtener elementos AQUÍ también
   const editNombre = document.getElementById("editNombre");
   const editCategoria = document.getElementById("editCategoria");
   const editPrecio = document.getElementById("editPrecio");
@@ -1218,18 +1221,33 @@ async function guardarCambiosProducto() {
   const editImagen = document.getElementById("editImagen");
   const editImagenFile = document.getElementById("editImagenArchivo").files[0];
 
-let nuevaImagen = editImagen.value.trim() || datosActuales.imagen;
-
-if (editImagenFile) {
-  mostrarToast("Subiendo nueva imagen...", "warn");
-  nuevaImagen = await subirImagenCloudinary(editImagenFile);
-}
-
   const ref = doc(db, "productos", productoEditandoId);
   const snap = await getDoc(ref);
   if (!snap.exists()) return;
 
-  const datosActuales = snap.data();
+  const datosActuales = snap.data(); // 👈 MOVER AQUÍ ARRIBA
+
+let nuevaImagen = datosActuales.imagen; // 👈 mantener por defecto
+
+// 👉 Si escribió una URL nueva
+if (editImagen.value.trim() !== "") {
+  nuevaImagen = editImagen.value.trim();
+}
+
+// 👉 Si borró la URL (y antes era URL)
+if (
+  editImagen.value.trim() === "" &&
+  datosActuales.tipoImagen === "url" &&
+  !editImagenFile
+) {
+  nuevaImagen = null;
+}
+
+// 👉 Si subió archivo (prioridad máxima)
+if (editImagenFile) {
+  mostrarToast("Subiendo nueva imagen...", "warn");
+  nuevaImagen = await subirImagenCloudinary(editImagenFile);
+}
 
   await updateDoc(ref, {
     nombre: editNombre.value.trim(),
@@ -1239,9 +1257,11 @@ if (editImagenFile) {
     precioActivo: editPrecioActivo.checked,
     activoReservas: editActivoReservas.checked,
     imagen: nuevaImagen,
+    tipoImagen: editImagenFile ? "archivo" : (editImagen.value.trim() ? "url" : "ninguna"),
     actualizado: serverTimestamp()
   });
 
+  mostrarToast("✅ Producto actualizado", "success");
   volverALista();
 }
 
