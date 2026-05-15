@@ -1,0 +1,131 @@
+
+/* =========================================================
+   BOTONES GLOBALES
+========================================================= */
+
+.btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 12px 22px;
+
+  border: none;
+
+  border-radius: 30px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+
+
+/* =========================================================
+   BOTÓN PRIMARIO
+========================================================= */
+
+.btn-primary {
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #3b82f6
+  );
+
+  color: #fff;
+
+  box-shadow:
+    0 8px 20px rgba(37,99,235,0.35);
+}
+
+
+
+.btn-primary:hover {
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(56,189,248,0.45);
+}
+
+
+
+/* =========================================================
+   BOTÓN SECUNDARIO
+========================================================= */
+
+.btn-secondary {
+
+  background: #e5e7eb;
+
+  color: #333;
+}
+
+
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+
+
+/* =========================================================
+   BOTÓN ELIMINAR
+========================================================= */
+
+.btn-danger {
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color: #fff;
+
+  box-shadow:
+    0 8px 20px rgba(220,38,38,0.35);
+}
+
+
+
+.btn-danger:hover {
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(220,38,38,0.45);
+}
+
+
+
+/* =========================================================
+   ESPACIADO BOTÓN GUARDAR
+========================================================= */
+
+#btnGuardarProducto {
+  margin-top: 70px;
+}
+
+/* =========================================================
+   BOTONES CONFIGURACIÓN
+========================================================= */
+
+#btnGuardarConfigReservas,
+#btnGuardarConfigBreak {
+  width: fit-content;
+
+  margin: 35px auto 0 auto;
+
+  display: flex;
+}

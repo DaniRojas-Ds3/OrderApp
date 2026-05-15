@@ -1,0 +1,13 @@
+
+/* =========================================================
+   ADMIN CSS PRINCIPAL
+========================================================= */
+
+@import url("./layoutAdmin.css");
+@import url("./sidebar.css");
+@import url("./formulariosAdmin.css");
+@import url("./botones.css");
+@import url("./cardsAdmin.css");
+@import url("./anuncios.css");
+@import url("./reportes.css");
+@import url("./responsive.css");

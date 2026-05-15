@@ -1,770 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OrderPage</title>
+
+  <!-- ================= META ================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Reservas | OrderPage</title>
+
+  <!-- ================= FUENTES ================= -->
   <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@700&display=swap" rel="stylesheet">
-  <link rel="icon" href="IMAGENES/FAVICON.png" type="image/x-icon">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-}
 
-/* ---- Encabezado ---- */
-header {
-  
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 3px dashed #000000;
-  flex-wrap: wrap; /* permite adaptarse en móviles */
-  text-align: center;
-}
+  <!-- ================= FAVICON ================= -->
+  <link rel="icon" href="IMAGENES/FAVICON.png">
 
-header h1 {
-  color: #a62929;
-  font-size: 3rem;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+<!-- ================= CSS GLOBAL ================= -->
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
 
-header h1 img {
-  width: 60px;
-  height: 60px;
-}
+<!-- ================= COMPONENTE TARJETAS ================= -->
+<link rel="stylesheet" href="css/card.css">
+<link rel="stylesheet" href="css/alerts.css">
 
-/* ---- Contador ---- */
-.contador {
-  position: fixed;
-  top: 15%;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
-  text-align: center;
-  padding: 0.7rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  z-index: 1000;
-  font-size: 1.5rem;
-}
+<!-- ================= CSS EXCLUSIVO RESERVAS ================= -->
+<link rel="stylesheet" href="css/reservas.css">
 
-/* ---- Tarjetas ---- */
-.productos {
-  margin-top: 140px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 1rem;
-  justify-items: center; /* centra las tarjetas */
-}
-
-.card {
-  background: #ffffff;
-  border: 2px solid #000000;
-  border-radius: 12px;
-  max-width: 260px;
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.price {
-  margin-top: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #a62929;
-}
-
-.card h3 {
-  color: #a62929;
-  margin: 10px 0 5px;
-}
-
-.card p {
-  font-weight: bold;
-}
-
-.card button {
-  background: #a62929;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 15px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.card button:disabled {
-  background: gray;
-  cursor: not-allowed;
-}
-
-/* ---- Modal ---- */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  color: #a62929;
-}
-
-.confirmacion {
-  background: #a62929;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* ---- Carrito ---- */
-.carrito-boton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #a62929;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: transform 0.2s;
-}
-
-.carrito-boton:hover {
-  transform: scale(1.1);
-}
-
-/* 🛍️ Lista carrito */
-#carritoLista div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-}
-
-/* ---- Botón volver ---- */
-
-.back-button{
-  position: fixed;          /* se fija a la pantalla */
-  right: 20px;              /* lado derecho */
-  top: 28%;                 /* altura entre header y productos */
-  transform: translateY(-50%);
-  z-index: 1000;
-}
-
-.back-button a{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:white;
-  color:#a62929;
-
-  padding:10px 18px;
-  border-radius:25px;
-
-  font-size:14px;
-  font-weight:600;
-  text-decoration:none;
-
-  box-shadow:0 3px 8px rgba(0,0,0,0.2);
-  transition:0.25s;
-}
-
-.back-button a:hover{
-  background:#a62929;
-  color:white;
-  transform:scale(1.05);
-}
-
-
-  </style>
 </head>
-<body>
-  <div class="contador" id="contador"></div>
 
+<body>
+
+  <!-- ===================================================== -->
+  <!-- CONTADOR DE RESERVAS -->
+  <!-- ===================================================== -->
+  <div class="contador" id="contador">
+    Cargando horario...
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
   <header>
-    <h1><img src="IMAGENES/LOGO.webp" style="width:60px;height:60px;"> Reservas</h1>
+
+    <div class="brand">
+      <img src="IMAGENES/reservas_img.webp" class="logo" alt="Logo">
+      <h1 class="titulo">Reservas</h1>
+    </div>
+
   </header>
 
-  <section class="productos" id="listaProductos"></section>
 
+  <!-- ===================================================== -->
+  <!-- BOTÓN VOLVER -->
+  <!-- ===================================================== -->
 <div class="back-button">
+
   <a href="index.html">
-    <span></span> Volver
+    Volver
   </a>
-</div>
-  
 
-  <!-- 🛒 Botón flotante del carrito -->
-<button id="carritoBtn" class="carrito-boton">🛒</button>
-
-<!-- 🛍️ Modal del carrito -->
-<div id="carritoModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="cerrarCarrito">&times;</span>
-    <h2>Mi Carrito</h2>
-    <div id="carritoLista"></div>
-    <h3 id="totalCarrito">Total: $0</h3>
-    <button id="confirmarReserva" class="confirmacion">Confirmar Reserva</button>
-  </div>
 </div>
 
-  </div>
-</div>
 
-<script type="module">
+  <!-- ===================================================== -->
+  <!-- CONTENEDOR PRODUCTOS -->
+  <!-- ===================================================== -->
+  <section class="card-row" id="listaProductos">
 
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  <!-- ===================================================== -->
+  <!-- BOTÓN CARRITO -->
+  <!-- ===================================================== -->
 
-import { db, guardarReserva } from "./firebase.js";
-let productos = [];
-async function cargarProductosReservas() {
-  try {
-    const q = query(
-      collection(db, "productos"),
-      where("activo", "==", true),
-      where("activoReservas", "==", true)
-    );
+  <button class="carrito-boton" id="carritoBtn">
 
-    const snapshot = await getDocs(q);
+    🛒
 
-    productos = [];
-    snapshot.forEach(doc => {
-      productos.push(doc.data());
-    });
+  </button>
 
-    renderizarProductos(); // 🔥 usa TU función existente
-  } catch (error) {
-    console.error("Error cargando productos de reservas:", error);
-  }
-}
+    <!-- Productos dinámicos -->
 
+  </section>
 
-/* ---------- Referencias DOM ---------- */
-const lista = document.getElementById("listaProductos");
-const contadorNodo = document.getElementById("contador");
 
+  <!-- ===================================================== -->
+  <!-- MODALES DINÁMICOS -->
+  <!-- ===================================================== -->
+  <div id="contenedorModales"></div>
 
 
-// 🕗 CONFIGURA AQUÍ las horas y minutos de apertura y cierre (hora local de Bogotá)
-/* ---------- Configuración ---------- */
-const horaApertura = 6;    // 
-const minutoApertura = 0;
-const horaCierre =22 ;     
-const minutoCierre = 0;
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 
-let tiempoRestante = 0;
-let horarioMensajeMostrado = false;
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-/* ---------- Mostrar mensaje emergente (mantiene tu estilo original) ---------- */
-function mostrarMensajeEmergente(texto) {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-  modal.innerHTML = `
-    <div class="modal-content" style="text-align:center;">
-      <h2>${texto}</h2>
-      <button id="okCerrar" class="confirmacion" style="width:auto;margin-top:15px;">OK</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  modal.style.display = "flex";
-
-  const cerrar = modal.querySelector("#okCerrar");
-  cerrar.addEventListener("click", () => {
-    modal.style.display = "none";
-    modal.remove();
-  });
-}
-
-/* ---------- Hora Bogotá ---------- */
-function obtenerHoraBogota() {
-  const ahora = new Date();
-  const bogota = new Date(ahora.toLocaleString("en-US", { timeZone: "America/Bogota" }));
-  return bogota;
-}
-
-/* ---------- Verificar horario ---------- */
-function estaDentroDelHorario() {
-  const ahora = obtenerHoraBogota();
-  const apertura = new Date(ahora);
-  apertura.setHours(horaApertura, minutoApertura, 0, 0);
-
-  const cierre = new Date(ahora);
-  cierre.setHours(horaCierre, minutoCierre, 0, 0);
-
-  return ahora >= apertura && ahora < cierre;
-}
-
-/* ---------- Calcular segundos restantes ---------- */
-function calcularTiempoRestante() {
-  const ahora = obtenerHoraBogota();
-  const cierre = new Date(ahora);
-  cierre.setHours(horaCierre, minutoCierre, 0, 0);
-  return Math.max(0, Math.floor((cierre - ahora) / 1000));
-}
-
-/* ---------- Actualizar interfaz ---------- */
-function actualizarUISegunTiempo() {
-  const botones = document.querySelectorAll(".card button, #carritoBtn, .btn-agregar");
-  const carritoBtn = document.getElementById("carritoBtn");
-  const carritoModal = document.getElementById("carritoModal");
-  const formularioReserva = document.getElementById("formularioReserva");
-
-  if (estaDentroDelHorario()) {
-    if (tiempoRestante > 0) {
-      const horas = Math.floor(tiempoRestante / 3600);
-      const minutos = Math.floor((tiempoRestante % 3600) / 60);
-      const segundos = tiempoRestante % 60;
-      contadorNodo.textContent = `Tiempo restante: ${horas}h ${minutos}m ${segundos}s`;
-
-      botones.forEach(b => {
-        b.disabled = false;
-        b.style.backgroundColor = "";
-        b.style.cursor = "pointer";
-      });
-      if (carritoBtn) {
-        carritoBtn.disabled = false;
-        carritoBtn.style.backgroundColor = "";
-        carritoBtn.style.cursor = "pointer";
-      }
-
-    } else {
-      // 🔴 Se acabó el tiempo dentro del horario
-      botones.forEach(b => {
-        b.disabled = true;
-        b.style.backgroundColor = "#999";
-        b.style.cursor = "not-allowed";
-      });
-      contadorNodo.innerHTML = "⛔ <strong>¡Reservas Cerradas!</strong> ⛔";
-
-      // 🔒 Cierre automático de formularios y carrito
-      if (carritoModal && carritoModal.style.display === "flex") {
-        mostrarMensajeEmergente("⏰ <strong>El tiempo de reservas ha finalizado.</strong><br>El carrito se cerrará automáticamente.");
-        setTimeout(() => {
-          carritoModal.style.display = "none";
-        }, 2000);
-      }
-
-      if (formularioReserva && formularioReserva.style.display === "flex") {
-        mostrarMensajeEmergente("⏰ <strong>¡El tiempo de reservas ha finalizado!</strong><br>El formulario se cerrará automáticamente.");
-        setTimeout(() => {
-          formularioReserva.style.display = "none";
-        }, 2000);
-      }
-
-      if (carritoBtn) {
-        carritoBtn.style.backgroundColor = "#555";
-        carritoBtn.style.cursor = "not-allowed";
-        carritoBtn.disabled = true;
-      }
-    }
-  } else {
-    // 🕗 Fuera del horario (antes o después)
-    botones.forEach(b => {
-      b.disabled = true;
-      b.style.backgroundColor = "#999";
-      b.style.cursor = "not-allowed";
-    });
-    if (carritoBtn) {
-      carritoBtn.style.backgroundColor = "#555";
-      carritoBtn.style.cursor = "not-allowed";
-      carritoBtn.disabled = true;
-    }
-    contadorNodo.innerHTML = "🕗 <strong>Reservas no disponibles (6:00 a.m. - 3:00 p.m.)</strong>";
-
-    if (!horarioMensajeMostrado) {
-      mostrarMensajeEmergente("🕗 Las reservas estarán disponibles de 6:00 a.m. a 3:00 p.m.");
-      horarioMensajeMostrado = true;
-    }
-
-    // 🔒 Si el usuario tenía algo abierto, también se cierra
-    if (carritoModal && carritoModal.style.display === "flex") carritoModal.style.display = "none";
-    if (formularioReserva && formularioReserva.style.display === "flex") formularioReserva.style.display = "none";
-  }
-}
-
-/* ---------- Iniciar contador ---------- */
-function iniciarContador() {
-  if (estaDentroDelHorario()) {
-    tiempoRestante = calcularTiempoRestante();
-  } else {
-    tiempoRestante = 0;
-  }
-  actualizarUISegunTiempo();
-}
-
-/* ---------- Intervalos ---------- */
-iniciarContador();
-setInterval(() => {
-  if (estaDentroDelHorario() && tiempoRestante > 0) {
-    tiempoRestante--;
-  }
-  actualizarUISegunTiempo();
-}, 1000);
-
-// Revisa cada minuto por si cambia de horario
-setInterval(() => {
-  horarioMensajeMostrado = false; // permite volver a mostrar mensajes si cambia
-  iniciarContador();
-}, 60000);
-
-
-
-
-/* ---------- Renderizar productos ---------- */
-function renderizarProductos() {
-  lista.innerHTML = "";
-  productos.forEach((prod, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${encodeURI(prod.imagen)}" alt="${prod.nombre}">
-      <h3>${prod.nombre}</h3>
-      ${prod.precioActivo 
-        ? `<p>$${prod.precio.toLocaleString("es-CO")}</p>` 
-        : ``}
-      <button data-index="${i}" class="btn-agregar">Agregar al carrito</button>
-    `;
-    lista.appendChild(card);
-  });
-
-  document.querySelectorAll(".btn-agregar").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const i = e.currentTarget.dataset.index;
-      const producto = productos[i];
-      agregarAlCarrito(producto);
-
-      const img = e.target.parentElement.querySelector("img");
-      const imgClone = img.cloneNode(true);
-      const carritoIcon = document.getElementById("carritoBtn");
-      const imgRect = img.getBoundingClientRect();
-      const carritoRect = carritoIcon.getBoundingClientRect();
-
-      imgClone.style.position = "fixed";
-      imgClone.style.left = imgRect.left + "px";
-      imgClone.style.top = imgRect.top + "px";
-      imgClone.style.width = imgRect.width + "px";
-      imgClone.style.height = imgRect.height + "px";
-      imgClone.style.borderRadius = "50%";
-      imgClone.style.transition = "all 0.8s ease-in-out";
-      imgClone.style.zIndex = "2000";
-      document.body.appendChild(imgClone);
-
-      setTimeout(() => {
-        imgClone.style.left = carritoRect.left + 20 + "px";
-        imgClone.style.top = carritoRect.top + 20 + "px";
-        imgClone.style.width = "20px";
-        imgClone.style.height = "20px";
-        imgClone.style.opacity = "0.4";
-      }, 10);
-
-      setTimeout(() => {
-        imgClone.remove();
-        carritoIcon.classList.add("rebote");
-        setTimeout(() => carritoIcon.classList.remove("rebote"), 400);
-      }, 800);
-    });
-  });
-}
-
-/* ---------- Carrito ---------- */
-let carrito = [];
-
-const carritoBtn = document.getElementById("carritoBtn");
-const carritoModal = document.getElementById("carritoModal");
-const cerrarCarrito = document.getElementById("cerrarCarrito");
-const carritoLista = document.getElementById("carritoLista");
-const totalCarrito = document.getElementById("totalCarrito");
-const confirmarReserva = document.getElementById("confirmarReserva");
-
-carritoBtn.addEventListener("click", () => {
-  if (tiempoRestante <= 0) {
-    mostrarMensajeEmergente("⛔ <strong>¡El periodo de Reservas a finalizado!</strong> ⛔");
-    return;
-  }
-  carritoModal.style.display = "flex";
-});
-cerrarCarrito.addEventListener("click", () => carritoModal.style.display = "none");
-window.addEventListener("click", e => {
-  if (e.target === carritoModal) carritoModal.style.display = "none";
-});
-
-function agregarAlCarrito(producto) {
-  const existente = carrito.find(p => p.nombre === producto.nombre);
-  if (existente) existente.cantidad++;
-  else carrito.push({ ...producto, cantidad: 1 });
-  actualizarCarrito();
-}
-
-function actualizarCarrito() {
-  carritoLista.innerHTML = "";
-  let total = 0;
-
-  carrito.forEach((item, index) => {
-    const subtotal = item.precio * item.cantidad;
-    total += subtotal;
-
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <span>${item.nombre}</span>
-      <div style="display:flex;align-items:center;gap:5px;">
-        <button class="menos" data-i="${index}">−</button>
-        <span>${item.cantidad}</span>
-        <button class="mas" data-i="${index}">+</button>
-        <span>$${subtotal.toLocaleString("es-CO")}</span>
-        <button class="eliminar" data-i="${index}">❌</button>
-      </div>
-    `;
-    carritoLista.appendChild(div);
-  });
-
-  totalCarrito.textContent = `Total: $${total.toLocaleString("es-CO")}`;
-
-  carritoLista.querySelectorAll(".mas").forEach(btn => {
-    btn.addEventListener("click", e => {
-      carrito[e.target.dataset.i].cantidad++;
-      actualizarCarrito();
-    });
-  });
-
-  carritoLista.querySelectorAll(".menos").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const i = e.target.dataset.i;
-      carrito[i].cantidad--;
-      if (carrito[i].cantidad <= 0) carrito.splice(i, 1);
-      actualizarCarrito();
-    });
-  });
-
-  carritoLista.querySelectorAll(".eliminar").forEach(btn => {
-    btn.addEventListener("click", e => {
-      carrito.splice(e.target.dataset.i, 1);
-      actualizarCarrito();
-    });
-  });
-}
-
-/* Confirmar reserva */
-confirmarReserva.addEventListener("click", () => {
-  if (carrito.length === 0) {
-    mostrarMensajeEmergente("Tu carrito está vacío.");
-    return;
-  }
-  if (tiempoRestante <= 0) {
-    mostrarMensajeEmergente("⛔ El periodo de reservas está cerrado.");
-    return;
-  }
-  carritoModal.style.display = "none";
-  abrirFormularioReserva();
-});
-
-/* ---------- FORMULARIO ---------- */
-let formularioReserva = null;
-
-function abrirFormularioReserva() { 
-  if (tiempoRestante <= 0) {
-    mostrarMensajeEmergente("⛔ El periodo de reservas está cerrado.");
-    return;
-  }
-
-  if (formularioReserva) {
-    formularioReserva.style.display = "flex";
-    return;
-  }
-
-  formularioReserva = document.createElement("div");
-  formularioReserva.className = "modal";
-  formularioReserva.innerHTML = `
-    <div class="modal-content">
-      <span class="close" id="cerrarForm">&times;</span>
-      <h2>Confirmar Reserva</h2>
-      <form id="reservaForm">
-        <label>Nombre:</label>
-        <input type="text" id="nombreReserva" required style="width:95%;padding:8px;"><br><br>
-
-        <label>Tipo de persona:</label>
-        <select id="tipoPersona" style="width:100%;padding:8px;" required>
-          <option value="">Seleccione...</option>
-          <option value="Aprendiz">Aprendiz</option>
-          <option value="Equipo de trabajo SENA">Equipo de trabajo SENA</option>
-        </select><br><br>
-
-        <div id="campoJornada" style="display:none;">
-          <label>Jornada:</label>
-          <select id="jornada" style="width:100%;padding:8px;">
-            <option value=""> </option>
-            <option value="Mañana">Mañana</option>
-            <option value="Tarde">Tarde</option>
-            <option value="Noche">Noche</option>
-          </select><br><br>
-        </div>
-
-        <button type="submit" class="confirmacion">Enviar</button>
-      </form>
-    </div>
-  `;
-  document.body.appendChild(formularioReserva);
-
-const cerrarForm = formularioReserva.querySelector("#cerrarForm");
-const tipoPersona = formularioReserva.querySelector("#tipoPersona");
-const campoJornada = formularioReserva.querySelector("#campoJornada");
-const reservaForm = formularioReserva.querySelector("#reservaForm");
-
-
-  cerrarForm.addEventListener("click", () => formularioReserva.style.display = "none");
-
-// ✔ Listener seguro: se agrega UNA sola vez
-if (!window._listenerFormulario) {
-  window._listenerFormulario = true;
-  window.addEventListener("click", e => {
-    if (formularioReserva && e.target === formularioReserva) {
-      formularioReserva.style.display = "none";
-    }
-  });
-}
-
-
-  tipoPersona.addEventListener("change", (e) => {
-    campoJornada.style.display = e.target.value === "Aprendiz" ? "block" : "none";
-  });
-
-reservaForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  if (tiempoRestante <= 0) {
-    mostrarMensajeEmergente("⛔ El tiempo se ha agotado. No se puede confirmar.");
-    formularioReserva.style.display = "none";
-    return;
-  }
-
-  const nombre = reservaForm.querySelector("#nombreReserva").value.trim();
-  const tipo = reservaForm.querySelector("#tipoPersona").value;
-  const jornada = (tipo === "Aprendiz")
-      ? reservaForm.querySelector("#jornada").value
-      : "Jornada Externa";
-
-  const fechaActual = new Date().toLocaleDateString("es-CO");
-
-  // 🔥 Enviar a Firebase
-for (const item of carrito) {
-    await guardarReserva({
-      producto: item.nombre,
-      cantidad: item.cantidad,
-      tipoPersona: tipo,
-      jornada: jornada,
-      usuario: nombre,
-      fecha: fechaActual
-    });
-}
-  console.log("Reservas enviadas a Firebase");;
-
-  // limpiar formulario
-reservaForm.reset(); // 🔹 limpia los campos de texto y selectñ
-
-  // limpiar interfaz
-  formularioReserva.style.display = "none";
-  carrito = [];
-  actualizarCarrito();
-
-  // confirmación visual (con chulito que debe clickeárse)
-// ✔ MODAL DE ÉXITO (SE CREA SOLO UNA VEZ Y SIN OSCURECER MÁS LA PANTALLA)
-let modalExito = document.getElementById("modalExito");
-
-if (!modalExito) {
-  modalExito = document.createElement("div");
-  modalExito.id = "modalExito";
-  modalExito.className = "modal";
-  modalExito.innerHTML = `
-    <div class="modal-content" style="text-align:center;">
-      <h2 id="textoExito"></h2>
-      <p id="cerrar-modal" style="font-size:2.5rem; cursor:pointer; margin-top:50px; color: #a62929;"><u>Salir</u></p>
-      <p>Por favor, toma una captura de este comprobante.</p>
-    </div>
-  `;
-  document.body.appendChild(modalExito);
-
-  // Se añade UNA sola vez
-  modalExito.querySelector("#cerrar-modal").addEventListener("click", () => {
-    modalExito.style.display = "none";
-  });
-}
-
-document.getElementById("textoExito").innerHTML = `${nombre}, su pedido ha sido exitosamente reservado`;
-modalExito.style.display = "flex";
-
-}); // cierre reservaForm.addEventListener
-
-} // cierre abrirFormularioReserva
-
-/* ---------- Inicialización ---------- */
-cargarProductosReservas();
-actualizarUISegunTiempo();
-
-
-</script>
-
+<!-- Config Firebase -->
+<script src="./js/firebase_config.js"></script>
+  <!-- ===================================================== -->
+  <!-- JS PRINCIPAL -->
+  <!-- ===================================================== -->
+  <script type="module" src="js/reservas.js"></script>
 
 </body>
 </html>

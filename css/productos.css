@@ -1,0 +1,49 @@
+/* =========================================================
+   PRODUCTOS.CSS
+   ---------------------------------------------------------
+   Estilos exclusivos de la página de productos
+   ========================================================= */
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+body {
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   HEADER DE CATEGORÍA
+   ========================================================= */
+
+.top-box {
+  width: 90%;
+  margin: 30px auto;
+  background: rgba(255,255,255,0.95);
+  border-radius: 25px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 2px solid rgba(0,0,0,0.08);
+}
+
+/* Título categoría */
+.top-box h2 {
+
+  margin: 0;
+  color: #a62929;
+  font-size: 2rem;
+  font-family: 'Amaranth', sans-serif;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .top-box h2 {
+    font-size: 1.5rem;
+  }
+}

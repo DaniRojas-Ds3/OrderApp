@@ -1,0 +1,128 @@
+/* =========================================================
+   ALERTS.CSS
+   ---------------------------------------------------------
+   Sistema global de alertas reutilizable
+   ========================================================= */
+
+
+/* =========================================================
+   CONTENEDOR ALERTA
+   ========================================================= */
+
+.alerta {
+
+  position: fixed;
+
+  top: 30px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: rgba(255,255,255,0.96);
+
+  color: #a62929;
+
+  padding: 18px 25px;
+
+  border-radius: 18px;
+
+  border: 2px solid #a62929;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+  z-index: 99999;
+
+  font-weight: bold;
+
+  font-size: 1rem;
+
+  backdrop-filter: blur(8px);
+
+  animation:
+    aparecerAlerta 0.3s ease,
+    desaparecerAlerta 0.3s ease 2.7s forwards;
+}
+
+
+/* =========================================================
+   ANIMACIÓN ENTRADA
+   ========================================================= */
+
+@keyframes aparecerAlerta {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-20px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+
+  }
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN SALIDA
+   ========================================================= */
+
+@keyframes desaparecerAlerta {
+
+  to {
+
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-20px);
+
+  }
+
+}
+
+/* =========================================================
+   VARIANTE ERROR (ROJO)
+   ========================================================= */
+
+.alerta.error {
+
+  color: #a62929;
+
+  border: 2px solid #a62929;
+}
+
+
+/* =========================================================
+   VARIANTE ÉXITO (VERDE)
+   ========================================================= */
+
+.alerta.exito {
+
+  color: #1e7e34;
+
+  border: 2px solid #28a745;
+}
+
+
+/* =========================================================
+   VARIANTE INFO (OPCIONAL)
+   ========================================================= */
+
+.alerta.info {
+
+  color: #0c5460;
+
+  border: 2px solid #17a2b8;
+}
