@@ -1,0 +1,149 @@
+/* =========================================================
+   TABLETS
+========================================================= */
+@media (max-width: 1024px) {
+
+  .admin-menu {
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .menu-btn {
+    min-width: 200px;
+    min-height: 62px;
+    font-size: 15px;
+    padding: 16px 24px;
+  }
+
+  .form-productos,
+  .report-card,
+  .admin-table,
+  .search-input {
+    max-width: 100%;
+  }
+
+  #listaAnunciosAdmin {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =========================================================
+   MÓVILES
+========================================================= */
+@media (max-width: 768px) {
+
+  .content-box {
+    padding: 20px;
+  }
+
+.admin-menu {
+  flex-direction: row;
+
+  flex-wrap: nowrap;
+
+  justify-content: flex-start;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  padding: 16px;
+
+  gap: 12px;
+
+  scrollbar-width: thin;
+}
+
+
+
+.admin-menu::-webkit-scrollbar {
+  height: 6px;
+}
+
+
+
+.admin-menu::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.5);
+  border-radius: 20px;
+}
+
+
+
+.menu-btn {
+  min-width: 220px;
+
+  flex: 0 0 auto;
+}
+  .form-productos,
+  .report-card {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .editor-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  #listaAnunciosAdmin {
+    grid-template-columns: 1fr;
+  }
+
+  .img-anuncio-admin {
+    max-width: 220px;
+    height: 220px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+
+/* =========================================================
+   MÓVILES PEQUEÑOS
+========================================================= */
+@media (max-width: 480px) {
+
+  .content-box {
+    padding: 14px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .menu-btn {
+    min-height: 56px;
+    font-size: 14px;
+  }
+
+  .form-productos,
+  .report-card {
+    padding: 18px;
+  }
+
+  input,
+  select {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+
+  .img-anuncio-admin {
+    max-width: 180px;
+    height: 180px;
+  }
+}

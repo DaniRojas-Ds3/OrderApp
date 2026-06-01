@@ -1,0 +1,44 @@
+/* =========================================================
+   LAYOUT.CSS
+   ---------------------------------------------------------
+   Define la estructura general (grids, responsive, distribución)
+   ========================================================= */
+
+/* Contenedor principal de tarjetas */
+.items {
+  padding: 1rem;
+}
+
+/* ============================
+   DISEÑO PARA ESCRITORIO
+   ============================ */
+@media (min-width: 1024px) {
+
+  .items {
+    display: grid; /* Activa grid */
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 25px;
+    padding: 40px 80px;
+  }
+
+}
+
+/* =================================================
+   RESPONSIVE GENERAL
+================================================= */
+@media (max-width:768px){
+
+  header{
+    padding: 30px 15px;
+  }
+
+  .brand{
+    gap: 20px;
+  }
+
+  .logo{
+    width: 140px;
+    height: 140px;
+  }
+
+}

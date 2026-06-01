@@ -1,0 +1,208 @@
+/* =========================================================
+   BREAK.CSS
+   ---------------------------------------------------------
+   Página de recesos
+   ========================================================= */
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.break-box {
+
+  max-width: 1100px;
+
+  margin:
+    40px auto 60px;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.break-header {
+
+  text-align: center;
+
+  margin-bottom: 40px;
+
+}
+
+
+.break-icon {
+
+  font-size: 5rem;
+
+  margin-bottom: 10px;
+
+}
+
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.break-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  margin-bottom: 40px;
+
+}
+
+
+#tokenInput {
+
+  width: 100%;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  border: 2px solid #000;
+
+  font-size: 1rem;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   CONTADOR ACTIVOS
+   ========================================================= */
+
+#activeCount {
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+}
+
+
+/* =========================================================
+   GRID TARJETAS
+   ========================================================= */
+
+#activeTimersContainer {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 20px;
+
+}
+
+
+/* =========================================================
+   TARJETAS
+   ========================================================= */
+
+.timer-card {
+
+  background: white;
+
+  border-radius: 25px;
+
+  padding: 25px;
+
+  text-align: center;
+
+  box-shadow:
+    0 5px 15px rgba(0,0,0,.2);
+
+  border: 3px solid transparent;
+
+}
+
+
+/* =========================================================
+   COLORES TIEMPO
+   ========================================================= */
+
+.timer-green {
+
+  border-color: #28a745;
+
+}
+
+
+.timer-yellow {
+
+  border-color: #ffc107;
+
+}
+
+
+.timer-orange {
+
+  border-color: #fd7e14;
+
+}
+
+
+.timer-red {
+
+  border-color: #dc3545;
+
+}
+
+
+/* =========================================================
+   TEXTO TARJETA
+   ========================================================= */
+
+.timer-token {
+
+  font-size: 1.5rem;
+
+  font-weight: bold;
+
+  margin-bottom: 15px;
+
+}
+
+
+.timer-time {
+
+  font-size: 2rem;
+
+  font-weight: bold;
+
+}
+
+/* =========================================================
+   PANEL FORMULARIO
+   ========================================================= */
+
+.break-panel {
+
+  background:
+    rgba(255,255,255,0.45);
+
+  backdrop-filter:
+    blur(10px);
+
+  border:
+    2px solid rgba(255,255,255,0.4);
+
+  border-radius: 30px;
+
+  padding: 30px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.15);
+
+  margin-bottom: 40px;
+
+}

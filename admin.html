@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <!-- =========================================================
+       CONFIGURACIÓN GENERAL
+  ========================================================== -->
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Admin | OrderPage</title>
+
+  <!-- =========================================================
+       ESTILOS GLOBALES
+  ========================================================== -->
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/forms.css">
+  <link rel="stylesheet" href="./css/alerts.css">
+  <link rel="stylesheet" href="./css/admin.css">
+
+</head>
+
+<body>
+
+  <!-- =========================================================
+       LAYOUT PRINCIPAL ADMIN
+  ========================================================== -->
+  <div class="admin-layout">
+
+    <!-- =====================================================
+         MENÚ LATERAL / SUPERIOR
+    ====================================================== -->
+    <nav class="admin-menu">
+
+      <button
+        class="menu-btn"
+        data-section="productos"
+      >
+        ➕ Agregar productos
+      </button>
+
+      <button
+        class="menu-btn"
+        data-section="precios"
+      >
+        ✏️ Editor de productos
+      </button>
+
+      <button
+  class="menu-btn"
+  data-section="reportes"
+>
+  📊 Reportes
+</button>
+
+<button
+  class="menu-btn"
+  data-section="config-reservas"
+>
+  ⏱️ Configuración reservas
+</button>
+
+<button
+  class="menu-btn"
+  data-section="config-break"
+>
+  ☕ Configuración break
+</button>
+
+      <button
+        class="menu-btn"
+        data-section="anuncios"
+      >
+        📢 Anuncios
+      </button>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+    <main class="content-area">
+
+      <div class="content-box">
+
+        <!-- =================================================
+             SECCIÓN:
+             AGREGAR PRODUCTOS
+        ================================================== -->
+        <section
+          id="productos"
+          class="section active"
+        >
+
+          <div class="form-productos">
+
+            <h2 class="section-title">
+              ➕ Agregar producto
+            </h2>
+
+            <!-- Nombre -->
+            <label for="nombreProducto">
+              Nombre del producto
+            </label>
+
+            <input
+              type="text"
+              id="nombreProducto"
+              placeholder="Ej: Café Latte"
+            >
+
+            <!-- Precio -->
+            <label for="precioProducto">
+              Precio
+            </label>
+
+            <input
+              type="number"
+              id="precioProducto"
+              placeholder="Ej: 4500"
+            >
+
+            <!-- Categoría -->
+            <label for="categoriaProducto">
+              Categoría
+            </label>
+
+            <select id="categoriaProducto">
+
+              <option value="">
+                Selecciona una categoría
+              </option>
+
+              <option value="Comida">Comida</option>
+              <option value="Bebidas">Bebidas</option>
+              <option value="Combos">Combos</option>
+              <option value="Paquetes">Paquetes</option>
+              <option value="Helados">Helados</option>
+              <option value="Greca">Greca</option>
+              <option value="Jugos y Fruteria">
+                Jugos y Fruteria
+              </option>
+              <option value="Pasteleria">
+                Pasteleria
+              </option>
+              <option value="Lacteos">
+                Lacteos
+              </option>
+              <option value="Dulceria">
+                Dulceria
+              </option>
+              <option value="Reservas">
+                Reservas
+              </option>
+              <option value="Variedades">
+                Variedades
+              </option>
+
+            </select>
+
+            <!-- Imagen archivo -->
+            <label for="imagenArchivo">
+              Subir imagen
+            </label>
+
+            <input
+              type="file"
+              id="imagenArchivo"
+              accept="image/*"
+            >
+<!-- Vista previa -->
+<div class="image-preview-container">
+
+  <img
+    id="previewImagen"
+    class="image-preview hidden"
+    alt="Vista previa"
+  >
+
+  <button
+    type="button"
+    id="btnEliminarImagen"
+    class="btn-remove-image hidden"
+  >
+    ✕
+  </button>
+
+</div>
+
+            <!-- Opciones -->
+            <div class="switch-group">
+
+  <!-- Producto activo -->
+  <div class="switch-item">
+
+    <span>
+      Producto activo
+    </span>
+
+    <label class="switch">
+
+      <input
+        type="checkbox"
+        id="productoActivo"
+        checked
+      >
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+
+
+  <!-- Precio activo -->
+  <div class="switch-item">
+
+    <span>
+      Precio activo
+    </span>
+
+    <label class="switch">
+
+      <input
+        type="checkbox"
+        id="precioActivo"
+        checked
+      >
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+
+
+  <!-- Mostrar reservas -->
+  <div class="switch-item">
+
+    <span>
+      Mostrar en reservas
+    </span>
+
+    <label class="switch">
+
+      <input
+        type="checkbox"
+        id="activoReservas"
+      >
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+</div>
+
+            <!-- Botón -->
+            <button
+              type="button"
+              id="btnGuardarProducto"
+              class="btn btn-primary"
+            >
+              💾 Guardar producto
+            </button>
+
+          </div>
+
+        </section>
+
+        <!-- =================================================
+             SECCIÓN:
+             EDITOR DE PRODUCTOS
+        ================================================== -->
+        <section
+          id="precios"
+          class="section"
+        >
+
+          <h2 class="section-title">
+            Editor de productos
+          </h2>
+
+          <p class="section-description">
+            Modifica productos existentes.
+          </p>
+
+          <!-- Buscador -->
+<div class="search-container">
+
+  <input
+    type="text"
+    id="buscadorProductos"
+    class="search-input"
+    placeholder="🔍 Buscar producto..."
+  >
+
+</div>
+
+
+
+<div class="table-container">
+
+  <div
+    id="listaProductosAdmin"
+    class="admin-table"
+  ></div>
+
+</div>
+        </section>
+
+
+
+        <!-- =================================================
+             SECCIÓN:
+             EDITAR PRODUCTO
+        ================================================== -->
+        <section
+          id="editarProducto"
+          class="section"
+        >
+
+          <h2 class="section-title">
+            Editar producto
+          </h2>
+
+          <label for="editNombre">
+            Nombre
+          </label>
+
+          <input
+  type="text"
+  id="editNombre"
+  disabled
+>
+          <label for="editPrecio">
+            Precio
+          </label>
+
+          <input
+            type="number"
+            id="editPrecio"
+          >
+
+
+<select id="editCategoria"></select>
+
+          <!-- Checkboxes -->
+<div class="switch-group">
+
+  <!-- Producto activo -->
+  <div class="switch-item">
+
+    <span>
+      Producto activo
+    </span>
+
+    <label class="switch">
+
+      <input
+        type="checkbox"
+        id="editActivo"
+      >
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+
+
+  <!-- Precio activo -->
+  <div class="switch-item">
+
+    <span>
+      Precio activo
+    </span>
+
+    <label class="switch">
+
+      <input
+        type="checkbox"
+        id="editPrecioActivo"
+      >
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+
+
+  <!-- Reservas -->
+  <div class="switch-item">
+
+    <span>
+      Mostrar en reservas
+    </span>
+
+    <label class="switch">
+
+      <input
+        type="checkbox"
+        id="editActivoReservas"
+      >
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+</div>
+          <!-- Archivo -->
+          <label for="editImagenArchivo">
+            Subir nueva imagen
+          </label>
+
+          <input
+            type="file"
+            id="editImagenArchivo"
+            accept="image/*"
+          >
+<div class="image-preview-container">
+
+  <img
+    id="editPreviewImagen"
+    class="image-preview hidden"
+    alt="Vista previa"
+  >
+
+  <button
+    type="button"
+    id="editBtnEliminarImagen"
+    class="btn-remove-image hidden"
+  >
+    ✕
+  </button>
+
+</div>
+
+          <!-- Acciones -->
+          <div class="editor-actions">
+
+            <button
+              id="btnGuardarCambios"
+              class="btn btn-primary"
+            >
+              💾 Guardar
+            </button>
+
+            <button
+              id="btnCancelarEdicion"
+              class="btn btn-secondary"
+            >
+              Cancelar
+            </button>
+
+          </div>
+
+        </section>
+<!-- =================================================
+     SECCIÓN:
+     REPORTES
+================================================== -->
+<section
+  id="reportes"
+  class="section"
+>
+
+  <h2 class="section-title">
+    📊 Reportes del sistema
+  </h2>
+
+  <p class="section-description">
+    Descarga reportes filtrados
+    por fecha o mes.
+  </p>
+
+  <!-- Reporte reservas -->
+  <div class="report-card">
+
+    <h3>
+      📅 Reporte de reservas
+    </h3>
+
+    <label for="fechaReporteReservas">
+      Seleccionar fecha
+    </label>
+
+    <input
+      type="date"
+      id="fechaReporteReservas"
+    >
+
+    <button
+      id="btnDescargarReservas"
+      class="btn btn-primary"
+    >
+      📄 Descargar reservas
+    </button>
+
+  </div>
+
+  <!-- Reporte PQRS -->
+  <div class="report-card">
+
+    <h3>
+      📝 Reporte PQRS
+    </h3>
+
+    <label for="mesReportePQRS">
+      Seleccionar mes
+    </label>
+
+    <input
+      type="month"
+      id="mesReportePQRS"
+    >
+
+    <button
+      id="btnDescargarPQRS"
+      class="btn btn-primary"
+    >
+      📄 Descargar PQRS
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =================================================
+     SECCIÓN:
+     CONFIGURACIÓN RESERVAS
+================================================== -->
+<section
+  id="config-reservas"
+  class="section"
+>
+
+  <h2 class="section-title">
+    ⏱️ Configuración de reservas
+  </h2>
+
+  <div class="form-productos">
+
+    <label>
+      Hora inicio reservas
+    </label>
+
+    <input
+      type="time"
+      id="horaInicioReservas"
+    >
+
+    <label>
+      Hora cierre reservas
+    </label>
+
+    <input
+      type="time"
+      id="horaCierreReservas"
+    >
+
+    <button
+      id="btnGuardarConfigReservas"
+      class="btn btn-primary"
+    >
+      💾 Guardar configuración
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =================================================
+     SECCIÓN:
+     CONFIGURACIÓN BREAK
+================================================== -->
+<section
+  id="config-break"
+  class="section"
+>
+
+  <h2 class="section-title">
+    ☕ Configuración break
+  </h2>
+
+  <div class="form-productos">
+
+    <label>
+      Duración del break (minutos)
+    </label>
+
+    <input
+      type="number"
+      id="duracionReceso"
+      min="1"
+    >
+
+    <label>
+      Fichas por break
+    </label>
+
+    <input
+      type="number"
+      id="maxTemporizadores"
+      min="1"
+    >
+
+    <button
+      id="btnGuardarConfigBreak"
+      class="btn btn-primary"
+    >
+      💾 Guardar configuración
+    </button>
+
+  </div>
+
+</section>
+        <!-- =================================================
+             SECCIÓN:
+             ANUNCIOS
+        ================================================== -->
+        <section
+          id="anuncios"
+          class="section"
+        >
+
+          <h2 class="section-title">
+            Gestión de anuncios
+          </h2>
+
+          <div class="form-productos">
+
+            <label for="imagenAnuncio">
+              Imagen
+            </label>
+
+            <input
+              type="file"
+              id="imagenAnuncio"
+              accept="image/*"
+            >
+
+            <button
+              type="button"
+              id="btnPublicarAnuncio"
+              class="btn btn-primary"
+            >
+              📢 Publicar anuncio
+            </button>
+
+          </div>
+
+          <hr class="divider">
+
+          <h3 class="sub-title">
+            Anuncios publicados
+          </h3>
+
+          <div id="listaAnunciosAdmin"></div>
+          <hr>
+
+<h3>Historial de promociones</h3>
+
+<div id="historialPromos"
+     class="historial-promos">
+</div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       LIBRERÍAS EXTERNAS
+  ========================================================== -->
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script src="./JS/firebase_config.js"></script>
+
+<!-- Admin -->
+<script type="module" src="./JS/admin.js"></script>
+</body>
+
+</html>

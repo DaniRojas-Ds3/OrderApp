@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <!-- ================= META BÁSICOS ================= -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OrderPage</title>
+
+  <!-- Verificación de Google -->
+  <meta name="google-site-verification" content="ki9twLs1IBj3wYuQlR6cE4ZfmG1X89uTzjKmHgqziL8" />
+
+  <!-- SEO -->
+  <meta name="description" content="OrderPage es una plataforma para gestionar pedidos de forma rápida y sencilla para negocios y restaurantes.">
+  <meta name="keywords" content="OrderPage, pedidos online, sistema de pedidos, restaurantes, app pedidos">
+  <meta name="author" content="Diego Jara, Karen Benitez, Daniel Rojas">
+
+  <!-- ================= FUENTES ================= -->
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@700&display=swap" rel="stylesheet">
+
+  <!-- ================= FAVICON ================= -->
+  <link rel="icon" href="IMAGENES/FAVICON.png" type="image/png">
+  <link rel="icon" sizes="192x192" href="IMAGENES/FAVICON.png">
+  <link rel="apple-touch-icon" href="IMAGENES/FAVICON.png">
+  <link rel="shortcut icon" href="IMAGENES/FAVICON.png">
+
+  <!-- ================= CSS (ORDEN IMPORTANTE) ================= -->
+  <!-- Estilos base del sistema -->
+  <link rel="stylesheet" href="css/global.css">
+
+  <!-- Componentes reutilizables (botones, tarjetas, menú, etc.) -->
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Layout (grid, responsive, estructura general) -->
+  <link rel="stylesheet" href="css/layout.css">
+
+  <!-- Estilos específicos SOLO del index -->
+  <link rel="stylesheet" href="css/index.css">
+
+</head>
+
+<body>
+
+<!-- ================= CONTENEDOR DE ANUNCIOS DINÁMICOS ================= -->
+<div id="anunciosPublicos"></div>
+
+<!-- ================= HEADER ================= -->
+<header>
+
+  <!-- Logo + título -->
+  <div class="brand">
+    <img src="IMAGENES/delixia_logo.png" class="logo" alt="Logo">
+    <h1 class="titulo">OrderPage</h1>
+  </div>
+
+  <!-- Botón menú (3 puntos) -->
+  <div class="menu-btn" id="menuBtn">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+
+</header>
+
+<!-- ================= MENÚ LATERAL ================= -->
+<div id="menuLateral" class="menu-lateral">
+
+  <!-- Botón cerrar -->
+  <button id="cerrarMenu" class="btn-cerrar-menu">✖</button>
+
+  <!-- Opciones del menú -->
+  <a href="reservas.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/reservas_img.webp" alt="Reservas">
+      <div class="item-info">
+        <h2>Reservas</h2>
+      </div>
+    </div>
+  </a>
+
+  <a href="break.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/horario.webp" alt="Franja Horaria">
+      <div class="item-info">
+        <h2>Franja Horaria</h2>
+      </div>
+    </div>
+  </a>
+
+  <a href="pqrs.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/PQRS.webp" alt="PQRS">
+      <div class="item-info">
+        <h2>PQRS</h2>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- ================= BUSCADOR ================= -->
+<div class="search-bar">
+  <input type="text" id="serchInput" placeholder="Buscar Producto...">
+</div>
+
+<!-- Resultados dinámicos -->
+
+<div id="resultados" class="card-row"></div>
+
+
+
+<!-- ================= CONTENIDO PRINCIPAL ================= -->
+<section class="items">
+
+  <!-- Tarjeta principal -->
+  <a href="reservas.html" class="item-link">
+    <div class="item">
+      <img src="IMAGENES/reservas_img.webp" alt="Reservas" loading="lazy">
+      <div class="item-info">
+        <h2>Reservas</h2>
+      </div>
+    </div>
+  </a>
+
+<!-- Categorías -->
+<!-- Comidas -->
+<a href="productos.html?categoria=Comida" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/comida_rapida.webp" alt="">
+    <div class="item-info">
+      <h2>Comidas</h2>
+    </div>
+  </div>
+</a>
+<!-- bebidas -->
+ <a href="productos.html?categoria=Bebidas" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/bebidas.webp" alt="">
+    <div class="item-info">
+      <h2>Bebidas</h2>
+    </div>
+  </div>
+</a>
+<!-- Combos -->
+ <a href="productos.html?categoria=Combos" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/combo.webp" alt="">
+    <div class="item-info">
+      <h2>Combos</h2>
+    </div>
+  </div>
+</a>
+<!-- paquetes -->
+ <a href="productos.html?categoria=Paquetes" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/paquetes.webp" alt="">
+    <div class="item-info">
+      <h2>Paquetes</h2>
+    </div>
+  </div>
+</a>
+<!-- pasteleria -->
+ <a href="productos.html?categoria=Pasteleria" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/Pasteleria.webp" alt="">
+    <div class="item-info">
+      <h2>Pasteleria</h2>
+    </div>
+  </div>
+</a>
+<!-- Helados -->
+ <a href="productos.html?categoria=Helados" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/helados.webp" alt="">
+    <div class="item-info">
+      <h2>Helados</h2>
+    </div>
+  </div>
+</a>
+<!-- Greca -->
+ <a href="productos.html?categoria=Greca" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/Greca.webp" alt="">
+    <div class="item-info">
+      <h2>Greca</h2>
+    </div>
+  </div>
+</a>
+<!-- jugos y fruteria  -->
+ <a href="productos.html?categoria=Jugos y Fruteria" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/Jugos y  fruteria.webp" alt="">
+    <div class="item-info">
+      <h2>Jugos y Fruteria</h2>
+    </div>
+  </div>
+</a>
+<!-- lacteos -->
+ <a href="productos.html?categoria=Lacteos" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/lacteos.webp " alt="">
+    <div class="item-info">
+      <h2>Lacteos</h2>
+    </div>
+  </div>
+</a>
+<!-- dulceria -->
+ <a href="productos.html?categoria=Dulceria" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/Dulceria.webp" alt="">
+    <div class="item-info">
+      <h2>Dulceria</h2>
+    </div>
+  </div>
+</a>
+<!-- variedades -->
+ <a href="productos.html?categoria=Variedades" class="item-link">
+  <div class="item">
+    <img src="IMAGENES/Variedades.webp" alt="">
+    <div class="item-info">
+      <h2>Variedades</h2>
+    </div>
+  </div>
+</a>
+
+</section>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<!-- Config Firebase -->
+<script src="./JS/firebase_config.js"></script>
+
+<!-- Funcionalidades separadas (BUENA PRÁCTICA) -->
+<script src="JS/menu.js"></script>
+<script src="JS/buscador.js"></script>
+<script src="JS/anuncios.js"></script>
+
+</body>
+</html>

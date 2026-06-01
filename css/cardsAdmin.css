@@ -1,0 +1,184 @@
+/* =========================================================
+   CARDS GENERALES
+========================================================= */
+
+.card {
+
+  background: #ffffff;
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+
+  transition: 0.25s ease;
+}
+
+
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   TABLAS
+========================================================= */
+
+table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin-top: 20px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+
+
+th,
+td {
+
+  padding: 16px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+
+
+th {
+
+  background: #eff6ff;
+
+  font-weight: 700;
+
+  color: #1e3a8a;
+}
+
+
+
+tr:hover {
+  background: #f8fafc;
+}
+
+
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+.modal {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 9999;
+}
+
+
+
+.modal-content {
+
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 24px;
+
+  width: 90%;
+
+  max-width: 500px;
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+
+
+/* =========================================================
+   REPORT CARD
+========================================================= */
+
+.report-card {
+
+  background: white;
+
+  padding: 24px;
+
+  border-radius: 24px;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+
+  margin-top: 20px;
+}
+/* =========================================================
+   BUSCADOR EDITOR PRODUCTOS
+========================================================= */
+
+.search-container {
+  width: 100%;
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-bottom: 30px;
+}
+
+
+
+.search-input {
+  width: 100%;
+  max-width: 650px;
+}
+
+
+
+/* =========================================================
+   LISTA PRODUCTOS ADMIN
+========================================================= */
+
+#listaProductosAdmin,
+.admin-table {
+  width: 100%;
+  max-width: 650px;
+
+  margin: 0 auto;
+}
+
+
+
+/* =========================================================
+   PRECIO CENTRADO
+========================================================= */
+
+.precio,
+.product-price {
+  display: block;
+
+  text-align: center;
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  color: #2563eb;
+}

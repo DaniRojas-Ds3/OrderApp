@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <!-- ================= META ================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Reservas | OrderPage</title>
+
+  <!-- ================= FUENTES ================= -->
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@700&display=swap" rel="stylesheet">
+
+  <!-- ================= FAVICON ================= -->
+  <link rel="icon" href="IMAGENES/FAVICON.png">
+
+<!-- ================= CSS GLOBAL ================= -->
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+
+<!-- ================= COMPONENTE TARJETAS ================= -->
+<link rel="stylesheet" href="css/card.css">
+<link rel="stylesheet" href="css/alerts.css">
+
+<!-- ================= CSS EXCLUSIVO RESERVAS ================= -->
+<link rel="stylesheet" href="css/reservas.css">
+
+</head>
+
+<body>
+
+  <!-- ===================================================== -->
+  <!-- CONTADOR DE RESERVAS -->
+  <!-- ===================================================== -->
+  <div class="contador" id="contador">
+    Cargando horario...
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+  <header>
+
+    <div class="brand">
+      <img src="IMAGENES/reservas_img.webp" class="logo" alt="Logo">
+      <h1 class="titulo">Reservas</h1>
+    </div>
+
+  </header>
+
+
+  <!-- ===================================================== -->
+  <!-- BOTÓN VOLVER -->
+  <!-- ===================================================== -->
+<div class="back-button">
+
+  <a href="index.html">
+    Volver
+  </a>
+
+</div>
+
+
+  <!-- ===================================================== -->
+  <!-- CONTENEDOR PRODUCTOS -->
+  <!-- ===================================================== -->
+  <section class="card-row" id="listaProductos">
+
+  <!-- ===================================================== -->
+  <!-- BOTÓN CARRITO -->
+  <!-- ===================================================== -->
+
+  <button class="carrito-boton" id="carritoBtn">
+
+    🛒
+
+  </button>
+
+    <!-- Productos dinámicos -->
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- MODALES DINÁMICOS -->
+  <!-- ===================================================== -->
+  <div id="contenedorModales"></div>
+
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<!-- Config Firebase -->
+<script src="./JS/firebase_config.js"></script>
+  <!-- ===================================================== -->
+  <!-- JS PRINCIPAL -->
+  <!-- ===================================================== -->
+  <script type="module" src="JS/reservas.js"></script>
+
+</body>
+</html>

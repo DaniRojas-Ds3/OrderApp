@@ -1,0 +1,51 @@
+/* =========================================================
+   PQRS.CSS
+   ---------------------------------------------------------
+   Estilos exclusivos PQRS
+   ========================================================= */
+
+.pqrs-box {
+
+  width: 90%;
+
+  max-width: 700px;
+
+  margin:
+    40px auto 80px;
+
+}
+
+
+#mensaje {
+
+  width: 100%;
+
+  min-height: 260px;
+
+  resize: none;
+
+  padding: 20px;
+
+  border-radius: 20px;
+
+  border: 2px solid #000;
+
+  font-size: 1rem;
+
+  font-family: inherit;
+
+  box-sizing: border-box;
+
+  margin-bottom: 20px;
+
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .back-button{
+    top: 170px;
+  }
+}

@@ -1,0 +1,99 @@
+/* =========================================================
+   GLOBAL.CSS
+   ---------------------------------------------------------
+   Estilos globales de toda la aplicación:
+   - Reset base
+   - Fondo general
+   - Tipografías
+   - Header
+   ========================================================= */
+
+
+/* =========================
+   RESET + CONFIGURACIÓN BASE
+   ========================= */
+body {
+  margin: 0;
+
+  /* Fuente principal del sistema */
+  font-family: Arial, sans-serif;
+
+  /* Fondo escritorio */
+  background-image: url('./RecursosVisuales/fondo_pc.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  background-color: #ffffff; /* fallback */
+}
+
+
+/* =========================
+   FONDO PARA MÓVIL
+   ========================= */
+@media (max-width: 768px) {
+  body {
+    background-image: url('./RecursosVisuales/fondo_celular.jpg');
+  }
+}
+
+
+/* =========================
+   TIPOGRAFÍAS
+   ========================= */
+
+/* Título principal */
+h1 {
+  font-family: 'Satisfy', cursive;
+}
+
+/* Subtítulos */
+h2, h3 {
+  font-family: 'Amaranth', sans-serif;
+  font-weight: 700;
+}
+
+/* Botones o elementos destacados */
+button, .highlight {
+  font-family: 'Amaranth', sans-serif;
+  font-weight: 700;
+}
+
+
+/* =========================
+   HEADER (estructura global)
+   ========================= */
+
+header {
+  position: relative;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 130px;
+  border-bottom: 3px dashed #000000;
+}
+
+/* Contenedor logo + título */
+.brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  left: -150px;
+  height: 100px;
+}
+
+/* Título principal */
+.titulo {
+  font-size: 3rem;
+  color: #a62929;
+  font-family: 'Satisfy', cursive;
+  margin: 0;
+}

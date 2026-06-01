@@ -1,0 +1,135 @@
+/* =========================================================
+   CARD ANUNCIO
+========================================================= */
+
+.card-anuncio {
+
+  background: white;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
+  transition: 0.25s ease;
+}
+
+
+
+.card-anuncio:hover {
+  transform: translateY(-5px);
+}
+
+
+
+/* =========================================================
+   CARD ANUNCIO ADMIN
+========================================================= */
+
+.card-anuncio-admin {
+
+  background: #ffffff;
+
+  padding: 20px;
+
+  border-radius: 24px;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+
+
+
+/* =========================================================
+   IMÁGENES ANUNCIO
+========================================================= */
+
+.img-anuncio {
+
+  width: 100%;
+
+  height: 220px;
+
+  object-fit: cover;
+}
+
+
+
+.img-anuncio-admin {
+  width: 100%;
+
+  max-width: 180px;
+
+  height: 180px;
+
+  object-fit: cover;
+
+  border-radius: 18px;
+
+  margin: 0 auto;
+
+  display: block;
+}
+
+
+
+/* =========================================================
+   LISTA ANUNCIOS ADMIN
+========================================================= */
+
+#listaAnunciosAdmin {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  gap: 20px;
+
+  justify-items: center;
+
+  margin-top: 30px;
+}
+/* =========================================================
+   PREVIEW ANUNCIO
+========================================================= */
+
+#anuncios .image-preview-container {
+  margin-top: 35px;
+}
+
+/* =========================================================
+   BOTÓN PUBLICAR ANUNCIO
+========================================================= */
+
+#btnPublicarAnuncio {
+  display: flex;
+
+  width: fit-content;
+
+  margin: 35px auto 0 auto;
+}
+
+/* =========================================================
+   HISTORIAL PROMOCIONES
+========================================================= */
+
+.historial-promos{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-top:20px;
+}
+
+.card-historial{
+  width:220px;
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.img-historial{
+  width:100%;
+  border-radius:10px;
+  display:block;
+  margin-bottom:10px;
+}

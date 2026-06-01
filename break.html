@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Break | OrderPage</title>
+
+
+  <!-- ================= TIPOGRAFÍAS ================= -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- ================= CSS GLOBAL ================= -->
+
+  <link
+    rel="stylesheet"
+    href="css/global.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/components.css"
+  >
+
+  <link
+     rel="stylesheet"
+    href="css/layout.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/break.css"
+  >
+
+  <link
+   rel="stylesheet" 
+   href="css/alerts.css">
+
+  <!-- ================= FAVICON ================= -->
+  <link rel="icon" href="IMAGENES/FAVICON.png">
+
+</head>
+
+<body>
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+<header>
+
+  <div class="brand">
+
+    <img
+      src="IMAGENES/horario.webp"
+      class="logo"
+      alt="Logo"
+    >
+
+    <h1 class="titulo">
+
+      Break
+
+    </h1>
+
+  </div>
+
+
+</header>
+
+    <!-- ===================================================== -->
+  <!-- BOTÓN VOLVER -->
+  <!-- ===================================================== -->
+    <div class="back-button">
+
+        <a href="index.html">
+            Volver
+        </a>
+
+    </div>
+
+
+  <!-- ================= CONTENEDOR ================= -->
+
+  <main class="top-box break-box">
+
+
+    <!-- HEADER -->
+
+    <div class="break-header">
+
+      <div class="break-icon">
+
+        ⏱
+
+      </div>
+
+      <h2>
+
+        Gestor de Temporizadores
+
+      </h2>
+
+    </div>
+
+
+    <!-- FORMULARIO -->
+
+    <div class="break-panel">
+
+  <div class="break-form">
+
+    <input
+      id="tokenInput"
+      type="text"
+      placeholder="Ingrese ficha"
+    >
+
+    <button
+      id="startButton"
+      class="confirmacion"
+    >
+
+      Iniciar Receso
+
+    </button>
+
+  </div>
+
+</div>
+
+
+    <!-- CONTADOR -->
+
+    <h3 id="activeCount">
+
+      Temporizadores Activos (0/0)
+
+    </h3>
+
+
+    <!-- TARJETAS -->
+
+    <div id="activeTimersContainer">
+
+    </div>
+
+  </main>
+
+
+  <!-- ================= SCRIPTS ================= -->
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<!-- Config Firebase -->
+<script src="./JS/firebase_config.js"></script>
+
+  <script type="module" src="JS/break.js"></script>
+
+</body>
+
+</html>
