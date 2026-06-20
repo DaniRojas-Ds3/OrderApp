@@ -12,16 +12,53 @@
 
 const buscador = document.getElementById("serchInput");
 const contenedorResultados = document.getElementById("resultados");
+let productosCache = [];
+
+async function cargarProductos() {
+
+  try {
+
+    const snapshot =
+      await db
+        .collection("productos")
+        .get();
+
+    productosCache = [];
+
+    snapshot.forEach((doc) => {
+
+      productosCache.push({
+        id: doc.id,
+        ...doc.data()
+      });
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Error cargando productos:",
+      error
+    );
+
+  }
+
+}
 
 
 /* =========================================================
    EVENTO PRINCIPAL DEL BUSCADOR
    ========================================================= */
+  cargarProductos();
 
-buscador.addEventListener("input", async (e) => {
+buscador.addEventListener("input", (e) => {
 
   /* Texto escrito */
-  const texto = e.target.value.toLowerCase().trim();
+  const texto = e.target.value
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .trim();
 
   /* Limpiar resultados anteriores */
   contenedorResultados.innerHTML = "";
@@ -38,22 +75,24 @@ buscador.addEventListener("input", async (e) => {
 
   try {
 
-    /* Obtener productos desde Firebase */
-    const snapshot = await db.collection("productos").get();
-
     /* Variable para saber si encontró algo */
     let resultadosEncontrados = false;
 
-    snapshot.forEach((doc) => {
-
-      const producto = doc.data();
+    productosCache.forEach((producto) => {
 
       /* Validaciones básicas */
       if (!producto.nombre || !producto.categoria) return;
 
       /* Convertir a minúsculas */
-      const nombre = producto.nombre.toLowerCase();
-      const categoria = producto.categoria.toLowerCase();
+      const nombre = producto.nombre
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "");
+
+const categoria = producto.categoria
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "");
 
       /* =================================================
          BUSCAR POR:
@@ -62,8 +101,8 @@ buscador.addEventListener("input", async (e) => {
          ================================================= */
 
       const coincide =
-        nombre.includes(texto) ||
-        categoria.includes(texto);
+  nombre.startsWith(texto) ||
+  categoria.startsWith(texto);
 
       if (coincide) {
 

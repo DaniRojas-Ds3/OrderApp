@@ -77,6 +77,52 @@ export function initEditarProducto() {
       "click",
       volverListaProductos
     );
+  
+    /* =====================================================
+   PREVIEW NUEVA IMAGEN
+===================================================== */
+
+document
+  .getElementById("editImagenArchivo")
+  .addEventListener("change", (e) => {
+
+    const archivo = e.target.files[0];
+
+    if (!archivo) return;
+
+    const preview =
+      document.getElementById(
+        "editPreviewImagen"
+      );
+
+    const btnX =
+      document.getElementById(
+        "editBtnEliminarImagen"
+      );
+
+    const reader =
+      new FileReader();
+
+    reader.onload = (evento) => {
+
+      preview.src =
+        evento.target.result;
+
+      preview.classList.remove(
+        "hidden"
+      );
+
+      btnX.classList.remove(
+        "hidden"
+      );
+
+    };
+
+    reader.readAsDataURL(
+      archivo
+    );
+
+  });
 
 
 
@@ -336,6 +382,10 @@ async function guardarCambiosProducto() {
   /* =====================================================
      OBTENER VALORES
   ===================================================== */
+  const nombre =
+  document.getElementById(
+    "editNombre"
+  ).value.trim();
 
   const precio =
     document.getElementById(
@@ -362,6 +412,10 @@ async function guardarCambiosProducto() {
       "editActivoReservas"
     ).checked;
 
+    const nuevaImagen =
+  document.getElementById(
+    "editImagenArchivo"
+  ).files[0];
 
 
   /* =====================================================
@@ -381,26 +435,80 @@ async function guardarCambiosProducto() {
 
   try {
 
+    let urlImagen = null;
+
+/* ==========================================
+   SUBIR NUEVA IMAGEN SI EXISTE
+========================================== */
+
+if (nuevaImagen) {
+
+  const formData = new FormData();
+
+  formData.append(
+    "file",
+    nuevaImagen
+  );
+
+  formData.append(
+    "upload_preset",
+    "anuncios_unsigned"
+  );
+
+  const res = await fetch(
+    "https://api.cloudinary.com/v1_1/dyr1lufbt/image/upload",
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+
+  const data =
+    await res.json();
+
+  urlImagen =
+    data.secure_url;
+
+}
+
     /* =================================================
        ACTUALIZAR FIREBASE
     ================================================= */
 
-    await db
-      .collection("productos")
-      .doc(productoEditandoId)
-      .update({
+    const datosActualizar = {
 
-        precio: Number(precio),
+  nombre: nombre,
 
-        categoria: categoria,
+  precio: Number(precio),
 
-        activo: activo,
+  categoria: categoria,
 
-        precioActivo: precioActivo,
+  activo: activo,
 
-        activoReservas: activoReservas
+  precioActivo: precioActivo,
 
-      });
+  activoReservas: activoReservas
+
+};
+
+/* ==========================================
+   SOLO ACTUALIZAR IMAGEN
+   SI SE SELECCIONÓ UNA NUEVA
+========================================== */
+
+if (urlImagen) {
+
+  datosActualizar.imagen =
+    urlImagen;
+
+}
+
+await db
+  .collection("productos")
+  .doc(productoEditandoId)
+  .update(
+    datosActualizar
+  );
 
 
 

@@ -79,9 +79,11 @@ export function initBuscadorAdmin() {
       /* ================= TEXTO ================= */
 
       const texto =
-        e.target.value
-        .toLowerCase()
-        .trim();
+  e.target.value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 
 
 
@@ -134,10 +136,18 @@ snapshot.forEach((doc) => {
   /* ================= NORMALIZAR TEXTO ================= */
 
   const nombre =
-    producto.nombre.toLowerCase().trim();
+  producto.nombre
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 
-  const categoria =
-    producto.categoria.toLowerCase().trim();
+const categoria =
+  producto.categoria
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 
   /* =====================================================
      EVITAR DUPLICADOS
@@ -150,8 +160,7 @@ snapshot.forEach((doc) => {
   /* ================= COINCIDENCIA ================= */
 
   const coincide =
-    nombre.includes(texto) ||
-    categoria.includes(texto);
+  nombre.startsWith(texto);
 
   /* ================= SI COINCIDE ================= */
 
